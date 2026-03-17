@@ -1,5 +1,6 @@
 ---
-import { comparisonFieldLabel, formatComparisonValue } from "../../lib/page-utils";
+import GameCardHero from "./GameCardHero.astro";
+import { comparisonFieldLabel, formatComparisonValue, gameSignalLabels } from "../../lib/page-utils";
 import type { ComparisonField, GameEntry } from "../../types/page-props";
 
 export interface Props {
@@ -15,29 +16,40 @@ const { title, games, fields } = Astro.props;
   games.length > 0 && (
     <section>
       <h2>{title}</h2>
-      <div class="table-wrap">
-        <table class="comparison-table">
-          <thead>
-            <tr>
-              <th>Game</th>
-              {fields.map((field) => (
-                <th>{comparisonFieldLabel(field)}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {games.map((game) => (
-              <tr>
-                <th>{game.data.name}</th>
-                {fields.map((field) => (
-                  <td>{formatComparisonValue(game, field)}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div class="comparison-stack">
+        {games.map((game, index) => {
+          const signals = gameSignalLabels(game);
+
+          return (
+            <article class="card comparison-card">
+              <div class="comparison-card-media">
+                <GameCardHero game={game} priority={index === 0} />
+              </div>
+              <div class="comparison-card-body">
+                <div class="comparison-card-intro">
+                  <div class="comparison-card-meta-row">
+                    <div class="game-card-signal-row">
+                      {signals.map((signal) => (
+                        <span class="game-card-signal">{signal}</span>
+                      ))}
+                    </div>
+                    <span class="meta-chip comparison-card-players">{game.data.players}</span>
+                  </div>
+                  <strong>{game.data.name}</strong>
+                </div>
+                <dl class="comparison-detail-grid">
+                  {fields.map((field) => (
+                    <div>
+                      <dt>{comparisonFieldLabel(field)}</dt>
+                      <dd>{formatComparisonValue(game, field)}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   )
 }
-

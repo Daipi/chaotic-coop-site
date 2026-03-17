@@ -1,3 +1,4 @@
+import { filterLabelForValue } from "./game-explorer";
 import type { ComparisonField, GameEntry, PageEntry } from "../types/page-props";
 
 const pageTypeLabels: Record<PageEntry["data"]["type"], string> = {
@@ -58,6 +59,21 @@ export function formatComparisonValue(game: GameEntry, field: ComparisonField): 
 
   if (field === "physicsChaos" || field === "proximityChat") {
     return truthyLabels[String(value) as keyof typeof truthyLabels];
+  }
+
+  if (
+    field === "horrorLevel" ||
+    field === "progression" ||
+    field === "priceLabel" ||
+    field === "tone" ||
+    field === "sessionLength" ||
+    field === "onboarding"
+  ) {
+    return filterLabelForValue(field, String(value));
+  }
+
+  if (field === "players") {
+    return String(value);
   }
 
   if (typeof value === "string") {
