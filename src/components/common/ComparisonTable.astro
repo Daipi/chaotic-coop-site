@@ -1,0 +1,43 @@
+---
+import { comparisonFieldLabel, formatComparisonValue } from "../../lib/page-utils";
+import type { ComparisonField, GameEntry } from "../../types/page-props";
+
+export interface Props {
+  title: string;
+  games: GameEntry[];
+  fields: ComparisonField[];
+}
+
+const { title, games, fields } = Astro.props;
+---
+
+{
+  games.length > 0 && (
+    <section>
+      <h2>{title}</h2>
+      <div class="table-wrap">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Game</th>
+              {fields.map((field) => (
+                <th>{comparisonFieldLabel(field)}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {games.map((game) => (
+              <tr>
+                <th>{game.data.name}</th>
+                {fields.map((field) => (
+                  <td>{formatComparisonValue(game, field)}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  )
+}
+

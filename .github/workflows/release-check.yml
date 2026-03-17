@@ -1,0 +1,49 @@
+name: Release Check
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SITE_URL: https://ci.chaotic-coop-site.test
+  PUBLIC_SITE_NAME: Chaotic Co-op Site
+  PUBLIC_ORGANIZATION_NAME: Chaotic Co-op Site
+  PUBLIC_CONTACT_EMAIL: editor@chaotic-coop-site.test
+  ADS_TXT_LINES: google.com, pub-1234567890123456, DIRECT, f08c47fec0942fa0
+
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Verify release artifacts
+        run: npm run verify:release
+
+      - name: Upload static artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-dist
+          path: dist
+          if-no-files-found: error
+          retention-days: 7

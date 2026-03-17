@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { organizationName, siteDescription, siteName } from "../lib/site-config";
+
+const title = `About | ${siteName}`;
+const description = "Learn what Chaotic Co-op Site covers, how pages are selected, and who the site is for.";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: title,
+  description
+};
+---
+
+<BaseLayout title={title} description={description} canonical="/about/" structuredData={structuredData}>
+  <article class="panel page-shell">
+    <header class="page-header">
+      <div class="eyebrow">About</div>
+      <h1>About this site</h1>
+      <p class="muted intro-copy">{siteDescription}</p>
+    </header>
+
+    <section class="body-copy">
+      <section>
+        <h2>What we publish</h2>
+        <p>
+          {siteName} is an English editorial site focused on chaotic co-op games, physics-heavy horror,
+          and recommendation-style search queries such as games like <code>R.E.P.O.</code> or
+          low-friction group picks for game night.
+        </p>
+      </section>
+
+      <section>
+        <h2>Who it is for</h2>
+        <p>
+          The target reader is a player who wants a fast, honest answer before buying or installing a game
+          with friends. Most pages are written to solve recommendation intent first and broad genre
+          explanation second.
+        </p>
+      </section>
+
+      <section>
+        <h2>How pages are written</h2>
+        <p>
+          Pages are built around clear search intent, internal linking, and lightweight comparison data.
+          Rankings and recommendations are based on mechanic fit, onboarding difficulty, group dynamics,
+          and replay value rather than hype alone.
+        </p>
+      </section>
+
+      <section>
+        <h2>Ownership</h2>
+        <p>
+          Unless otherwise stated, {siteName} is operated under the name {organizationName}. Brand names,
+          game titles, logos, and trademarks mentioned on the site remain the property of their respective
+          owners.
+        </p>
+      </section>
+    </section>
+  </article>
+</BaseLayout>

@@ -1,0 +1,31 @@
+---
+import ArticleTemplate from "./ArticleTemplate.astro";
+import ComparisonTable from "../common/ComparisonTable.astro";
+import GameExplorer from "../common/GameExplorer.astro";
+import GameCardGrid from "../common/GameCardGrid.astro";
+import type { BestPageProps } from "../../types/page-props";
+
+export interface Props extends BestPageProps {}
+
+const { page, games, relatedPages, quickPickGames, comparisonFields, rankingLabel } = Astro.props;
+const displayGames = quickPickGames.length > 0 ? quickPickGames : games;
+---
+
+<ArticleTemplate page={page} relatedPages={relatedPages}>
+  <Fragment slot="lead">
+    <GameCardGrid title="Quick Picks" description={rankingLabel} games={displayGames} />
+    <ComparisonTable
+      title="How the Shortlist Differs"
+      games={displayGames}
+      fields={comparisonFields}
+    />
+    <GameExplorer
+      title="Browse This Shortlist"
+      description="Filter the games in this list by the dimensions that matter for this search intent."
+      games={games}
+      filterKeys={comparisonFields}
+      emptyMessage="No games in this shortlist match the current filters."
+    />
+  </Fragment>
+  <slot />
+</ArticleTemplate>

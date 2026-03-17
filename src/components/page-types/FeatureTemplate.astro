@@ -1,0 +1,33 @@
+---
+import ArticleTemplate from "./ArticleTemplate.astro";
+import ComparisonTable from "../common/ComparisonTable.astro";
+import GameCardGrid from "../common/GameCardGrid.astro";
+import type { FeaturePageProps } from "../../types/page-props";
+
+export interface Props extends FeaturePageProps {}
+
+const { page, relatedPages, comparedGames, comparisonFields, winnerSummary } = Astro.props;
+---
+
+<ArticleTemplate page={page} relatedPages={relatedPages}>
+  <Fragment slot="lead">
+    <section>
+      <h2>Winner Summary</h2>
+      <div class="card">
+        <strong>Who this page should help first</strong>
+        <p class="muted">{winnerSummary}</p>
+      </div>
+    </section>
+    <ComparisonTable
+      title="Head-to-Head"
+      games={comparedGames}
+      fields={comparisonFields}
+    />
+    <GameCardGrid
+      title="Compared Games"
+      description="Use these cards as the quick orientation layer before the deeper comparison copy."
+      games={comparedGames}
+    />
+  </Fragment>
+  <slot />
+</ArticleTemplate>

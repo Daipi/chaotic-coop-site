@@ -1,0 +1,52 @@
+---
+import GameExplorer from "../common/GameExplorer.astro";
+import LinkCardGrid from "../common/LinkCardGrid.astro";
+import PillLinks from "../common/PillLinks.astro";
+import SectionPanel from "../common/SectionPanel.astro";
+import HomeHero from "./HomeHero.astro";
+import type { HomeTemplateProps } from "../../types/page-props";
+
+export interface Props {
+  page: HomeTemplateProps["page"];
+  games: HomeTemplateProps["games"];
+}
+
+const { page, games } = Astro.props;
+---
+
+<main>
+  <HomeHero hero={page.hero} />
+
+  <SectionPanel title="Intent Shortcuts">
+    <LinkCardGrid items={page.shortcuts} />
+  </SectionPanel>
+
+  <SectionPanel title="Top Picks">
+    <LinkCardGrid items={page.topPicks} />
+  </SectionPanel>
+
+  <SectionPanel title="Browse by Vibe">
+    <PillLinks items={page.browseByVibe} />
+  </SectionPanel>
+
+  <GameExplorer
+    title="Browse the Current Co-Op Pool"
+    description="Use these filters to break the recommendation pool down by tone, fear level, party size, and mechanics."
+    games={games}
+    filterKeys={["tone", "horrorLevel", "players", "physicsChaos", "proximityChat", "sessionLength"]}
+    emptyMessage="Try clearing one of the filters to bring more games back into view."
+  />
+
+  <section class="grid dual-panels">
+    <SectionPanel title="Explainers">
+      <LinkCardGrid items={page.explainers} />
+    </SectionPanel>
+    <SectionPanel title="Comparisons">
+      <LinkCardGrid items={page.comparisons} />
+    </SectionPanel>
+  </section>
+
+  <SectionPanel title="Fresh but Evergreen">
+    <LinkCardGrid items={page.fresh} />
+  </SectionPanel>
+</main>

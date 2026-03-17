@@ -1,0 +1,16 @@
+---
+export interface Props {
+  title?: string;
+  eyebrow?: string;
+  className?: string;
+}
+
+const { title, eyebrow, className = "panel" } = Astro.props;
+---
+
+<section class={className}>
+  {eyebrow && <div class="eyebrow">{eyebrow}</div>}
+  {title && <h2>{title}</h2>}
+  <slot />
+</section>
+

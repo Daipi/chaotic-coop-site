@@ -1,0 +1,29 @@
+---
+import FaqSection from "../common/FaqSection.astro";
+import KeyTakeaways from "../common/KeyTakeaways.astro";
+import PageHeader from "../common/PageHeader.astro";
+import RelatedPagesSection from "../common/RelatedPagesSection.astro";
+import type { PageEntry } from "../../types/page-props";
+
+export interface Props {
+  page: PageEntry;
+  relatedPages: PageEntry[];
+}
+
+const { page, relatedPages } = Astro.props;
+const hasLead = Astro.slots.has("lead");
+---
+
+<article class="panel page-shell">
+  <PageHeader page={page} />
+  <KeyTakeaways items={page.data.keyTakeaways} />
+
+  {hasLead && <div class="lead-stack"><slot name="lead" /></div>}
+
+  <section class="body-copy">
+    <slot />
+  </section>
+
+  <FaqSection items={page.data.faq} />
+  <RelatedPagesSection pages={relatedPages} />
+</article>

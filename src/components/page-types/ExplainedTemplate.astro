@@ -1,0 +1,22 @@
+---
+import ArticleTemplate from "./ArticleTemplate.astro";
+import ConceptPills from "../common/ConceptPills.astro";
+import GameCardGrid from "../common/GameCardGrid.astro";
+import type { ExplainedPageProps } from "../../types/page-props";
+
+export interface Props extends ExplainedPageProps {}
+
+const { page, relatedPages, glossaryLabel, conceptPills, exampleGames } = Astro.props;
+---
+
+<ArticleTemplate page={page} relatedPages={relatedPages}>
+  <Fragment slot="lead">
+    <ConceptPills title="Concept Hooks" items={conceptPills} />
+    <GameCardGrid
+      title={glossaryLabel}
+      description="These examples make the concept legible before the reader drops into the full explainer body."
+      games={exampleGames}
+    />
+  </Fragment>
+  <slot />
+</ArticleTemplate>

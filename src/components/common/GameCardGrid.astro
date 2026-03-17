@@ -1,0 +1,40 @@
+---
+import type { GameEntry } from "../../types/page-props";
+
+export interface Props {
+  title: string;
+  description?: string;
+  games: GameEntry[];
+}
+
+const { title, description, games } = Astro.props;
+---
+
+{
+  games.length > 0 && (
+    <section>
+      <h2>{title}</h2>
+      {description && <p class="section-copy">{description}</p>}
+      <div class="grid cards">
+        {games.map((game) => (
+          <article class="card">
+            <strong>{game.data.name}</strong>
+            <p class="muted">{game.data.shortPitch}</p>
+            <div class="stat-row muted">
+              <span>{game.data.players} players</span>
+              <span>{game.data.horrorLevel} horror</span>
+              <span>{game.data.tone} tone</span>
+              <span>{game.data.sessionLength} sessions</span>
+            </div>
+            <p class="muted">{game.data.bestFor}</p>
+            <div class="tag-row">
+              {game.data.mechanics.slice(0, 3).map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}

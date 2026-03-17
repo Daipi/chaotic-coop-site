@@ -1,0 +1,94 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { contactEmail, hasConfiguredContactEmail, organizationName, siteName } from "../lib/site-config";
+
+const title = `Privacy Policy | ${siteName}`;
+const description = "Privacy policy for Chaotic Co-op Site, including basic data handling, analytics, and advertising notes.";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: title,
+  description
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/privacy-policy/"
+  structuredData={structuredData}
+>
+  <article class="panel page-shell">
+    <header class="page-header">
+      <div class="eyebrow">Privacy</div>
+      <h1>Privacy Policy</h1>
+      <p class="muted intro-copy">
+        This policy explains what information {organizationName} may receive when you use {siteName}.
+      </p>
+    </header>
+
+    <section class="body-copy">
+      <section>
+        <h2>What the site does not collect directly</h2>
+        <p>
+          {siteName} does not currently offer user accounts, comments, checkout flows, or a custom database
+          where visitors submit personal profiles. The site is a static editorial website.
+        </p>
+      </section>
+
+      <section>
+        <h2>Hosting and standard logs</h2>
+        <p>
+          Like most websites, the hosting provider may process standard technical logs such as IP address,
+          user agent, referrer, requested URL, and timestamp to deliver the site, prevent abuse, and keep
+          the service running.
+        </p>
+      </section>
+
+      <section>
+        <h2>Analytics and advertising</h2>
+        <p>
+          The site may add privacy-conscious analytics or third-party advertising in the future. If that
+          happens, this policy should be updated before those tools are enabled, including the specific
+          provider names and any cookie-related disclosures they require.
+        </p>
+        <p>
+          If third-party ads are added later, those providers may use cookies, local storage, or similar
+          technologies to measure performance, limit fraud, or personalize ad delivery, depending on the
+          provider and local law.
+        </p>
+      </section>
+
+      <section>
+        <h2>External links</h2>
+        <p>
+          The site links to external platforms and publisher pages. Their privacy practices are controlled
+          by those third parties, not by {siteName}.
+        </p>
+      </section>
+
+      <section>
+        <h2>Your requests</h2>
+        <p>
+          For privacy questions or rights-related requests, contact <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+        </p>
+        {
+          !hasConfiguredContactEmail && (
+            <p>
+              This address is still the default placeholder. Replace
+              <code>PUBLIC_CONTACT_EMAIL</code> before launch so this page points to a real inbox.
+            </p>
+          )
+        }
+      </section>
+
+      <section>
+        <h2>Policy updates</h2>
+        <p>
+          This page should be reviewed whenever analytics, ad tech, newsletter tools, affiliate tracking,
+          or other third-party scripts are introduced.
+        </p>
+      </section>
+    </section>
+  </article>
+</BaseLayout>

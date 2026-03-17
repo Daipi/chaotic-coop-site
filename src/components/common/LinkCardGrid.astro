@@ -1,0 +1,21 @@
+---
+import type { SiteLink } from "../../types/page-props";
+
+export interface Props {
+  items: SiteLink[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="grid cards">
+  {
+    items.map((item) => (
+      <a class="card" href={item.href}>
+        <strong>{item.label}</strong>
+        {item.description && <p class="muted">{item.description}</p>}
+      </a>
+    ))
+  }
+</div>
+

@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteName } from "../lib/site-config";
+
+const title = `Page Not Found | ${siteName}`;
+const description = "The page you requested could not be found.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/404/"
+  robots="noindex,follow"
+>
+  <article class="panel page-shell">
+    <header class="page-header">
+      <div class="eyebrow">404</div>
+      <h1>Page not found</h1>
+      <p class="muted intro-copy">
+        The URL may be outdated, the slug may have changed, or the page may not exist.
+      </p>
+    </header>
+
+    <section class="body-copy">
+      <section>
+        <h2>Try one of these paths</h2>
+        <p><a href="/">Go back to the homepage</a></p>
+        <p><a href="/games-like/repo/">Browse games like R.E.P.O.</a></p>
+        <p><a href="/best/chaotic-coop-games/">See the broad chaotic co-op picks</a></p>
+      </section>
+    </section>
+  </article>
+</BaseLayout>

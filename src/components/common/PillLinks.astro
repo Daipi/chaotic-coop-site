@@ -1,0 +1,20 @@
+---
+import type { SiteLink } from "../../types/page-props";
+
+export interface Props {
+  items: SiteLink[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="pill-list">
+  {
+    items.map((item) => (
+      <a class="pill" href={item.href}>
+        {item.label}
+      </a>
+    ))
+  }
+</div>
+

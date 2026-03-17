@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { contactEmail, hasConfiguredContactEmail, siteName } from "../lib/site-config";
+
+const title = `Contact | ${siteName}`;
+const description = "Contact the operator of Chaotic Co-op Site for corrections, privacy requests, or business enquiries.";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  name: title,
+  description
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/contact/"
+  structuredData={structuredData}
+>
+  <article class="panel page-shell">
+    <header class="page-header">
+      <div class="eyebrow">Contact</div>
+      <h1>Contact</h1>
+      <p class="muted intro-copy">
+        Use this page for correction requests, privacy questions, removal requests, and business enquiries.
+      </p>
+    </header>
+
+    <section class="body-copy">
+      <section>
+        <h2>Email</h2>
+        <p>
+          Primary contact: <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+        </p>
+        {
+          !hasConfiguredContactEmail && (
+            <p>
+              This site is still using the default placeholder address. Replace
+              <code>PUBLIC_CONTACT_EMAIL</code> before production launch so privacy and legal notices
+              point to a real contact inbox.
+            </p>
+          )
+        }
+      </section>
+
+      <section>
+        <h2>What to include</h2>
+        <p>
+          If you are reporting an issue, include the page URL, the exact statement you want corrected,
+          and any source that helps verify the change quickly.
+        </p>
+      </section>
+
+      <section>
+        <h2>Response scope</h2>
+        <p>
+          Messages about factual corrections, privacy requests, and rights-related notices should be given
+          priority over general feedback. Keep requests specific so they can be handled efficiently.
+        </p>
+      </section>
+    </section>
+  </article>
+</BaseLayout>

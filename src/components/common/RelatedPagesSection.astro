@@ -1,0 +1,26 @@
+---
+import { pageHref } from "../../lib/page-utils";
+import type { PageEntry } from "../../types/page-props";
+
+export interface Props {
+  pages: PageEntry[];
+}
+
+const { pages } = Astro.props;
+---
+
+{
+  pages.length > 0 && (
+    <section>
+      <h2>Related Pages</h2>
+      <div class="pill-list">
+        {pages.map((page) => (
+          <a class="pill" href={pageHref(page)}>
+            {page.data.title}
+          </a>
+        ))}
+      </div>
+    </section>
+  )
+}
+

@@ -1,0 +1,50 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HomeTemplate from "../components/home/HomeTemplate.astro";
+import { homePageDraft } from "../lib/home-data";
+import { siteDescription, siteName } from "../lib/site-config";
+
+const games = await getCollection("games");
+const hasRealSite = Boolean(Astro.site) && Astro.site.hostname !== "example.com";
+const homeUrl = hasRealSite ? new URL("/", Astro.site).toString() : undefined;
+const websiteSchema: Record<string, unknown> = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteName,
+  description: siteDescription,
+  inLanguage: "en"
+};
+
+if (homeUrl) {
+  websiteSchema.url = homeUrl;
+}
+
+const itemListSchema: Record<string, unknown> = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Top chaotic co-op picks",
+  itemListElement: homePageDraft.topPicks.map((item, index) => {
+    const entry: Record<string, unknown> = {
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.label
+    };
+
+    if (hasRealSite) {
+      entry.url = new URL(item.href, Astro.site).toString();
+    }
+
+    return entry;
+  })
+};
+---
+
+<BaseLayout
+  title={siteName}
+  description={siteDescription}
+  canonical="/"
+  structuredData={[websiteSchema, itemListSchema]}
+>
+  <HomeTemplate page={homePageDraft} games={games} />
+</BaseLayout>

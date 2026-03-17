@@ -1,0 +1,198 @@
+---
+import {
+  buildExplorerFilterGroups,
+  explorerDataForGame,
+  filterLabelForValue
+} from "../../lib/game-explorer";
+import type { ComparisonField, GameEntry } from "../../types/page-props";
+
+export interface Props {
+  title: string;
+  description?: string;
+  games: GameEntry[];
+  filterKeys: ComparisonField[];
+  emptyMessage?: string;
+}
+
+const {
+  title,
+  description,
+  games,
+  filterKeys,
+  emptyMessage = "No games match the current filters."
+} = Astro.props;
+
+const filterGroups = buildExplorerFilterGroups(games, filterKeys);
+---
+
+<section class="panel explorer-shell" data-game-explorer>
+  <div class="explorer-header">
+    <div>
+      <h2>{title}</h2>
+      {description && <p class="section-copy">{description}</p>}
+    </div>
+    <div class="explorer-summary">
+      <strong data-results-count>{games.length}</strong>
+      <span class="muted">games in view</span>
+    </div>
+  </div>
+
+  {
+    filterGroups.length > 0 && (
+      <div class="filter-stack">
+        {filterGroups.map((group) => (
+          <fieldset class="filter-group">
+            <legend>{group.label}</legend>
+            <div class="pill-list">
+              <button
+                type="button"
+                class="filter-chip is-active"
+                data-filter-group={group.key}
+                data-filter-value="all"
+              >
+                All
+              </button>
+              {group.options.map((option) => (
+                <button
+                  type="button"
+                  class="filter-chip"
+                  data-filter-group={group.key}
+                  data-filter-value={option.value}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+        ))}
+      </div>
+    )
+  }
+
+  <div class="grid cards explorer-grid">
+    {
+      games.map((game) => {
+        const data = explorerDataForGame(game);
+
+        return (
+          <article
+            class="card explorer-card"
+            data-game-card
+            data-players={data.players}
+            data-horror-level={data.horrorLevel}
+            data-physics-chaos={data.physicsChaos}
+            data-proximity-chat={data.proximityChat}
+            data-progression={data.progression}
+            data-price-label={data.priceLabel}
+            data-platforms={data.platforms}
+            data-tone={data.tone}
+            data-session-length={data.sessionLength}
+            data-onboarding={data.onboarding}
+          >
+            <div class="explorer-card-head">
+              <strong>{game.data.name}</strong>
+              <span class="meta-chip">{game.data.players}</span>
+            </div>
+            <p class="muted">{game.data.shortPitch}</p>
+            <div class="stat-row muted">
+              <span>{filterLabelForValue("tone", game.data.tone)}</span>
+              <span>{filterLabelForValue("horrorLevel", game.data.horrorLevel)}</span>
+              <span>{filterLabelForValue("sessionLength", game.data.sessionLength)}</span>
+            </div>
+            <p class="muted">{game.data.bestFor}</p>
+            <div class="tag-row">
+              {game.data.mechanics.slice(0, 3).map((mechanic) => (
+                <span class="tag">{mechanic}</span>
+              ))}
+            </div>
+          </article>
+        );
+      })
+    }
+  </div>
+
+  <p class="muted empty-state" data-empty-state hidden>{emptyMessage}</p>
+</section>
+
+<script>
+  const attributeMap = {
+    players: "data-players",
+    horrorLevel: "data-horror-level",
+    physicsChaos: "data-physics-chaos",
+    proximityChat: "data-proximity-chat",
+    progression: "data-progression",
+    priceLabel: "data-price-label",
+    platforms: "data-platforms",
+    tone: "data-tone",
+    sessionLength: "data-session-length",
+    onboarding: "data-onboarding"
+  };
+
+  for (const root of document.querySelectorAll("[data-game-explorer]")) {
+    if (root.dataset.bound === "true") {
+      continue;
+    }
+
+    root.dataset.bound = "true";
+
+    const state = {};
+    const cards = Array.from(root.querySelectorAll("[data-game-card]"));
+    const countNode = root.querySelector("[data-results-count]");
+    const emptyNode = root.querySelector("[data-empty-state]");
+
+    const applyFilters = () => {
+      let visibleCount = 0;
+
+      for (const card of cards) {
+        const matches = Object.entries(state).every(([group, value]) => {
+          if (!value) {
+            return true;
+          }
+
+          const attributeName = attributeMap[group];
+          const raw = card.getAttribute(attributeName) || "";
+          const values = raw.split("|").filter(Boolean);
+          return values.includes(value);
+        });
+
+        card.hidden = !matches;
+
+        if (matches) {
+          visibleCount += 1;
+        }
+      }
+
+      if (countNode) {
+        countNode.textContent = String(visibleCount);
+      }
+
+      if (emptyNode) {
+        emptyNode.hidden = visibleCount !== 0;
+      }
+    };
+
+    root.addEventListener("click", (event) => {
+      const target = event.target.closest("[data-filter-group][data-filter-value]");
+
+      if (!target || !root.contains(target)) {
+        return;
+      }
+
+      const { filterGroup, filterValue } = target.dataset;
+
+      if (!filterGroup || !filterValue) {
+        return;
+      }
+
+      state[filterGroup] = filterValue === "all" ? "" : filterValue;
+
+      for (const button of root.querySelectorAll(`[data-filter-group="${filterGroup}"]`)) {
+        button.classList.toggle("is-active", button === target);
+      }
+
+      applyFilters();
+    });
+
+    applyFilters();
+  }
+</script>

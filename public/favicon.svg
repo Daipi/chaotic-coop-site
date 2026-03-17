@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Chaotic Co-op Site</title>
+  <desc id="desc">Stylized chaotic co-op emblem</desc>
+  <rect width="128" height="128" rx="28" fill="#f0efed" />
+  <path
+    d="M87 31a33 33 0 1 0 0 66"
+    fill="none"
+    stroke="#0f2862"
+    stroke-linecap="round"
+    stroke-width="14"
+  />
+  <path
+    d="M62 44a20 20 0 1 0 0 40"
+    fill="none"
+    stroke="#51d0de"
+    stroke-linecap="round"
+    stroke-width="12"
+  />
+  <circle cx="93" cy="34" r="10" fill="#beef00" />
+</svg>

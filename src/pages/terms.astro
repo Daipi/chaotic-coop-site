@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { organizationName, siteName } from "../lib/site-config";
+
+const title = `Terms | ${siteName}`;
+const description = "Basic terms for using Chaotic Co-op Site and its editorial content.";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: title,
+  description
+};
+---
+
+<BaseLayout title={title} description={description} canonical="/terms/" structuredData={structuredData}>
+  <article class="panel page-shell">
+    <header class="page-header">
+      <div class="eyebrow">Terms</div>
+      <h1>Terms of Use</h1>
+      <p class="muted intro-copy">
+        These terms apply to your use of {siteName}, an editorial website operated by {organizationName}.
+      </p>
+    </header>
+
+    <section class="body-copy">
+      <section>
+        <h2>Editorial information only</h2>
+        <p>
+          The site provides general informational and editorial content about games, genres, and buying
+          decisions. Nothing on the site is legal, financial, or professional advice.
+        </p>
+      </section>
+
+      <section>
+        <h2>No warranty</h2>
+        <p>
+          The site is provided on an as-is basis. Game prices, availability, platform support, and feature
+          sets can change over time, so readers should verify important details with the official source
+          before relying on them.
+        </p>
+      </section>
+
+      <section>
+        <h2>Intellectual property and trademarks</h2>
+        <p>
+          Unless otherwise stated, the original editorial text and site design belong to {organizationName}.
+          Game names, publisher names, logos, storefront brands, and trademarks referenced on the site remain
+          the property of their respective owners.
+        </p>
+      </section>
+
+      <section>
+        <h2>External websites</h2>
+        <p>
+          The site may link to storefronts, publishers, and other third-party websites. {siteName} is not
+          responsible for the content, availability, or policies of those external sites.
+        </p>
+      </section>
+
+      <section>
+        <h2>Changes</h2>
+        <p>
+          These terms may be revised as the site adds new features, monetization methods, or third-party
+          services. Material changes should be reflected on this page before they take effect.
+        </p>
+      </section>
+    </section>
+  </article>
+</BaseLayout>

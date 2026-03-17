@@ -1,0 +1,27 @@
+---
+import ArticleTemplate from "./ArticleTemplate.astro";
+import ComparisonTable from "../common/ComparisonTable.astro";
+import GameCardGrid from "../common/GameCardGrid.astro";
+import type { GamesLikePageProps } from "../../types/page-props";
+
+export interface Props extends GamesLikePageProps {
+  featuredGame?: GamesLikePageProps["featuredGame"];
+}
+
+const { page, games, relatedPages, comparisonFields, featuredGame, shortlistGames } = Astro.props;
+const leadGames = featuredGame
+  ? [featuredGame, ...shortlistGames.filter((game) => game.id !== featuredGame.id)]
+  : shortlistGames;
+---
+
+<ArticleTemplate page={page} relatedPages={relatedPages}>
+  <Fragment slot="lead">
+    <ComparisonTable title="Quick Comparison" games={leadGames} fields={comparisonFields} />
+    <GameCardGrid
+      title="Shortlist"
+      description="Use this shortlist to surface the closest overlaps before the full recommendation section."
+      games={shortlistGames}
+    />
+  </Fragment>
+  <slot />
+</ArticleTemplate>

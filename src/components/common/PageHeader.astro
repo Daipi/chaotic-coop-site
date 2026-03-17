@@ -1,0 +1,24 @@
+---
+import { formatDate, pageTypeLabel } from "../../lib/page-utils";
+import type { PageEntry } from "../../types/page-props";
+
+export interface Props {
+  page: PageEntry;
+}
+
+const { page } = Astro.props;
+const updatedLabel = formatDate(page.data.updatedAt);
+---
+
+<header class="page-header">
+  <div class="eyebrow">{pageTypeLabel(page.data.type)}</div>
+  <h1>{page.data.title}</h1>
+  <p class="muted intro-copy">{page.data.intro}</p>
+  <div class="meta-row">
+    <span class="meta-chip">Keyword: {page.data.targetKeyword}</span>
+    <span class="meta-chip">Intent: {page.data.searchIntent}</span>
+    {updatedLabel && <span class="meta-chip">Updated: {updatedLabel}</span>}
+  </div>
+  {page.data.summary && <p class="section-copy">{page.data.summary}</p>}
+</header>
+

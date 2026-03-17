@@ -1,0 +1,23 @@
+---
+import type { HomeHero as HomeHeroProps } from "../../types/page-props";
+
+export interface Props {
+  hero: HomeHeroProps;
+}
+
+const { hero } = Astro.props;
+---
+
+<section class="panel hero-panel">
+  <div class="eyebrow">{hero.eyebrow}</div>
+  <h1>{hero.title}</h1>
+  <p class="muted">{hero.description}</p>
+  <div class="button-row">
+    <a class="button primary" href={hero.primaryCta.href}>
+      {hero.primaryCta.label}
+    </a>
+    <a class="button secondary" href={hero.secondaryCta.href}>
+      {hero.secondaryCta.label}
+    </a>
+  </div>
+</section>

@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteName } from "../lib/site-config";
+
+const title = `Disclosure | ${siteName}`;
+const description = "Advertising, monetization, and editorial disclosure for Chaotic Co-op Site.";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: title,
+  description
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/disclosure/"
+  structuredData={structuredData}
+>
+  <article class="panel page-shell">
+    <header class="page-header">
+      <div class="eyebrow">Disclosure</div>
+      <h1>Advertising and Editorial Disclosure</h1>
+      <p class="muted intro-copy">
+        This page explains how {siteName} handles monetization, recommendations, and potential conflicts of
+        interest.
+      </p>
+    </header>
+
+    <section class="body-copy">
+      <section>
+        <h2>Editorial independence</h2>
+        <p>
+          Recommendation pages are written to answer search intent clearly and honestly. Rankings are based
+          on game fit, onboarding, replay value, and group dynamics, not on a promise of favorable coverage.
+        </p>
+      </section>
+
+      <section>
+        <h2>Advertising</h2>
+        <p>
+          The site may display advertising in the future. If ads are enabled, they should be identifiable as
+          advertising and handled in a way that does not rewrite or distort the editorial conclusions of a
+          page.
+        </p>
+      </section>
+
+      <section>
+        <h2>Affiliate links</h2>
+        <p>
+          The site does not currently state that it uses affiliate links. If affiliate links are introduced
+          later, this page should be updated before launch so readers know when a link may generate a
+          commission.
+        </p>
+      </section>
+
+      <section>
+        <h2>Price and availability notes</h2>
+        <p>
+          Prices, discounts, and platform availability can change quickly. When pages mention price-sensitive
+          buying advice, official storefront pages should be treated as the final source of truth.
+        </p>
+      </section>
+    </section>
+  </article>
+</BaseLayout>
