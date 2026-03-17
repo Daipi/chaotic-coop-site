@@ -16,7 +16,7 @@ const { title, description, games } = Astro.props;
     <section>
       <h2>{title}</h2>
       {description && <p class="section-copy">{description}</p>}
-      <div class="grid cards">
+      <div class="grid game-list">
         {games.map((game, index) => (
           <article class="card game-card">
             <GameCardHero game={game} priority={index < 2} />
@@ -40,15 +40,18 @@ const { title, description, games } = Astro.props;
                   <dd>{game.data.priceLabel}</dd>
                 </div>
               </dl>
+              <div class="game-card-mechanics">
+                <span class="game-card-section-label">Core loop</span>
+                <div class="tag-row compact-tags">
+                  {game.data.mechanics.slice(0, 3).map((tag) => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
+              </div>
               <p class="muted game-card-fit">
                 <span class="game-card-label">Best for</span>
                 {game.data.bestFor}
               </p>
-              <div class="tag-row compact-tags">
-                {game.data.mechanics.slice(0, 2).map((tag) => (
-                  <span class="tag">{tag}</span>
-                ))}
-              </div>
             </div>
           </article>
         ))}

@@ -808,14 +808,22 @@ const canonicalUrl = canonical
       .game-card,
       .explorer-card {
         display: grid;
-        gap: 16px;
-        align-content: start;
-        padding: 16px;
+        grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
+        gap: 20px;
+        align-items: stretch;
+        padding: 18px;
       }
 
       .game-card-body {
         display: grid;
-        gap: 14px;
+        align-content: start;
+        gap: 16px;
+      }
+
+      .game-list,
+      .explorer-list {
+        grid-template-columns: 1fr;
+        gap: 18px;
       }
 
       .game-card-hero {
@@ -823,6 +831,8 @@ const canonicalUrl = canonical
         overflow: hidden;
         border-radius: 20px;
         isolation: isolate;
+        height: 100%;
+        min-height: 236px;
         background: linear-gradient(
           145deg,
           rgba(15, 40, 98, 0.96),
@@ -836,11 +846,12 @@ const canonicalUrl = canonical
       .game-card-fallback {
         display: block;
         width: 100%;
-        aspect-ratio: 460 / 215;
+        height: 100%;
+        min-height: 236px;
       }
 
       .game-card-hero img {
-        height: auto;
+        height: 100%;
         object-fit: cover;
       }
 
@@ -848,6 +859,7 @@ const canonicalUrl = canonical
         display: grid;
         place-items: end start;
         padding: 18px;
+        min-height: 232px;
         color: white;
         font-size: 1.45rem;
         font-weight: 800;
@@ -928,14 +940,16 @@ const canonicalUrl = canonical
 
       .game-stat-grid {
         margin: 0;
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
       }
 
       .game-stat-grid div {
-        padding: 10px 12px;
-        border-radius: 16px;
+        min-width: 112px;
+        flex: 1 1 0;
+        padding: 12px 14px;
+        border-radius: 18px;
         background: rgba(255, 255, 255, 0.58);
         border: 1px solid rgba(15, 40, 98, 0.08);
       }
@@ -963,6 +977,19 @@ const canonicalUrl = canonical
         border: 1px solid rgba(15, 40, 98, 0.08);
       }
 
+      .game-card-mechanics {
+        display: grid;
+        gap: 10px;
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: linear-gradient(
+          135deg,
+          rgba(81, 208, 222, 0.12),
+          rgba(255, 255, 255, 0.76) 68%
+        );
+        border: 1px solid rgba(81, 208, 222, 0.18);
+      }
+
       .game-card-label {
         display: block;
         margin-bottom: 4px;
@@ -970,6 +997,15 @@ const canonicalUrl = canonical
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color: var(--accent-secondary);
+        font-weight: 800;
+      }
+
+      .game-card-section-label {
+        display: block;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-deep);
         font-weight: 800;
       }
 
@@ -1295,6 +1331,23 @@ const canonicalUrl = canonical
 
         .hero-panel {
           min-height: auto;
+        }
+
+        .game-card,
+        .explorer-card {
+          grid-template-columns: 1fr;
+        }
+
+        .game-card-hero {
+          height: auto;
+          min-height: 0;
+        }
+
+        .game-card-hero img,
+        .game-card-fallback {
+          height: auto;
+          min-height: 0;
+          aspect-ratio: 460 / 215;
         }
 
         .game-card-hero .game-card-head {

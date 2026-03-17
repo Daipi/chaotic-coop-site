@@ -70,7 +70,7 @@ const filterGroups = buildExplorerFilterGroups(games, filterKeys);
     )
   }
 
-  <div class="grid cards explorer-grid">
+  <div class="grid explorer-list explorer-grid">
     {
       games.map((game) => {
         const data = explorerDataForGame(game);
@@ -111,15 +111,18 @@ const filterGroups = buildExplorerFilterGroups(games, filterKeys);
                   <dd>{game.data.proximityChat ? "Proximity chat" : "No proximity chat"}</dd>
                 </div>
               </dl>
+              <div class="game-card-mechanics">
+                <span class="game-card-section-label">Core loop</span>
+                <div class="tag-row compact-tags">
+                  {game.data.mechanics.slice(0, 3).map((mechanic) => (
+                    <span class="tag">{mechanic}</span>
+                  ))}
+                </div>
+              </div>
               <p class="muted game-card-fit">
                 <span class="game-card-label">Best for</span>
                 {game.data.bestFor}
               </p>
-              <div class="tag-row compact-tags">
-                {game.data.mechanics.slice(0, 2).map((mechanic) => (
-                  <span class="tag">{mechanic}</span>
-                ))}
-              </div>
             </div>
           </article>
         );
