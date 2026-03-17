@@ -1,7 +1,9 @@
 import type { CollectionEntry } from "astro:content";
+import type { MarkdownHeading } from "astro";
 
 export type GameEntry = CollectionEntry<"games">;
 export type PageEntry = CollectionEntry<"pages">;
+export type PageHeading = MarkdownHeading;
 
 export type SiteLink = {
   label: string;
@@ -13,6 +15,8 @@ export type HomeHero = {
   eyebrow: string;
   title: string;
   description: string;
+  signals: string[];
+  supportNote: string;
   primaryCta: SiteLink;
   secondaryCta: SiteLink;
 };
@@ -47,6 +51,7 @@ export type ComparisonField =
 export type BaseTemplateProps = {
   page: PageEntry;
   relatedPages: PageEntry[];
+  headings: PageHeading[];
 };
 
 export type GamesLikePageProps = BaseTemplateProps & {

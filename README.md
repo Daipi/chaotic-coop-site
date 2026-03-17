@@ -1,6 +1,6 @@
 # Chaotic Co-op Site
 
-Astro static site for an English SEO project focused on chaotic co-op and `games like R.E.P.O.` style queries.
+Astro static site for an English editorial project about chaotic co-op games, discovery guides, and `games like R.E.P.O.` style recommendations.
 
 ## What is included
 

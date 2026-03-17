@@ -1,29 +1,70 @@
 ---
 import FaqSection from "../common/FaqSection.astro";
 import KeyTakeaways from "../common/KeyTakeaways.astro";
+import PageRail from "../common/PageRail.astro";
 import PageHeader from "../common/PageHeader.astro";
 import RelatedPagesSection from "../common/RelatedPagesSection.astro";
-import type { PageEntry } from "../../types/page-props";
+import type { PageEntry, PageHeading } from "../../types/page-props";
 
 export interface Props {
   page: PageEntry;
   relatedPages: PageEntry[];
+  headings: PageHeading[];
 }
 
-const { page, relatedPages } = Astro.props;
+const { page, relatedPages, headings } = Astro.props;
 const hasLead = Astro.slots.has("lead");
+const hasAfter = Astro.slots.has("after");
 ---
 
-<article class="panel page-shell">
-  <PageHeader page={page} />
-  <KeyTakeaways items={page.data.keyTakeaways} />
+<div class={`article-layout page-type-${page.data.type}`}>
+  <div class="page-main">
+    <section class="panel page-hero-panel">
+      <PageHeader page={page} />
+    </section>
 
-  {hasLead && <div class="lead-stack"><slot name="lead" /></div>}
+    {
+      page.data.keyTakeaways.length > 0 && (
+        <section class="panel">
+          <KeyTakeaways items={page.data.keyTakeaways} />
+        </section>
+      )
+    }
 
-  <section class="body-copy">
-    <slot />
-  </section>
+    {
+      hasLead && (
+        <section class="panel lead-panel">
+          <div class="lead-stack">
+            <slot name="lead" />
+          </div>
+        </section>
+      )
+    }
 
-  <FaqSection items={page.data.faq} />
-  <RelatedPagesSection pages={relatedPages} />
-</article>
+    <article class="panel body-panel">
+      <section class="body-copy">
+        <slot />
+      </section>
+    </article>
+
+    {hasAfter && <div class="after-stack"><slot name="after" /></div>}
+
+    {
+      page.data.faq.length > 0 && (
+        <section class="panel">
+          <FaqSection items={page.data.faq} />
+        </section>
+      )
+    }
+
+    {
+      relatedPages.length > 0 && (
+        <section class="panel">
+          <RelatedPagesSection pages={relatedPages} />
+        </section>
+      )
+    }
+  </div>
+
+  <PageRail page={page} headings={headings} relatedPages={relatedPages} />
+</div>

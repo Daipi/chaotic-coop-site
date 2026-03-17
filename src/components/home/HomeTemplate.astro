@@ -12,22 +12,66 @@ export interface Props {
 }
 
 const { page, games } = Astro.props;
+const routeGroups = [
+  {
+    eyebrow: "By Game",
+    title: "Start from the exact game your group just played",
+    description:
+      "Use the title-led pages when the question is literally 'what should we play after this?'",
+    items: page.shortcuts
+  },
+  {
+    eyebrow: "By Vibe",
+    title: "Start from the energy you want tonight",
+    description:
+      "Use these mood-led routes when you care more about tone, fear, price, or chaos than a specific game name.",
+    items: page.browseByVibe
+  },
+  {
+    eyebrow: "By Question",
+    title: "Start with the concept or the close call",
+    description:
+      "Use explainers and comparisons when the language is fuzzy or your group is split between similar picks.",
+    items: [...page.explainers, ...page.comparisons]
+  }
+];
 ---
 
-<main>
-  <HomeHero hero={page.hero} />
+<main class="home-flow">
+  <section class="hero-layout">
+    <HomeHero hero={page.hero} />
 
-  <SectionPanel title="Intent Shortcuts">
-    <LinkCardGrid items={page.shortcuts} />
-  </SectionPanel>
+    <section class="panel launchpad-panel">
+      <div class="eyebrow">Choose Your Route</div>
+      <h2>Start the way your group actually talks</h2>
+      <p class="section-copy">
+        Some readers arrive with a title, some with a vibe, and some with a comparison question.
+        The first screen should help all three without feeling like a sitemap dump.
+      </p>
+      <div class="route-grid">
+        {
+          routeGroups.map((group) => (
+            <article class="route-card">
+              <div class="route-card-kicker">{group.eyebrow}</div>
+              <h3>{group.title}</h3>
+              <p class="muted">{group.description}</p>
+              <PillLinks items={group.items} />
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </section>
 
-  <SectionPanel title="Top Picks">
-    <LinkCardGrid items={page.topPicks} />
-  </SectionPanel>
+  <section class="grid dual-panels">
+    <SectionPanel eyebrow="Priority Pages" title="Start with the strongest entry points">
+      <LinkCardGrid items={page.topPicks} />
+    </SectionPanel>
 
-  <SectionPanel title="Browse by Vibe">
-    <PillLinks items={page.browseByVibe} />
-  </SectionPanel>
+    <SectionPanel eyebrow="Fresh Reads" title="Keep moving once you land">
+      <LinkCardGrid items={page.fresh} />
+    </SectionPanel>
+  </section>
 
   <GameExplorer
     title="Browse the Current Co-Op Pool"
@@ -38,15 +82,11 @@ const { page, games } = Astro.props;
   />
 
   <section class="grid dual-panels">
-    <SectionPanel title="Explainers">
+    <SectionPanel eyebrow="Explainers" title="Decode the terms before you bounce">
       <LinkCardGrid items={page.explainers} />
     </SectionPanel>
-    <SectionPanel title="Comparisons">
+    <SectionPanel eyebrow="Comparisons" title="Break the tie between close picks">
       <LinkCardGrid items={page.comparisons} />
     </SectionPanel>
   </section>
-
-  <SectionPanel title="Fresh but Evergreen">
-    <LinkCardGrid items={page.fresh} />
-  </SectionPanel>
 </main>

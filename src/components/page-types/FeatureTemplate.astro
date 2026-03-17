@@ -6,14 +6,15 @@ import type { FeaturePageProps } from "../../types/page-props";
 
 export interface Props extends FeaturePageProps {}
 
-const { page, relatedPages, comparedGames, comparisonFields, winnerSummary } = Astro.props;
+const { page, relatedPages, headings, comparedGames, comparisonFields, winnerSummary } =
+  Astro.props;
 ---
 
-<ArticleTemplate page={page} relatedPages={relatedPages}>
+<ArticleTemplate page={page} relatedPages={relatedPages} headings={headings}>
   <Fragment slot="lead">
     <section>
       <h2>Winner Summary</h2>
-      <div class="card">
+      <div class="card decision-card">
         <strong>Who this page should help first</strong>
         <p class="muted">{winnerSummary}</p>
       </div>

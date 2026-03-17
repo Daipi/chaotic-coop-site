@@ -93,15 +93,31 @@ const filterGroups = buildExplorerFilterGroups(games, filterKeys);
               <strong>{game.data.name}</strong>
               <span class="meta-chip">{game.data.players}</span>
             </div>
-            <p class="muted">{game.data.shortPitch}</p>
-            <div class="stat-row muted">
-              <span>{filterLabelForValue("tone", game.data.tone)}</span>
-              <span>{filterLabelForValue("horrorLevel", game.data.horrorLevel)}</span>
-              <span>{filterLabelForValue("sessionLength", game.data.sessionLength)}</span>
-            </div>
-            <p class="muted">{game.data.bestFor}</p>
-            <div class="tag-row">
-              {game.data.mechanics.slice(0, 3).map((mechanic) => (
+            <p class="muted game-card-pitch">{game.data.shortPitch}</p>
+            <dl class="game-stat-grid muted">
+              <div>
+                <dt>Tone</dt>
+                <dd>{filterLabelForValue("tone", game.data.tone)}</dd>
+              </div>
+              <div>
+                <dt>Fear</dt>
+                <dd>{filterLabelForValue("horrorLevel", game.data.horrorLevel)}</dd>
+              </div>
+              <div>
+                <dt>Session</dt>
+                <dd>{filterLabelForValue("sessionLength", game.data.sessionLength)}</dd>
+              </div>
+              <div>
+                <dt>Voice</dt>
+                <dd>{game.data.proximityChat ? "Proximity chat" : "No proximity chat"}</dd>
+              </div>
+            </dl>
+            <p class="muted game-card-fit">
+              <span class="game-card-label">Best for</span>
+              {game.data.bestFor}
+            </p>
+            <div class="tag-row compact-tags">
+              {game.data.mechanics.slice(0, 2).map((mechanic) => (
                 <span class="tag">{mechanic}</span>
               ))}
             </div>

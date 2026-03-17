@@ -1,0 +1,98 @@
+---
+import { formatDate, pageHref, pageTypeLabel } from "../../lib/page-utils";
+import type { PageEntry, PageHeading } from "../../types/page-props";
+
+export interface Props {
+  page: PageEntry;
+  headings: PageHeading[];
+  relatedPages: PageEntry[];
+}
+
+const { page, headings, relatedPages } = Astro.props;
+
+const updatedLabel = formatDate(page.data.updatedAt);
+const railHeading = {
+  recommendation: "Pick the next game faster",
+  comparison: "Choose between the close calls",
+  definition: "Learn the term before you click away"
+}[page.data.searchIntent];
+const railCopy = {
+  recommendation:
+    "Use the quick calls and section links here when your group wants the answer without reading the whole page first.",
+  comparison:
+    "Use this rail to jump straight to the deciding sections when you are weighing two similar games.",
+  definition:
+    "Use this rail to get the core meaning first, then jump into examples and adjacent recommendation pages."
+}[page.data.searchIntent];
+const visibleHeadings = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3);
+const railPages = relatedPages.slice(0, 4);
+---
+
+<aside class="page-rail">
+  <div class="rail-sticky">
+    <section class="panel rail-panel">
+      <div class="eyebrow">At a Glance</div>
+      <h2>{railHeading}</h2>
+      <p class="muted rail-copy">{railCopy}</p>
+      <dl class="rail-facts">
+        <div>
+          <dt>Page type</dt>
+          <dd>{pageTypeLabel(page.data.type)}</dd>
+        </div>
+        {
+          updatedLabel && (
+            <div>
+              <dt>Updated</dt>
+              <dd>{updatedLabel}</dd>
+            </div>
+          )
+        }
+      </dl>
+    </section>
+
+    {
+      page.data.keyTakeaways.length > 0 && (
+        <section class="panel rail-panel">
+          <h2>Quick Calls</h2>
+          <ol class="rail-checklist">
+            {page.data.keyTakeaways.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ol>
+        </section>
+      )
+    }
+
+    {
+      visibleHeadings.length > 0 && (
+        <section class="panel rail-panel">
+          <h2>On This Page</h2>
+          <nav aria-label="Table of contents">
+            <ol class="toc-list">
+              {visibleHeadings.map((heading) => (
+                <li class:list={{ "toc-child": heading.depth === 3 }}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </section>
+      )
+    }
+
+    {
+      railPages.length > 0 && (
+        <section class="panel rail-panel">
+          <h2>Try Next</h2>
+          <div class="pill-list rail-pill-list">
+            {railPages.map((relatedPage) => (
+              <a class="pill" href={pageHref(relatedPage)}>
+                {relatedPage.data.title}
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+</aside>

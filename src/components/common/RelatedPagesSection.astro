@@ -12,7 +12,7 @@ const { pages } = Astro.props;
 {
   pages.length > 0 && (
     <section>
-      <h2>Related Pages</h2>
+      <h2>Keep Exploring</h2>
       <div class="pill-list">
         {pages.map((page) => (
           <a class="pill" href={pageHref(page)}>
@@ -23,4 +23,3 @@ const { pages } = Astro.props;
     </section>
   )
 }
-

@@ -7,11 +7,12 @@ import type { BestPageProps } from "../../types/page-props";
 
 export interface Props extends BestPageProps {}
 
-const { page, games, relatedPages, quickPickGames, comparisonFields, rankingLabel } = Astro.props;
+const { page, games, relatedPages, headings, quickPickGames, comparisonFields, rankingLabel } =
+  Astro.props;
 const displayGames = quickPickGames.length > 0 ? quickPickGames : games;
 ---
 
-<ArticleTemplate page={page} relatedPages={relatedPages}>
+<ArticleTemplate page={page} relatedPages={relatedPages} headings={headings}>
   <Fragment slot="lead">
     <GameCardGrid title="Quick Picks" description={rankingLabel} games={displayGames} />
     <ComparisonTable
@@ -19,13 +20,17 @@ const displayGames = quickPickGames.length > 0 ? quickPickGames : games;
       games={displayGames}
       fields={comparisonFields}
     />
-    <GameExplorer
-      title="Browse This Shortlist"
-      description="Filter the games in this list by the dimensions that matter for this search intent."
-      games={games}
-      filterKeys={comparisonFields}
-      emptyMessage="No games in this shortlist match the current filters."
-    />
+  </Fragment>
+  <Fragment slot="after">
+    <section class="panel">
+      <GameExplorer
+        title="Browse This Shortlist"
+        description="Filter the games in this list by the dimensions that matter for this search intent."
+        games={games}
+        filterKeys={comparisonFields}
+        emptyMessage="No games in this shortlist match the current filters."
+      />
+    </section>
   </Fragment>
   <slot />
 </ArticleTemplate>

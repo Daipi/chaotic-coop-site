@@ -6,10 +6,10 @@ import type { ExplainedPageProps } from "../../types/page-props";
 
 export interface Props extends ExplainedPageProps {}
 
-const { page, relatedPages, glossaryLabel, conceptPills, exampleGames } = Astro.props;
+const { page, relatedPages, headings, glossaryLabel, conceptPills, exampleGames } = Astro.props;
 ---
 
-<ArticleTemplate page={page} relatedPages={relatedPages}>
+<ArticleTemplate page={page} relatedPages={relatedPages} headings={headings}>
   <Fragment slot="lead">
     <ConceptPills title="Concept Hooks" items={conceptPills} />
     <GameCardGrid

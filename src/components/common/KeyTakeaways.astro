@@ -9,10 +9,11 @@ const { items } = Astro.props;
 {
   items.length > 0 && (
     <section>
-      <h2>Key Takeaways</h2>
+      <h2>What to Know First</h2>
       <div class="grid cards">
-        {items.map((item) => (
-          <div class="card">
+        {items.map((item, index) => (
+          <div class="card takeaway-card">
+            <span class="meta-chip takeaway-index">0{index + 1}</span>
             <strong>{item}</strong>
           </div>
         ))}
@@ -20,4 +21,3 @@ const { items } = Astro.props;
     </section>
   )
 }
-

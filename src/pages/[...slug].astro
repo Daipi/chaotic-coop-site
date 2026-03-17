@@ -23,7 +23,7 @@ const relatedPages = sortPagesByIds(
   allPages.filter((candidate) => candidate.id !== page.id),
   page.data.relatedPages
 );
-const { Content } = await render(page);
+const { Content, headings } = await render(page);
 const hasRealSite = Boolean(Astro.site) && Astro.site.hostname !== "example.com";
 const pageUrl = hasRealSite ? new URL(pageHref(page), Astro.site).toString() : undefined;
 const keywords = [page.data.targetKeyword, ...page.data.secondaryKeywords]
@@ -88,6 +88,7 @@ if (page.data.faq.length > 0) {
         page={page}
         games={mentionedGames}
         relatedPages={relatedPages}
+        headings={headings}
         featuredGame={(await getEntries([page.data.featuredGame]))[0]}
         shortlistGames={await getEntries(page.data.shortlistGames)}
         comparisonFields={page.data.comparisonFields}
@@ -99,6 +100,7 @@ if (page.data.faq.length > 0) {
         page={page}
         games={mentionedGames}
         relatedPages={relatedPages}
+        headings={headings}
         quickPickGames={await getEntries(page.data.quickPickGames)}
         comparisonFields={page.data.comparisonFields}
         rankingLabel={page.data.rankingLabel}
@@ -110,6 +112,7 @@ if (page.data.faq.length > 0) {
         page={page}
         games={mentionedGames}
         relatedPages={relatedPages}
+        headings={headings}
         exampleGames={await getEntries(page.data.exampleGames)}
         glossaryLabel={page.data.glossaryLabel}
         conceptPills={page.data.conceptPills}
@@ -121,6 +124,7 @@ if (page.data.faq.length > 0) {
         page={page}
         games={mentionedGames}
         relatedPages={relatedPages}
+        headings={headings}
         comparedGames={await getEntries(page.data.comparedGames)}
         comparisonFields={page.data.comparisonFields}
         winnerSummary={page.data.winnerSummary}

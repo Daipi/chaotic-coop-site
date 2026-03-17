@@ -262,6 +262,42 @@ const canonicalUrl = canonical
         margin: 0;
       }
 
+      .link-card {
+        display: grid;
+        gap: 14px;
+        min-height: 172px;
+        align-content: space-between;
+      }
+
+      .link-card-body {
+        display: grid;
+        gap: 8px;
+      }
+
+      .link-card-copy,
+      .game-card-pitch {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+      }
+
+      .link-card-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-secondary);
+      }
+
+      .link-card-cta::after {
+        content: "->";
+        font-size: 0.9rem;
+      }
+
       .pill-list {
         display: flex;
         flex-wrap: wrap;
@@ -395,9 +431,141 @@ const canonicalUrl = canonical
         gap: 24px;
       }
 
+      .article-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.78fr);
+        gap: 24px;
+        align-items: start;
+      }
+
+      .page-main {
+        display: grid;
+        gap: 20px;
+        min-width: 0;
+      }
+
+      .after-stack {
+        display: grid;
+        gap: 20px;
+      }
+
+      .page-hero-panel {
+        background:
+          radial-gradient(circle at top left, rgba(81, 208, 222, 0.14), transparent 24%),
+          linear-gradient(
+            150deg,
+            rgba(255, 255, 255, 0.9),
+            rgba(255, 255, 255, 0.72) 56%,
+            rgba(255, 255, 255, 0.84)
+          );
+      }
+
+      .lead-panel {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.66)),
+          rgba(255, 255, 255, 0.72);
+      }
+
+      .body-panel {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.62)),
+          rgba(255, 255, 255, 0.72);
+      }
+
+      .page-rail {
+        min-width: 0;
+      }
+
+      .rail-sticky {
+        position: sticky;
+        top: 104px;
+        display: grid;
+        gap: 16px;
+      }
+
+      .rail-panel {
+        gap: 14px;
+      }
+
+      .rail-copy,
+      .page-support {
+        max-width: 56ch;
+      }
+
+      .rail-facts {
+        margin: 0;
+        display: grid;
+        gap: 12px;
+      }
+
+      .rail-facts div {
+        display: grid;
+        gap: 4px;
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+      }
+
+      .rail-facts dt {
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .rail-facts dd {
+        margin: 0;
+        font-weight: 700;
+        color: var(--accent-deep);
+      }
+
+      .rail-checklist,
+      .toc-list {
+        margin: 0;
+        padding-left: 1.1rem;
+        display: grid;
+        gap: 10px;
+        color: var(--muted);
+      }
+
+      .toc-list li {
+        list-style: decimal;
+      }
+
+      .toc-list li.toc-child {
+        margin-left: 0.8rem;
+        list-style: lower-alpha;
+      }
+
+      .toc-list a {
+        text-decoration: none;
+      }
+
+      .rail-pill-list {
+        gap: 8px;
+      }
+
       .page-header {
         display: grid;
         gap: 14px;
+      }
+
+      .page-signal-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .page-signal {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: rgba(20, 36, 78, 0.06);
+        border: 1px solid rgba(15, 40, 98, 0.08);
+        color: var(--accent-deep);
+        font-size: 0.84rem;
+        font-weight: 700;
       }
 
       .page-header h1 {
@@ -407,6 +575,11 @@ const canonicalUrl = canonical
       .intro-copy,
       .section-copy {
         max-width: 72ch;
+      }
+
+      .page-updated {
+        margin: 0;
+        font-size: 0.92rem;
       }
 
       .lead-stack {
@@ -437,11 +610,265 @@ const canonicalUrl = canonical
 
       .body-copy {
         display: grid;
-        gap: 20px;
+        gap: 0;
       }
 
       .body-copy > :global(*) {
         min-width: 0;
+      }
+
+      .body-copy > :global(* + *) {
+        margin-top: 1rem;
+      }
+
+      .body-copy > :global(h2) {
+        margin-top: 2.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .body-copy > :global(h2:first-child) {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: 0;
+      }
+
+      .body-copy > :global(h2:first-child + p) {
+        font-size: 1.12rem;
+        line-height: 1.8;
+        color: var(--accent-deep);
+        max-width: 60ch;
+      }
+
+      .body-copy > :global(h3) {
+        margin-top: 1.8rem;
+      }
+
+      .body-copy > :global(p),
+      .body-copy > :global(ul),
+      .body-copy > :global(ol) {
+        max-width: 68ch;
+      }
+
+      .body-copy > :global(ul),
+      .body-copy > :global(ol) {
+        padding-left: 1.2rem;
+      }
+
+      .body-copy > :global(li + li) {
+        margin-top: 0.45rem;
+      }
+
+      .body-copy > :global(blockquote) {
+        margin: 1.25rem 0 0;
+        padding: 0.9rem 1rem;
+        border-left: 4px solid rgba(81, 208, 222, 0.5);
+        background: rgba(255, 255, 255, 0.62);
+        border-radius: 0 18px 18px 0;
+      }
+
+      .takeaway-card {
+        display: grid;
+        gap: 12px;
+      }
+
+      .takeaway-index {
+        width: fit-content;
+      }
+
+      .faq-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .faq-item {
+        padding: 0;
+      }
+
+      .faq-item summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 18px 20px;
+        font-weight: 700;
+        color: var(--accent-deep);
+      }
+
+      .faq-item summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq-item p {
+        padding: 0 20px 18px;
+      }
+
+      .faq-item[open] {
+        border-color: rgba(81, 208, 222, 0.28);
+      }
+
+      .decision-card {
+        display: grid;
+        gap: 8px;
+        background:
+          linear-gradient(135deg, rgba(81, 208, 222, 0.16), rgba(190, 239, 0, 0.18)),
+          rgba(255, 255, 255, 0.8);
+        border-color: rgba(81, 208, 222, 0.18);
+      }
+
+      .page-type-games_like .page-hero-panel {
+        background:
+          radial-gradient(circle at top left, rgba(81, 208, 222, 0.2), transparent 26%),
+          linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(238, 250, 251, 0.78) 58%, rgba(255, 255, 255, 0.84));
+      }
+
+      .page-type-games_like .rail-panel h2,
+      .page-type-games_like .page-signal {
+        color: #0a4f63;
+      }
+
+      .page-type-best .page-hero-panel {
+        background:
+          radial-gradient(circle at top left, rgba(190, 239, 0, 0.18), transparent 24%),
+          linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(251, 252, 235, 0.8) 58%, rgba(255, 255, 255, 0.84));
+      }
+
+      .page-type-best .rail-panel h2,
+      .page-type-best .page-signal {
+        color: #456100;
+      }
+
+      .page-type-explained .page-hero-panel {
+        background:
+          radial-gradient(circle at top left, rgba(191, 74, 168, 0.15), transparent 24%),
+          linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(251, 240, 248, 0.8) 58%, rgba(255, 255, 255, 0.84));
+      }
+
+      .page-type-explained .rail-panel h2,
+      .page-type-explained .page-signal {
+        color: #8b2e79;
+      }
+
+      .page-type-feature .page-hero-panel {
+        background:
+          radial-gradient(circle at top left, rgba(15, 40, 98, 0.16), transparent 24%),
+          linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(236, 243, 255, 0.82) 58%, rgba(255, 255, 255, 0.84));
+      }
+
+      .page-type-feature .rail-panel h2,
+      .page-type-feature .page-signal {
+        color: #163f8f;
+      }
+
+      .home-flow {
+        display: grid;
+        gap: 24px;
+      }
+
+      .hero-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+        gap: 24px;
+        align-items: start;
+      }
+
+      .launchpad-panel {
+        display: grid;
+        gap: 16px;
+      }
+
+      .route-grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .route-card {
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: 18px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.58));
+        box-shadow: var(--shadow-soft);
+      }
+
+      .route-card h3 {
+        margin: 6px 0 10px;
+        font-size: 1.2rem;
+      }
+
+      .route-card p {
+        margin: 0 0 14px;
+      }
+
+      .route-card-kicker {
+        color: var(--accent-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.76rem;
+        font-weight: 800;
+      }
+
+      .game-card,
+      .explorer-card {
+        gap: 14px;
+      }
+
+      .game-card-head,
+      .explorer-card-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .game-card-head strong,
+      .explorer-card-head strong {
+        margin-bottom: 0;
+        font-size: 1.1rem;
+      }
+
+      .game-stat-grid {
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px 12px;
+      }
+
+      .game-stat-grid div {
+        padding: 10px 12px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.58);
+        border: 1px solid rgba(15, 40, 98, 0.08);
+      }
+
+      .game-stat-grid dt {
+        margin: 0 0 4px;
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      .game-stat-grid dd {
+        margin: 0;
+        color: var(--accent-deep);
+        font-weight: 700;
+      }
+
+      .game-card-fit {
+        font-size: 0.96rem;
+      }
+
+      .game-card-label {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-secondary);
+        font-weight: 800;
+      }
+
+      .compact-tags {
+        gap: 8px;
       }
 
       .table-wrap {
@@ -458,14 +885,6 @@ const canonicalUrl = canonical
 
       .explorer-card {
         display: grid;
-        gap: 12px;
-      }
-
-      .explorer-card-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
       }
 
       .empty-state {
@@ -624,6 +1043,7 @@ const canonicalUrl = canonical
         min-height: min(72vh, 520px);
         display: grid;
         align-content: end;
+        gap: 14px;
         background:
           radial-gradient(circle at top left, rgba(81, 208, 222, 0.2), transparent 28%),
           radial-gradient(circle at 84% 18%, rgba(191, 74, 168, 0.15), transparent 22%),
@@ -665,8 +1085,32 @@ const canonicalUrl = canonical
         font-size: 1.04rem;
       }
 
+      .hero-signal-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .hero-signal {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: rgba(20, 36, 78, 0.08);
+        color: var(--accent-deep);
+        font-size: 0.84rem;
+        font-weight: 700;
+        border: 1px solid rgba(15, 40, 98, 0.08);
+      }
+
       .hero-panel .button-row {
         margin-top: 10px;
+      }
+
+      .hero-support {
+        max-width: 42ch;
+        font-size: 0.95rem;
       }
 
       @keyframes rise-in {
@@ -721,6 +1165,15 @@ const canonicalUrl = canonical
       }
 
       @media (max-width: 720px) {
+        .article-layout,
+        .hero-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .rail-sticky {
+          position: static;
+        }
+
         header.site-header {
           flex-direction: column;
           align-items: flex-start;
@@ -736,6 +1189,10 @@ const canonicalUrl = canonical
 
         .hero-panel {
           min-height: auto;
+        }
+
+        .game-stat-grid {
+          grid-template-columns: 1fr;
         }
       }
     </style>

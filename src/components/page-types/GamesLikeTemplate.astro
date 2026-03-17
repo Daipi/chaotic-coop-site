@@ -8,13 +8,14 @@ export interface Props extends GamesLikePageProps {
   featuredGame?: GamesLikePageProps["featuredGame"];
 }
 
-const { page, games, relatedPages, comparisonFields, featuredGame, shortlistGames } = Astro.props;
+const { page, games, relatedPages, headings, comparisonFields, featuredGame, shortlistGames } =
+  Astro.props;
 const leadGames = featuredGame
   ? [featuredGame, ...shortlistGames.filter((game) => game.id !== featuredGame.id)]
   : shortlistGames;
 ---
 
-<ArticleTemplate page={page} relatedPages={relatedPages}>
+<ArticleTemplate page={page} relatedPages={relatedPages} headings={headings}>
   <Fragment slot="lead">
     <ComparisonTable title="Quick Comparison" games={leadGames} fields={comparisonFields} />
     <GameCardGrid

@@ -9,16 +9,15 @@ const { items } = Astro.props;
 {
   items.length > 0 && (
     <section>
-      <h2>FAQ</h2>
-      <div class="grid">
+      <h2>Questions Readers Still Ask</h2>
+      <div class="faq-list">
         {items.map((item) => (
-          <div class="card">
-            <strong>{item.q}</strong>
+          <details class="card faq-item">
+            <summary>{item.q}</summary>
             <p class="muted">{item.a}</p>
-          </div>
+          </details>
         ))}
       </div>
     </section>
   )
 }
-

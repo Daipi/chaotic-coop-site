@@ -12,6 +12,11 @@ const { hero } = Astro.props;
   <div class="eyebrow">{hero.eyebrow}</div>
   <h1>{hero.title}</h1>
   <p class="muted">{hero.description}</p>
+  <div class="hero-signal-row">
+    {hero.signals.map((signal) => (
+      <span class="hero-signal">{signal}</span>
+    ))}
+  </div>
   <div class="button-row">
     <a class="button primary" href={hero.primaryCta.href}>
       {hero.primaryCta.label}
@@ -20,4 +25,5 @@ const { hero } = Astro.props;
       {hero.secondaryCta.label}
     </a>
   </div>
+  <p class="hero-support muted">{hero.supportNote}</p>
 </section>

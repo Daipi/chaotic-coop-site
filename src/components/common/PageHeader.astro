@@ -8,17 +8,28 @@ export interface Props {
 
 const { page } = Astro.props;
 const updatedLabel = formatDate(page.data.updatedAt);
+const intentSupport = {
+  recommendation: "Use this page when your group wants the next game without wasting twenty tabs.",
+  comparison: "Use this page when the choice is narrow and the differences matter more than the hype.",
+  definition: "Use this page when the term is fuzzy and you want the concept before the recommendations."
+}[page.data.searchIntent];
+const typeSignals = {
+  games_like: ["Closest matches", "Fast substitutes"],
+  best: ["Ranked shortlist", "Broader discovery"],
+  explained: ["Plain-English definition", "Examples first"],
+  feature: ["Head-to-head call", "Decision support"]
+}[page.data.type];
 ---
 
 <header class="page-header">
   <div class="eyebrow">{pageTypeLabel(page.data.type)}</div>
   <h1>{page.data.title}</h1>
   <p class="muted intro-copy">{page.data.intro}</p>
-  <div class="meta-row">
-    <span class="meta-chip">Keyword: {page.data.targetKeyword}</span>
-    <span class="meta-chip">Intent: {page.data.searchIntent}</span>
-    {updatedLabel && <span class="meta-chip">Updated: {updatedLabel}</span>}
+  <div class="page-signal-row">
+    {typeSignals.map((signal) => (
+      <span class="page-signal">{signal}</span>
+    ))}
   </div>
-  {page.data.summary && <p class="section-copy">{page.data.summary}</p>}
+  <p class="page-support">{intentSupport}</p>
+  {updatedLabel && <p class="page-updated muted">Updated {updatedLabel}</p>}
 </header>
-

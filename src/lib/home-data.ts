@@ -6,6 +6,9 @@ export const homePageDraft: HomePageProps = {
     title: "Find chaotic co-op games worth your next game night.",
     description:
       "Start with R.E.P.O.-like games, proximity chat horror, and physics-heavy co-op picks that create panic and funny fails.",
+    signals: ["R.E.P.O.-like picks", "lighter alternatives", "voice-chaos filters"],
+    supportNote:
+      "Built for the moment when a friend says 'that was great, what do we boot next?'",
     primaryCta: {
       label: "Start with R.E.P.O.-like games",
       href: "/games-like/repo/"
@@ -82,4 +85,3 @@ export const homePageDraft: HomePageProps = {
     { label: "Best chaotic co-op games", href: "/best/chaotic-coop-games/" }
   ]
 };
-
