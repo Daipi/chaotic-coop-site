@@ -5,6 +5,7 @@ import {
   explorerDataForGame,
   filterLabelForValue
 } from "../../lib/game-explorer";
+import { gameSignalLabels } from "../../lib/page-utils";
 import type { ComparisonField, GameEntry } from "../../types/page-props";
 
 export interface Props {
@@ -74,6 +75,7 @@ const filterGroups = buildExplorerFilterGroups(games, filterKeys);
     {
       games.map((game) => {
         const data = explorerDataForGame(game);
+        const signals = gameSignalLabels(game);
 
         return (
           <article
@@ -92,7 +94,20 @@ const filterGroups = buildExplorerFilterGroups(games, filterKeys);
           >
             <GameCardHero game={game} />
             <div class="game-card-body">
-              <p class="muted game-card-pitch">{game.data.shortPitch}</p>
+              <div class="game-card-intro">
+                <div class="game-card-meta-row">
+                  <div class="game-card-signal-row">
+                    {signals.map((signal) => (
+                      <span class="game-card-signal">{signal}</span>
+                    ))}
+                  </div>
+                  <span class="meta-chip game-card-players">{game.data.players}</span>
+                </div>
+                <div class="game-card-head">
+                  <strong>{game.data.name}</strong>
+                </div>
+                <p class="muted game-card-pitch">{game.data.shortPitch}</p>
+              </div>
               <dl class="game-stat-grid muted">
                 <div>
                   <dt>Tone</dt>

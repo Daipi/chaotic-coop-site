@@ -1,5 +1,7 @@
 ---
 import GameCardHero from "./GameCardHero.astro";
+import { filterLabelForValue } from "../../lib/game-explorer";
+import { gameSignalLabels } from "../../lib/page-utils";
 import type { GameEntry } from "../../types/page-props";
 
 export interface Props {
@@ -17,44 +19,61 @@ const { title, description, games } = Astro.props;
       <h2>{title}</h2>
       {description && <p class="section-copy">{description}</p>}
       <div class="grid game-list">
-        {games.map((game, index) => (
-          <article class="card game-card">
-            <GameCardHero game={game} priority={index < 2} />
-            <div class="game-card-body">
-              <p class="muted game-card-pitch">{game.data.shortPitch}</p>
-              <dl class="game-stat-grid muted">
-                <div>
-                  <dt>Fear</dt>
-                  <dd>{game.data.horrorLevel}</dd>
+        {games.map((game, index) => {
+          const signals = gameSignalLabels(game);
+
+          return (
+            <article class="card game-card">
+              <GameCardHero game={game} priority={index < 2} />
+              <div class="game-card-body">
+                <div class="game-card-intro">
+                  <div class="game-card-meta-row">
+                    <div class="game-card-signal-row">
+                      {signals.map((signal) => (
+                        <span class="game-card-signal">{signal}</span>
+                      ))}
+                    </div>
+                    <span class="meta-chip game-card-players">{game.data.players}</span>
+                  </div>
+                  <div class="game-card-head">
+                    <strong>{game.data.name}</strong>
+                  </div>
+                  <p class="muted game-card-pitch">{game.data.shortPitch}</p>
                 </div>
-                <div>
-                  <dt>Tone</dt>
-                  <dd>{game.data.tone}</dd>
+                <dl class="game-stat-grid muted">
+                  <div>
+                    <dt>Fear</dt>
+                    <dd>{filterLabelForValue("horrorLevel", game.data.horrorLevel)}</dd>
+                  </div>
+                  <div>
+                    <dt>Tone</dt>
+                    <dd>{filterLabelForValue("tone", game.data.tone)}</dd>
+                  </div>
+                  <div>
+                    <dt>Session</dt>
+                    <dd>{filterLabelForValue("sessionLength", game.data.sessionLength)}</dd>
+                  </div>
+                  <div>
+                    <dt>Price</dt>
+                    <dd>{filterLabelForValue("priceLabel", game.data.priceLabel)}</dd>
+                  </div>
+                </dl>
+                <div class="game-card-mechanics">
+                  <span class="game-card-section-label">Core loop</span>
+                  <div class="tag-row compact-tags">
+                    {game.data.mechanics.slice(0, 3).map((tag) => (
+                      <span class="tag">{tag}</span>
+                    ))}
+                  </div>
                 </div>
-                <div>
-                  <dt>Session</dt>
-                  <dd>{game.data.sessionLength}</dd>
-                </div>
-                <div>
-                  <dt>Price</dt>
-                  <dd>{game.data.priceLabel}</dd>
-                </div>
-              </dl>
-              <div class="game-card-mechanics">
-                <span class="game-card-section-label">Core loop</span>
-                <div class="tag-row compact-tags">
-                  {game.data.mechanics.slice(0, 3).map((tag) => (
-                    <span class="tag">{tag}</span>
-                  ))}
-                </div>
+                <p class="muted game-card-fit">
+                  <span class="game-card-label">Best for</span>
+                  {game.data.bestFor}
+                </p>
               </div>
-              <p class="muted game-card-fit">
-                <span class="game-card-label">Best for</span>
-                {game.data.bestFor}
-              </p>
-            </div>
-          </article>
-        ))}
+            </article>
+          );
+        })}
       </div>
     </section>
   )

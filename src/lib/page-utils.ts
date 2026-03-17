@@ -67,6 +67,20 @@ export function formatComparisonValue(game: GameEntry, field: ComparisonField): 
   return String(value);
 }
 
+export function gameSignalLabels(game: GameEntry): string[] {
+  const labels = [
+    game.data.horrorLevel === "high"
+      ? "High fear"
+      : game.data.horrorLevel === "medium"
+        ? "Medium fear"
+        : "Low fear",
+    game.data.physicsChaos ? "Physics chaos" : null,
+    game.data.proximityChat ? "Proximity chat" : null
+  ];
+
+  return labels.filter((label): label is string => Boolean(label));
+}
+
 export function sortPagesByIds(pages: PageEntry[], ids: string[]): PageEntry[] {
   const pageMap = new Map(pages.map((page) => [page.id, page]));
 
