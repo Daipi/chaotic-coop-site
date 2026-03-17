@@ -366,15 +366,16 @@ const canonicalUrl = canonical
       }
 
       .explorer-shell-home {
-        padding: 26px;
-        border-radius: 30px;
+        gap: 28px;
+        padding: 32px;
+        border-radius: 32px;
         background:
-          radial-gradient(circle at top left, rgba(81, 208, 222, 0.14), transparent 24%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(238, 244, 249, 0.92));
-        border: 1px solid rgba(15, 40, 98, 0.12);
+          radial-gradient(circle at top left, rgba(81, 208, 222, 0.18), transparent 22%),
+          linear-gradient(180deg, rgba(247, 251, 253, 0.98), rgba(233, 240, 246, 0.94));
+        border: 1px solid rgba(15, 40, 98, 0.14);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.84),
-          0 20px 36px rgba(15, 40, 98, 0.08);
+          inset 0 1px 0 rgba(255, 255, 255, 0.88),
+          0 24px 44px rgba(15, 40, 98, 0.1);
       }
 
       .explorer-header {
@@ -463,14 +464,14 @@ const canonicalUrl = canonical
       }
 
       .explorer-shell-home .explorer-controls-card {
-        padding: 20px 22px;
-        border-radius: 24px;
+        padding: 18px 20px;
+        border-radius: 26px;
         background: linear-gradient(
-          135deg,
-          rgba(15, 40, 98, 0.08),
-          rgba(255, 255, 255, 0.88) 44%,
-          rgba(81, 208, 222, 0.08)
+          180deg,
+          rgba(245, 248, 251, 0.96),
+          rgba(255, 255, 255, 0.92)
         );
+        box-shadow: none;
       }
 
       .explorer-shell-home .explorer-filter-grid {
@@ -478,31 +479,115 @@ const canonicalUrl = canonical
       }
 
       .explorer-shell-home .explorer-results-shell {
-        padding: 22px;
-        border-radius: 24px;
-        background: rgba(255, 255, 255, 0.72);
-        border: 1px solid rgba(15, 40, 98, 0.1);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.8),
-          0 14px 28px rgba(15, 40, 98, 0.06);
+        gap: 18px;
+        padding: 0;
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+      }
+
+      .explorer-shell-home .explorer-results-head {
+        padding: 0 4px 10px;
+        border-bottom: 1px solid rgba(15, 40, 98, 0.12);
+      }
+
+      .explorer-shell-home .explorer-list {
+        gap: 22px;
       }
 
       .explorer-shell-home .explorer-card {
-        padding: 16px;
-        border-radius: 22px;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(251, 252, 253, 0.92));
+        grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+        gap: 0;
+        padding: 0;
+        border-radius: 30px;
+        overflow: hidden;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.98));
         border: 1px solid rgba(15, 40, 98, 0.1);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.8),
-          0 10px 18px rgba(15, 40, 98, 0.05);
+        box-shadow: 0 16px 28px rgba(15, 40, 98, 0.08);
+      }
+
+      .explorer-shell-home .explorer-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(15, 40, 98, 0.14);
+        box-shadow: 0 20px 34px rgba(15, 40, 98, 0.1);
       }
 
       .explorer-shell-home .explorer-card + .explorer-card {
-        margin-top: 4px;
+        margin-top: 0;
+      }
+
+      .explorer-shell-home .game-card-hero {
+        border-radius: 0;
+        min-height: 320px;
+        height: 100%;
+        background: #dbe5ee;
+      }
+
+      .explorer-shell-home .game-card-hero img,
+      .explorer-shell-home .game-card-fallback {
+        min-height: 320px;
+        height: 100%;
       }
 
       .explorer-shell-home .game-card-body {
-        padding: 6px 4px;
+        gap: 16px;
+        padding: 28px 32px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 248, 251, 0.96));
+      }
+
+      .explorer-shell-home .game-card-meta-row {
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(15, 40, 98, 0.08);
+      }
+
+      .explorer-shell-home .game-card-head {
+        gap: 10px;
+      }
+
+      .explorer-shell-home .game-card-head strong {
+        font-size: clamp(1.5rem, 2.2vw, 1.92rem);
+      }
+
+      .explorer-shell-home .game-card-pitch {
+        margin: 0;
+        max-width: none;
+        font-size: 1.02rem;
+        line-height: 1.68;
+      }
+
+      .explorer-shell-home .game-card-fact-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px 20px;
+      }
+
+      .explorer-shell-home .game-card-fact-list div {
+        display: grid;
+        gap: 4px;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(15, 40, 98, 0.08);
+      }
+
+      .explorer-shell-home .game-card-fact-list dt {
+        color: var(--accent-secondary);
+      }
+
+      .explorer-shell-home .game-card-note-stack {
+        gap: 12px;
+      }
+
+      .explorer-shell-home .game-card-inline-detail {
+        display: grid;
+        grid-template-columns: 112px minmax(0, 1fr);
+        gap: 12px;
+        max-width: none;
+        padding-top: 14px;
+        border-top: 1px solid rgba(15, 40, 98, 0.08);
+      }
+
+      .explorer-shell-home .game-card-inline-label {
+        margin-right: 0;
+        color: var(--accent-deep);
       }
 
       .explorer-summary {
@@ -1100,6 +1185,11 @@ const canonicalUrl = canonical
         line-height: 1.62;
       }
 
+      .game-card-note-stack {
+        display: grid;
+        gap: 10px;
+      }
+
       .game-card-inline-label {
         color: var(--accent-secondary);
         font-size: 0.76rem;
@@ -1521,9 +1611,42 @@ const canonicalUrl = canonical
         }
       }
 
+      @media (max-width: 860px) {
+        .explorer-shell-home .explorer-card {
+          grid-template-columns: 1fr;
+        }
+
+        .explorer-shell-home .game-card-hero {
+          min-height: 0;
+        }
+
+        .explorer-shell-home .game-card-hero img,
+        .explorer-shell-home .game-card-fallback {
+          min-height: 0;
+          aspect-ratio: 460 / 215;
+        }
+      }
+
       @media (max-width: 640px) {
         .explorer-card {
           grid-template-columns: 1fr;
+        }
+
+        .explorer-shell-home {
+          padding: 24px 20px;
+        }
+
+        .explorer-shell-home .game-card-body {
+          padding: 22px 20px;
+        }
+
+        .explorer-shell-home .game-card-fact-list {
+          grid-template-columns: 1fr;
+        }
+
+        .explorer-shell-home .game-card-inline-detail {
+          grid-template-columns: 1fr;
+          gap: 6px;
         }
       }
     </style>

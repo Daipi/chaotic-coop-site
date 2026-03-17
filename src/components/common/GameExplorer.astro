@@ -28,12 +28,13 @@ const {
 
 const filterGroups = buildExplorerFilterGroups(games, filterKeys);
 const hasFilters = filterGroups.length > 0;
+const isHomeVariant = variant === "home";
 ---
 
 <section
   class:list={[
     "panel explorer-shell",
-    variant === "home" && "explorer-shell-home"
+    isHomeVariant && "explorer-shell-home"
   ]}
   data-game-explorer
 >
@@ -121,7 +122,10 @@ const hasFilters = filterGroups.length > 0;
 
             return (
               <article
-                class="card explorer-card"
+                class:list={[
+                  "card explorer-card",
+                  isHomeVariant && "explorer-card-home"
+                ]}
                 data-game-card
                 data-players={data.players}
                 data-horror-level={data.horrorLevel}
@@ -135,7 +139,7 @@ const hasFilters = filterGroups.length > 0;
                 data-onboarding={data.onboarding}
               >
                 <GameCardHero game={game} />
-                <div class="game-card-body">
+                <div class:list={["game-card-body", isHomeVariant && "game-card-body-home"]}>
                   <div class="game-card-meta-row">
                     <div class="game-card-signal-row">
                       {signals.map((signal) => (
@@ -144,11 +148,14 @@ const hasFilters = filterGroups.length > 0;
                     </div>
                     <span class="meta-chip game-card-players">{game.data.players}</span>
                   </div>
-                  <div class="game-card-head">
+                  <div class:list={["game-card-head", isHomeVariant && "game-card-head-home"]}>
                     <strong>{game.data.name}</strong>
+                    {
+                      isHomeVariant && <p class="muted game-card-pitch">{game.data.shortPitch}</p>
+                    }
                   </div>
-                  <p class="muted game-card-pitch">{game.data.shortPitch}</p>
-                  <dl class="game-card-fact-list muted">
+                  {!isHomeVariant && <p class="muted game-card-pitch">{game.data.shortPitch}</p>}
+                  <dl class:list={["game-card-fact-list muted", isHomeVariant && "game-card-fact-list-home"]}>
                     <div>
                       <dt>Tone</dt>
                       <dd>{filterLabelForValue("tone", game.data.tone)}</dd>
@@ -166,14 +173,16 @@ const hasFilters = filterGroups.length > 0;
                       <dd>{game.data.proximityChat ? "Proximity chat" : "No proximity chat"}</dd>
                     </div>
                   </dl>
-                  <p class="muted game-card-inline-detail">
-                    <span class="game-card-inline-label">Core loop</span>
-                    {game.data.mechanics.slice(0, 3).join(" / ")}
-                  </p>
-                  <p class="muted game-card-inline-detail game-card-fit">
-                    <span class="game-card-inline-label">Best for</span>
-                    {game.data.bestFor}
-                  </p>
+                  <div class:list={["game-card-note-stack", isHomeVariant && "game-card-note-stack-home"]}>
+                    <p class="muted game-card-inline-detail">
+                      <span class="game-card-inline-label">Core loop</span>
+                      {game.data.mechanics.slice(0, 3).join(" / ")}
+                    </p>
+                    <p class="muted game-card-inline-detail game-card-fit">
+                      <span class="game-card-inline-label">Best for</span>
+                      {game.data.bestFor}
+                    </p>
+                  </div>
                 </div>
               </article>
             );
