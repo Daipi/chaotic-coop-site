@@ -59,6 +59,12 @@ const games = defineCollection({
     platforms: z.array(z.string()),
     tags: z.array(z.string()).default([]),
     mechanics: z.array(z.string()).default([]),
+    artwork: z
+      .object({
+        src: z.string(),
+        alt: z.string()
+      })
+      .optional(),
     bestFor: z.string(),
     shortPitch: z.string()
   })

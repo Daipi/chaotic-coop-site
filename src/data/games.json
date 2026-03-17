@@ -2,6 +2,10 @@
   {
     "id": "repo",
     "name": "R.E.P.O.",
+    "artwork": {
+      "src": "/images/games/repo.jpg",
+      "alt": "R.E.P.O. official header art showing robot scavengers in a haunted industrial facility."
+    },
     "players": "1-6",
     "minPlayers": 1,
     "maxPlayers": 6,
@@ -22,6 +26,10 @@
   {
     "id": "lethal-company",
     "name": "Lethal Company",
+    "artwork": {
+      "src": "/images/games/lethal-company.jpg",
+      "alt": "Lethal Company official header art with suited scavengers and a looming creature in a red industrial scene."
+    },
     "players": "1-4",
     "minPlayers": 1,
     "maxPlayers": 4,
@@ -42,6 +50,10 @@
   {
     "id": "content-warning",
     "name": "Content Warning",
+    "artwork": {
+      "src": "/images/games/content-warning.jpg",
+      "alt": "Content Warning official header art with masked creators filming monsters under neon light."
+    },
     "players": "1-4",
     "minPlayers": 1,
     "maxPlayers": 4,
@@ -62,6 +74,10 @@
   {
     "id": "murky-divers",
     "name": "Murky Divers",
+    "artwork": {
+      "src": "/images/games/murky-divers.jpg",
+      "alt": "Murky Divers official header art showing divers, a submersible, and underwater recovery chaos."
+    },
     "players": "1-8",
     "minPlayers": 1,
     "maxPlayers": 8,
@@ -82,6 +98,10 @@
   {
     "id": "peak",
     "name": "PEAK",
+    "artwork": {
+      "src": "/images/games/peak.avif",
+      "alt": "PEAK official header art with colorful climbers hanging from a steep mountain face."
+    },
     "players": "1-4",
     "minPlayers": 1,
     "maxPlayers": 4,
@@ -102,6 +122,10 @@
   {
     "id": "panicore",
     "name": "PANICORE",
+    "artwork": {
+      "src": "/images/games/panicore.jpg",
+      "alt": "PANICORE official header art showing a terrified group fleeing through a dark abandoned interior."
+    },
     "players": "1-5",
     "minPlayers": 1,
     "maxPlayers": 5,
@@ -122,6 +146,10 @@
   {
     "id": "phasmophobia",
     "name": "Phasmophobia",
+    "artwork": {
+      "src": "/images/games/phasmophobia.jpg",
+      "alt": "Phasmophobia official header art with paranormal investigators approaching a haunted house."
+    },
     "players": "1-4",
     "minPlayers": 1,
     "maxPlayers": 4,
@@ -142,6 +170,10 @@
   {
     "id": "escape-the-backrooms",
     "name": "Escape the Backrooms",
+    "artwork": {
+      "src": "/images/games/escape-the-backrooms.jpg",
+      "alt": "Escape the Backrooms official header art with players trapped in a yellow liminal corridor."
+    },
     "players": "1-4",
     "minPlayers": 1,
     "maxPlayers": 4,

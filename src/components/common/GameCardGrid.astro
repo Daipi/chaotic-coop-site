@@ -1,4 +1,5 @@
 ---
+import GameCardHero from "./GameCardHero.astro";
 import type { GameEntry } from "../../types/page-props";
 
 export interface Props {
@@ -16,39 +17,38 @@ const { title, description, games } = Astro.props;
       <h2>{title}</h2>
       {description && <p class="section-copy">{description}</p>}
       <div class="grid cards">
-        {games.map((game) => (
+        {games.map((game, index) => (
           <article class="card game-card">
-            <div class="game-card-head">
-              <strong>{game.data.name}</strong>
-              <span class="meta-chip">{game.data.players}</span>
-            </div>
-            <p class="muted game-card-pitch">{game.data.shortPitch}</p>
-            <dl class="game-stat-grid muted">
-              <div>
-                <dt>Fear</dt>
-                <dd>{game.data.horrorLevel}</dd>
+            <GameCardHero game={game} priority={index < 2} />
+            <div class="game-card-body">
+              <p class="muted game-card-pitch">{game.data.shortPitch}</p>
+              <dl class="game-stat-grid muted">
+                <div>
+                  <dt>Fear</dt>
+                  <dd>{game.data.horrorLevel}</dd>
+                </div>
+                <div>
+                  <dt>Tone</dt>
+                  <dd>{game.data.tone}</dd>
+                </div>
+                <div>
+                  <dt>Session</dt>
+                  <dd>{game.data.sessionLength}</dd>
+                </div>
+                <div>
+                  <dt>Price</dt>
+                  <dd>{game.data.priceLabel}</dd>
+                </div>
+              </dl>
+              <p class="muted game-card-fit">
+                <span class="game-card-label">Best for</span>
+                {game.data.bestFor}
+              </p>
+              <div class="tag-row compact-tags">
+                {game.data.mechanics.slice(0, 2).map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
               </div>
-              <div>
-                <dt>Tone</dt>
-                <dd>{game.data.tone}</dd>
-              </div>
-              <div>
-                <dt>Session</dt>
-                <dd>{game.data.sessionLength}</dd>
-              </div>
-              <div>
-                <dt>Price</dt>
-                <dd>{game.data.priceLabel}</dd>
-              </div>
-            </dl>
-            <p class="muted game-card-fit">
-              <span class="game-card-label">Best for</span>
-              {game.data.bestFor}
-            </p>
-            <div class="tag-row compact-tags">
-              {game.data.mechanics.slice(0, 2).map((tag) => (
-                <span class="tag">{tag}</span>
-              ))}
             </div>
           </article>
         ))}

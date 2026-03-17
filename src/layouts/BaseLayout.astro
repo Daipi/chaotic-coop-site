@@ -807,7 +807,91 @@ const canonicalUrl = canonical
 
       .game-card,
       .explorer-card {
+        display: grid;
+        gap: 16px;
+        align-content: start;
+        padding: 16px;
+      }
+
+      .game-card-body {
+        display: grid;
         gap: 14px;
+      }
+
+      .game-card-hero {
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        isolation: isolate;
+        background: linear-gradient(
+          145deg,
+          rgba(15, 40, 98, 0.96),
+          rgba(191, 74, 168, 0.52) 58%,
+          rgba(81, 208, 222, 0.52)
+        );
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      }
+
+      .game-card-hero img,
+      .game-card-fallback {
+        display: block;
+        width: 100%;
+        aspect-ratio: 460 / 215;
+      }
+
+      .game-card-hero img {
+        height: auto;
+        object-fit: cover;
+      }
+
+      .game-card-fallback {
+        display: grid;
+        place-items: end start;
+        padding: 18px;
+        color: white;
+        font-size: 1.45rem;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+
+      .game-card-hero-scrim {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(10, 18, 40, 0.06) 0%, rgba(10, 18, 40, 0.22) 52%),
+          linear-gradient(180deg, rgba(10, 18, 40, 0) 32%, rgba(10, 18, 40, 0.82) 100%);
+        z-index: 1;
+      }
+
+      .game-card-hero-copy {
+        position: absolute;
+        inset: auto 14px 14px;
+        display: grid;
+        gap: 10px;
+        z-index: 2;
+      }
+
+      .game-card-signal-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .game-card-signal {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: rgba(10, 18, 40, 0.34);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        color: white;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        backdrop-filter: blur(12px);
       }
 
       .game-card-head,
@@ -822,6 +906,24 @@ const canonicalUrl = canonical
       .explorer-card-head strong {
         margin-bottom: 0;
         font-size: 1.1rem;
+      }
+
+      .game-card-hero .game-card-head {
+        align-items: flex-end;
+      }
+
+      .game-card-hero .game-card-head strong {
+        color: white;
+        font-size: clamp(1.24rem, 2vw, 1.56rem);
+        line-height: 1.04;
+        text-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+      }
+
+      .game-card-hero .meta-chip {
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.22);
+        color: white;
+        box-shadow: none;
       }
 
       .game-stat-grid {
@@ -855,6 +957,10 @@ const canonicalUrl = canonical
 
       .game-card-fit {
         font-size: 0.96rem;
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.58);
+        border: 1px solid rgba(15, 40, 98, 0.08);
       }
 
       .game-card-label {
@@ -884,7 +990,7 @@ const canonicalUrl = canonical
       }
 
       .explorer-card {
-        display: grid;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.62));
       }
 
       .empty-state {
@@ -1189,6 +1295,15 @@ const canonicalUrl = canonical
 
         .hero-panel {
           min-height: auto;
+        }
+
+        .game-card-hero .game-card-head {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .game-card-hero .meta-chip {
+          align-self: flex-start;
         }
 
         .game-stat-grid {

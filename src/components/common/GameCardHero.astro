@@ -1,0 +1,52 @@
+---
+import type { GameEntry } from "../../types/page-props";
+
+export interface Props {
+  game: GameEntry;
+  priority?: boolean;
+}
+
+const { game, priority = false } = Astro.props;
+
+const signals = [
+  game.data.horrorLevel === "high"
+    ? "High fear"
+    : game.data.horrorLevel === "medium"
+      ? "Medium fear"
+      : "Low fear",
+  game.data.physicsChaos ? "Physics chaos" : null,
+  game.data.proximityChat ? "Proximity chat" : null
+].filter((value): value is string => Boolean(value));
+---
+
+<div class="game-card-hero">
+  {
+    game.data.artwork ? (
+      <img
+        src={game.data.artwork.src}
+        alt={game.data.artwork.alt}
+        width="460"
+        height="215"
+        loading={priority ? "eager" : "lazy"}
+        decoding="async"
+        sizes="(max-width: 720px) 100vw, (max-width: 1120px) 50vw, 360px"
+      />
+    ) : (
+      <div class="game-card-fallback" aria-hidden="true">
+        <span>{game.data.name}</span>
+      </div>
+    )
+  }
+  <div class="game-card-hero-scrim" aria-hidden="true"></div>
+  <div class="game-card-hero-copy">
+    <div class="game-card-signal-row">
+      {signals.slice(0, 2).map((signal) => (
+        <span class="game-card-signal">{signal}</span>
+      ))}
+    </div>
+    <div class="game-card-head">
+      <strong>{game.data.name}</strong>
+      <span class="meta-chip">{game.data.players}</span>
+    </div>
+  </div>
+</div>

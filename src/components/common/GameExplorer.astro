@@ -1,4 +1,5 @@
 ---
+import GameCardHero from "./GameCardHero.astro";
 import {
   buildExplorerFilterGroups,
   explorerDataForGame,
@@ -89,37 +90,36 @@ const filterGroups = buildExplorerFilterGroups(games, filterKeys);
             data-session-length={data.sessionLength}
             data-onboarding={data.onboarding}
           >
-            <div class="explorer-card-head">
-              <strong>{game.data.name}</strong>
-              <span class="meta-chip">{game.data.players}</span>
-            </div>
-            <p class="muted game-card-pitch">{game.data.shortPitch}</p>
-            <dl class="game-stat-grid muted">
-              <div>
-                <dt>Tone</dt>
-                <dd>{filterLabelForValue("tone", game.data.tone)}</dd>
+            <GameCardHero game={game} />
+            <div class="game-card-body">
+              <p class="muted game-card-pitch">{game.data.shortPitch}</p>
+              <dl class="game-stat-grid muted">
+                <div>
+                  <dt>Tone</dt>
+                  <dd>{filterLabelForValue("tone", game.data.tone)}</dd>
+                </div>
+                <div>
+                  <dt>Fear</dt>
+                  <dd>{filterLabelForValue("horrorLevel", game.data.horrorLevel)}</dd>
+                </div>
+                <div>
+                  <dt>Session</dt>
+                  <dd>{filterLabelForValue("sessionLength", game.data.sessionLength)}</dd>
+                </div>
+                <div>
+                  <dt>Voice</dt>
+                  <dd>{game.data.proximityChat ? "Proximity chat" : "No proximity chat"}</dd>
+                </div>
+              </dl>
+              <p class="muted game-card-fit">
+                <span class="game-card-label">Best for</span>
+                {game.data.bestFor}
+              </p>
+              <div class="tag-row compact-tags">
+                {game.data.mechanics.slice(0, 2).map((mechanic) => (
+                  <span class="tag">{mechanic}</span>
+                ))}
               </div>
-              <div>
-                <dt>Fear</dt>
-                <dd>{filterLabelForValue("horrorLevel", game.data.horrorLevel)}</dd>
-              </div>
-              <div>
-                <dt>Session</dt>
-                <dd>{filterLabelForValue("sessionLength", game.data.sessionLength)}</dd>
-              </div>
-              <div>
-                <dt>Voice</dt>
-                <dd>{game.data.proximityChat ? "Proximity chat" : "No proximity chat"}</dd>
-              </div>
-            </dl>
-            <p class="muted game-card-fit">
-              <span class="game-card-label">Best for</span>
-              {game.data.bestFor}
-            </p>
-            <div class="tag-row compact-tags">
-              {game.data.mechanics.slice(0, 2).map((mechanic) => (
-                <span class="tag">{mechanic}</span>
-              ))}
             </div>
           </article>
         );
