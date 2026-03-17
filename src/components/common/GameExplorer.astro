@@ -25,6 +25,7 @@ const {
 } = Astro.props;
 
 const filterGroups = buildExplorerFilterGroups(games, filterKeys);
+const hasFilters = filterGroups.length > 0;
 ---
 
 <section class="panel explorer-shell" data-game-explorer>
@@ -33,119 +34,154 @@ const filterGroups = buildExplorerFilterGroups(games, filterKeys);
       <h2>{title}</h2>
       {description && <p class="section-copy">{description}</p>}
     </div>
-    <div class="explorer-summary">
-      <strong data-results-count>{games.length}</strong>
-      <span class="muted">games in view</span>
-    </div>
   </div>
 
-  {
-    filterGroups.length > 0 && (
-      <div class="filter-stack">
-        {filterGroups.map((group) => (
-          <fieldset class="filter-group">
-            <legend>{group.label}</legend>
-            <div class="pill-list">
+  <div class:list={["explorer-layout", hasFilters && "has-controls"]}>
+    {
+      hasFilters && (
+        <aside class="explorer-controls">
+          <div class="explorer-controls-card">
+            <div class="explorer-controls-head">
+              <div>
+                <div class="eyebrow">Filter Console</div>
+                <h3>Shape the pool before you scan</h3>
+                <p class="muted explorer-controls-copy">
+                  Use a few hard constraints first, then compare the remaining games as full blocks.
+                </p>
+              </div>
               <button
                 type="button"
-                class="filter-chip is-active"
-                data-filter-group={group.key}
-                data-filter-value="all"
+                class="button secondary explorer-reset"
+                data-reset-filters
+                disabled
               >
-                All
+                Clear filters
               </button>
-              {group.options.map((option) => (
-                <button
-                  type="button"
-                  class="filter-chip"
-                  data-filter-group={group.key}
-                  data-filter-value={option.value}
-                >
-                  {option.label}
-                </button>
-              ))}
             </div>
-          </fieldset>
-        ))}
-      </div>
-    )
-  }
-
-  <div class="grid explorer-list explorer-grid">
-    {
-      games.map((game) => {
-        const data = explorerDataForGame(game);
-        const signals = gameSignalLabels(game);
-
-        return (
-          <article
-            class="card explorer-card"
-            data-game-card
-            data-players={data.players}
-            data-horror-level={data.horrorLevel}
-            data-physics-chaos={data.physicsChaos}
-            data-proximity-chat={data.proximityChat}
-            data-progression={data.progression}
-            data-price-label={data.priceLabel}
-            data-platforms={data.platforms}
-            data-tone={data.tone}
-            data-session-length={data.sessionLength}
-            data-onboarding={data.onboarding}
-          >
-            <GameCardHero game={game} />
-            <div class="game-card-body">
-              <div class="game-card-intro">
-                <div class="game-card-meta-row">
-                  <div class="game-card-signal-row">
-                    {signals.map((signal) => (
-                      <span class="game-card-signal">{signal}</span>
+            <div class="explorer-filter-grid">
+              {filterGroups.map((group) => (
+                <fieldset class="filter-group">
+                  <legend>{group.label}</legend>
+                  <div class="pill-list">
+                    <button
+                      type="button"
+                      class="filter-chip is-active"
+                      data-filter-group={group.key}
+                      data-filter-value="all"
+                    >
+                      All
+                    </button>
+                    {group.options.map((option) => (
+                      <button
+                        type="button"
+                        class="filter-chip"
+                        data-filter-group={group.key}
+                        data-filter-value={option.value}
+                      >
+                        {option.label}
+                      </button>
                     ))}
                   </div>
-                  <span class="meta-chip game-card-players">{game.data.players}</span>
-                </div>
-                <div class="game-card-head">
-                  <strong>{game.data.name}</strong>
-                </div>
-                <p class="muted game-card-pitch">{game.data.shortPitch}</p>
-              </div>
-              <dl class="game-stat-grid muted">
-                <div>
-                  <dt>Tone</dt>
-                  <dd>{filterLabelForValue("tone", game.data.tone)}</dd>
-                </div>
-                <div>
-                  <dt>Fear</dt>
-                  <dd>{filterLabelForValue("horrorLevel", game.data.horrorLevel)}</dd>
-                </div>
-                <div>
-                  <dt>Session</dt>
-                  <dd>{filterLabelForValue("sessionLength", game.data.sessionLength)}</dd>
-                </div>
-                <div>
-                  <dt>Voice</dt>
-                  <dd>{game.data.proximityChat ? "Proximity chat" : "No proximity chat"}</dd>
-                </div>
-              </dl>
-              <div class="game-card-mechanics">
-                <span class="game-card-section-label">Core loop</span>
-                <div class="tag-row compact-tags">
-                  {game.data.mechanics.slice(0, 3).map((mechanic) => (
-                    <span class="tag">{mechanic}</span>
-                  ))}
-                </div>
-              </div>
-              <p class="muted game-card-fit">
-                <span class="game-card-label">Best for</span>
-                {game.data.bestFor}
-              </p>
+                </fieldset>
+              ))}
             </div>
-          </article>
-        );
-      })
+          </div>
+        </aside>
+      )
     }
-  </div>
 
-  <p class="muted empty-state" data-empty-state hidden>{emptyMessage}</p>
+    <div class="explorer-results-shell">
+      <div class="explorer-results-head">
+        <div>
+          <div class="eyebrow">Current Matches</div>
+          <h3>Compare the remaining pool</h3>
+          <p class="muted explorer-results-copy" data-active-filters>
+            All filters open. Start broad, then narrow the pool.
+          </p>
+        </div>
+        <div class="explorer-summary">
+          <strong data-results-count>{games.length}</strong>
+          <span class="muted">games in view</span>
+        </div>
+      </div>
+
+      <div class="grid explorer-list explorer-grid">
+        {
+          games.map((game) => {
+            const data = explorerDataForGame(game);
+            const signals = gameSignalLabels(game);
+
+            return (
+              <article
+                class="card explorer-card"
+                data-game-card
+                data-players={data.players}
+                data-horror-level={data.horrorLevel}
+                data-physics-chaos={data.physicsChaos}
+                data-proximity-chat={data.proximityChat}
+                data-progression={data.progression}
+                data-price-label={data.priceLabel}
+                data-platforms={data.platforms}
+                data-tone={data.tone}
+                data-session-length={data.sessionLength}
+                data-onboarding={data.onboarding}
+              >
+                <GameCardHero game={game} />
+                <div class="game-card-body">
+                  <div class="game-card-intro">
+                    <div class="game-card-meta-row">
+                      <div class="game-card-signal-row">
+                        {signals.map((signal) => (
+                          <span class="game-card-signal">{signal}</span>
+                        ))}
+                      </div>
+                      <span class="meta-chip game-card-players">{game.data.players}</span>
+                    </div>
+                    <div class="game-card-head">
+                      <strong>{game.data.name}</strong>
+                    </div>
+                    <p class="muted game-card-pitch">{game.data.shortPitch}</p>
+                  </div>
+                  <dl class="game-stat-grid muted">
+                    <div>
+                      <dt>Tone</dt>
+                      <dd>{filterLabelForValue("tone", game.data.tone)}</dd>
+                    </div>
+                    <div>
+                      <dt>Fear</dt>
+                      <dd>{filterLabelForValue("horrorLevel", game.data.horrorLevel)}</dd>
+                    </div>
+                    <div>
+                      <dt>Session</dt>
+                      <dd>{filterLabelForValue("sessionLength", game.data.sessionLength)}</dd>
+                    </div>
+                    <div>
+                      <dt>Voice</dt>
+                      <dd>{game.data.proximityChat ? "Proximity chat" : "No proximity chat"}</dd>
+                    </div>
+                  </dl>
+                  <div class="game-card-mechanics">
+                    <span class="game-card-section-label">Core loop</span>
+                    <div class="tag-row compact-tags">
+                      {game.data.mechanics.slice(0, 3).map((mechanic) => (
+                        <span class="tag">{mechanic}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <p class="muted game-card-fit">
+                    <span class="game-card-label">Best for</span>
+                    {game.data.bestFor}
+                  </p>
+                </div>
+              </article>
+            );
+          })
+        }
+      </div>
+
+      <p class="muted empty-state" data-empty-state hidden>{emptyMessage}</p>
+    </div>
+  </div>
 </section>
 
 <script>
@@ -173,6 +209,23 @@ const filterGroups = buildExplorerFilterGroups(games, filterKeys);
     const cards = Array.from(root.querySelectorAll("[data-game-card]"));
     const countNode = root.querySelector("[data-results-count]");
     const emptyNode = root.querySelector("[data-empty-state]");
+    const activeFiltersNode = root.querySelector("[data-active-filters]");
+    const resetButton = root.querySelector("[data-reset-filters]");
+
+    const updateFilterSummary = () => {
+      const activeCount = Object.values(state).filter(Boolean).length;
+
+      if (activeFiltersNode) {
+        activeFiltersNode.textContent =
+          activeCount === 0
+            ? "All filters open. Start broad, then narrow the pool."
+            : `${activeCount} filter${activeCount === 1 ? "" : "s"} active. The result list is now narrowed.`;
+      }
+
+      if (resetButton) {
+        resetButton.disabled = activeCount === 0;
+      }
+    };
 
     const applyFilters = () => {
       let visibleCount = 0;
@@ -203,9 +256,30 @@ const filterGroups = buildExplorerFilterGroups(games, filterKeys);
       if (emptyNode) {
         emptyNode.hidden = visibleCount !== 0;
       }
+
+      updateFilterSummary();
+    };
+
+    const resetFilters = () => {
+      for (const key of Object.keys(state)) {
+        state[key] = "";
+      }
+
+      for (const button of root.querySelectorAll("[data-filter-group][data-filter-value]")) {
+        button.classList.toggle("is-active", button.dataset.filterValue === "all");
+      }
+
+      applyFilters();
     };
 
     root.addEventListener("click", (event) => {
+      const resetTarget = event.target.closest("[data-reset-filters]");
+
+      if (resetTarget && root.contains(resetTarget)) {
+        resetFilters();
+        return;
+      }
+
       const target = event.target.closest("[data-filter-group][data-filter-value]");
 
       if (!target || !root.contains(target)) {
