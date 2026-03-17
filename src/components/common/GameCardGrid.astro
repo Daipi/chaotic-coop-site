@@ -26,21 +26,19 @@ const { title, description, games } = Astro.props;
             <article class="card game-card">
               <GameCardHero game={game} priority={index < 2} />
               <div class="game-card-body">
-                <div class="game-card-intro">
-                  <div class="game-card-meta-row">
-                    <div class="game-card-signal-row">
-                      {signals.map((signal) => (
-                        <span class="game-card-signal">{signal}</span>
-                      ))}
-                    </div>
-                    <span class="meta-chip game-card-players">{game.data.players}</span>
+                <div class="game-card-meta-row">
+                  <div class="game-card-signal-row">
+                    {signals.map((signal) => (
+                      <span class="game-card-signal">{signal}</span>
+                    ))}
                   </div>
-                  <div class="game-card-head">
-                    <strong>{game.data.name}</strong>
-                  </div>
-                  <p class="muted game-card-pitch">{game.data.shortPitch}</p>
+                  <span class="meta-chip game-card-players">{game.data.players}</span>
                 </div>
-                <dl class="game-stat-grid muted">
+                <div class="game-card-head">
+                  <strong>{game.data.name}</strong>
+                </div>
+                <p class="muted game-card-pitch">{game.data.shortPitch}</p>
+                <dl class="game-card-fact-list muted">
                   <div>
                     <dt>Fear</dt>
                     <dd>{filterLabelForValue("horrorLevel", game.data.horrorLevel)}</dd>
@@ -58,16 +56,12 @@ const { title, description, games } = Astro.props;
                     <dd>{filterLabelForValue("priceLabel", game.data.priceLabel)}</dd>
                   </div>
                 </dl>
-                <div class="game-card-mechanics">
-                  <span class="game-card-section-label">Core loop</span>
-                  <div class="tag-row compact-tags">
-                    {game.data.mechanics.slice(0, 3).map((tag) => (
-                      <span class="tag">{tag}</span>
-                    ))}
-                  </div>
-                </div>
-                <p class="muted game-card-fit">
-                  <span class="game-card-label">Best for</span>
+                <p class="muted game-card-inline-detail">
+                  <span class="game-card-inline-label">Core loop</span>
+                  {game.data.mechanics.slice(0, 3).join(" / ")}
+                </p>
+                <p class="muted game-card-inline-detail game-card-fit">
+                  <span class="game-card-inline-label">Best for</span>
                   {game.data.bestFor}
                 </p>
               </div>
