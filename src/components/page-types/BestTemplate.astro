@@ -140,8 +140,7 @@ const spotlightItems = focusGames.map((game, index) => ({
       <div class="eyebrow">Fast Routes</div>
       <h2>Pick the lane before you scan the whole list</h2>
       <p class="muted">
-        This page should answer the broad intent quickly, then let the group narrow by tone,
-        fear, and session shape.
+        Start with the broad answer, then narrow by tone, fear, and session shape.
       </p>
       <div class="route-pick-grid">
         {routeCards.map((card) => (
@@ -173,7 +172,7 @@ const spotlightItems = focusGames.map((game, index) => ({
 
     <GameSpotlightRows
       title="Best picks worth opening first"
-      description="These recommendation blocks should resolve most readers before they ever need the full ranked article."
+      description="These recommendation blocks handle most of the decision before the full ranked article."
       items={spotlightItems}
     />
   </Fragment>

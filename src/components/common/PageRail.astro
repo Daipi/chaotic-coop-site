@@ -19,11 +19,11 @@ const railHeading = {
 }[page.data.searchIntent];
 const railCopy = {
   recommendation:
-    "Use the quick calls and section links here when your group wants the answer without reading the whole page first.",
+    "Start with the strongest picks here, then jump to the section that matches your group's filter.",
   comparison:
-    "Use this rail to jump straight to the deciding sections when you are weighing two similar games.",
+    "Use this rail when the choice is close and you want the deciding differences first.",
   definition:
-    "Use this rail to get the core meaning first, then jump into examples and adjacent recommendation pages."
+    "Start with the clearest examples here, then jump into the part of the concept you still need explained."
 }[page.data.searchIntent];
 const visibleHeadings = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3);
 const railPages = relatedPages.slice(0, 4);
@@ -35,9 +35,9 @@ const quickStartTitle = {
 }[page.data.searchIntent];
 const quickStartCopy = {
   recommendation:
-    "Use these as the fastest route when the group wants an answer before reading the whole page.",
+    "These are the fastest routes when the group wants an answer before reading the whole page.",
   comparison:
-    "Use these as the quickest scan before you decide which side of the comparison fits your group.",
+    "Start here if you want the quick scan before deciding which side fits your group.",
   definition:
     "Use these examples to make the term concrete before you read the full explainer."
 }[page.data.searchIntent];

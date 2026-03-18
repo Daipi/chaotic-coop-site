@@ -1,21 +1,54 @@
 ---
 import ArticleTemplate from "./ArticleTemplate.astro";
 import ConceptPills from "../common/ConceptPills.astro";
-import GameCardGrid from "../common/GameCardGrid.astro";
+import GameSpotlightRows from "../common/GameSpotlightRows.astro";
+import { comparisonFieldLabel, formatComparisonValue } from "../../lib/page-utils";
 import type { ExplainedPageProps } from "../../types/page-props";
 
 export interface Props extends ExplainedPageProps {}
 
 const { page, relatedPages, headings, glossaryLabel, conceptPills, exampleGames } = Astro.props;
+const spotlightItems = exampleGames.map((game) => ({
+  game,
+  eyebrow: "Example game",
+  title: game.data.name,
+  description: game.data.shortPitch,
+  facts: ["players", "tone", "horrorLevel", "sessionLength"].map((field) => ({
+    label: comparisonFieldLabel(field),
+    value: formatComparisonValue(game, field)
+  })),
+  notes: [
+    {
+      label: "Why it fits",
+      value: `${game.data.mechanics.slice(0, 3).join(" / ")}`
+    },
+    {
+      label: "Best for",
+      value: game.data.bestFor
+    }
+  ]
+}));
 ---
 
-<ArticleTemplate page={page} relatedPages={relatedPages} headings={headings}>
+<ArticleTemplate
+  page={page}
+  relatedPages={relatedPages}
+  headings={headings}
+  railGames={exampleGames}
+>
   <Fragment slot="lead">
-    <ConceptPills title="Concept Hooks" items={conceptPills} />
-    <GameCardGrid
+    <section class="card decision-summary-card">
+      <div class="eyebrow">Plain-English Take</div>
+      <h2>Get the concept before you open more tabs</h2>
+      <p class="muted decision-summary-copy">{page.data.summary ?? page.data.intro}</p>
+    </section>
+
+    <ConceptPills title="Core Signals" items={conceptPills} />
+
+    <GameSpotlightRows
       title={glossaryLabel}
-      description="These examples make the concept legible before the reader drops into the full explainer body."
-      games={exampleGames}
+      description="These examples make the term concrete before you drop into the long-form explainer."
+      items={spotlightItems}
     />
   </Fragment>
   <slot />

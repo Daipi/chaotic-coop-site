@@ -9,9 +9,9 @@ export interface Props {
 const { page } = Astro.props;
 const updatedLabel = formatDate(page.data.updatedAt);
 const intentSupport = {
-  recommendation: "Use this page when your group wants the next game without wasting twenty tabs.",
-  comparison: "Use this page when the choice is narrow and the differences matter more than the hype.",
-  definition: "Use this page when the term is fuzzy and you want the concept before the recommendations."
+  recommendation: "Find the shortest route to the right game for tonight.",
+  comparison: "See which pick fits your group's mood, fear tolerance, and session style.",
+  definition: "Get the term in plain English, then jump straight to the clearest examples."
 }[page.data.searchIntent];
 const typeSignals = {
   games_like: ["Closest matches", "Fast substitutes"],
