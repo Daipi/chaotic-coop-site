@@ -109,6 +109,14 @@ function assertIncludes(filePath, expected, description, failures) {
   }
 }
 
+function assertExcludes(filePath, unexpected, description, failures) {
+  const contents = fs.readFileSync(filePath, "utf8");
+
+  if (contents.includes(unexpected)) {
+    failures.push(`${description} still appears in ${path.relative(rootDir, filePath)}`);
+  }
+}
+
 function printSection(title, items) {
   console.log(`\n${title}`);
 
@@ -189,6 +197,17 @@ if (fs.existsSync(distDir)) {
   ];
 
   const resolvedFiles = requiredFiles.map((relativePath) => assertFile(relativePath, failures));
+  const homepagePath = path.join(distDir, "index.html");
+  const repoPath = path.join(distDir, "games-like/repo/index.html");
+  const featurePath = path.join(distDir, "features/repo-vs-lethal-company/index.html");
+  const explainedPath = path.join(distDir, "explained/what-is-friendslop/index.html");
+  const forbiddenPhrases = [
+    "This page should",
+    "prototype",
+    "flagship",
+    "topical authority",
+    "for the site"
+  ];
 
   if (siteUrl && !isPlaceholderSiteUrl(siteUrl.toString())) {
     const sitemapPath = assertFile("sitemap-index.xml", failures);
@@ -279,6 +298,36 @@ if (fs.existsSync(distDir)) {
 
   if (fs.existsSync(notFoundPath)) {
     assertIncludes(notFoundPath, 'meta name="robots" content="noindex,follow"', "404 robots meta", failures);
+  }
+
+  if (fs.existsSync(homepagePath)) {
+    assertIncludes(homepagePath, "explorer-shell-home", "Homepage explorer shell", failures);
+    assertIncludes(homepagePath, "explorer-card-home", "Homepage explorer media rows", failures);
+  }
+
+  if (fs.existsSync(repoPath)) {
+    assertIncludes(repoPath, "decision-intro-grid", "Games-like decision intro", failures);
+    assertIncludes(repoPath, "spotlight-row", "Games-like spotlight rows", failures);
+  }
+
+  if (fs.existsSync(featurePath)) {
+    assertIncludes(featurePath, "decision-summary-card", "Feature summary card", failures);
+    assertIncludes(featurePath, "spotlight-row", "Feature spotlight rows", failures);
+  }
+
+  if (fs.existsSync(explainedPath)) {
+    assertIncludes(explainedPath, "Plain-English Take", "Explained lead summary", failures);
+    assertIncludes(explainedPath, "spotlight-row", "Explained example rows", failures);
+  }
+
+  for (const filePath of [homepagePath, repoPath, featurePath, explainedPath]) {
+    if (!fs.existsSync(filePath)) {
+      continue;
+    }
+
+    for (const phrase of forbiddenPhrases) {
+      assertExcludes(filePath, phrase, `Draft phrase "${phrase}"`, failures);
+    }
   }
 
   if (resolvedFiles.every(Boolean)) {

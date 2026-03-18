@@ -59,6 +59,12 @@ function requireMatch(haystack, needle, description, failures, sourceLabel) {
   }
 }
 
+function requireAbsent(haystack, needle, description, failures, sourceLabel) {
+  if (haystack.includes(needle)) {
+    failures.push(`${description} still appears in ${sourceLabel}`);
+  }
+}
+
 function firstLocFromSitemapIndex(xml) {
   const match = xml.match(/<loc>([^<]+)<\/loc>/i);
   return match ? match[1] : null;
@@ -78,6 +84,8 @@ const passes = [];
 
 const homepage = await fetchText(baseUrl, "/");
 const repoPage = await fetchText(baseUrl, "/games-like/repo/");
+const featurePage = await fetchText(baseUrl, "/features/repo-vs-lethal-company/");
+const explainedPage = await fetchText(baseUrl, "/explained/what-is-friendslop/");
 const contactPage = await fetchText(baseUrl, "/contact/");
 const robotsFile = await fetchText(baseUrl, "/robots.txt");
 const llmsFile = await fetchText(baseUrl, "/llms.txt");
@@ -90,6 +98,8 @@ let sitemapContentFile = null;
 for (const [label, result] of [
   ["Homepage", homepage],
   ["Games like R.E.P.O. page", repoPage],
+  ["R.E.P.O. vs Lethal Company page", featurePage],
+  ["What is friendslop page", explainedPage],
   ["Contact page", contactPage],
   ["robots.txt", robotsFile],
   ["llms.txt", llmsFile],
@@ -123,6 +133,8 @@ if (homepage.ok) {
     failures,
     homepage.url
   );
+  requireMatch(homepage.body, "explorer-shell-home", "Homepage explorer shell", failures, homepage.url);
+  requireMatch(homepage.body, "explorer-card-home", "Homepage explorer media rows", failures, homepage.url);
 }
 
 if (repoPage.ok) {
@@ -139,6 +151,36 @@ if (repoPage.ok) {
     "Content og:url",
     failures,
     repoPage.url
+  );
+  requireMatch(repoPage.body, "decision-intro-grid", "Games-like decision intro", failures, repoPage.url);
+  requireMatch(repoPage.body, "spotlight-row", "Games-like spotlight rows", failures, repoPage.url);
+}
+
+if (featurePage.ok) {
+  requireMatch(
+    featurePage.body,
+    "decision-summary-card",
+    "Feature summary card",
+    failures,
+    featurePage.url
+  );
+  requireMatch(featurePage.body, "spotlight-row", "Feature spotlight rows", failures, featurePage.url);
+}
+
+if (explainedPage.ok) {
+  requireMatch(
+    explainedPage.body,
+    "Plain-English Take",
+    "Explained lead summary",
+    failures,
+    explainedPage.url
+  );
+  requireMatch(
+    explainedPage.body,
+    "spotlight-row",
+    "Explained example rows",
+    failures,
+    explainedPage.url
   );
 }
 
@@ -242,6 +284,16 @@ if (notFoundPage.ok) {
 
 if (notFoundPage.body && !notFoundPage.body.includes("Page not found")) {
   warnings.push("404 body does not include the expected page-not-found copy.");
+}
+
+for (const result of [homepage, repoPage, featurePage, explainedPage]) {
+  if (!result.ok) {
+    continue;
+  }
+
+  for (const phrase of ["This page should", "prototype", "flagship", "topical authority", "for the site"]) {
+    requireAbsent(result.body, phrase, `Draft phrase "${phrase}"`, failures, result.url);
+  }
 }
 
 if (passes.length > 0) {
