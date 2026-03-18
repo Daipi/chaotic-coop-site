@@ -1,14 +1,15 @@
 ---
 import { formatDate, pageHref, pageTypeLabel } from "../../lib/page-utils";
-import type { PageEntry, PageHeading } from "../../types/page-props";
+import type { GameEntry, PageEntry, PageHeading } from "../../types/page-props";
 
 export interface Props {
   page: PageEntry;
   headings: PageHeading[];
   relatedPages: PageEntry[];
+  railGames?: GameEntry[];
 }
 
-const { page, headings, relatedPages } = Astro.props;
+const { page, headings, relatedPages, railGames = [] } = Astro.props;
 
 const updatedLabel = formatDate(page.data.updatedAt);
 const railHeading = {
@@ -26,6 +27,20 @@ const railCopy = {
 }[page.data.searchIntent];
 const visibleHeadings = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3);
 const railPages = relatedPages.slice(0, 4);
+const quickStartGames = railGames.slice(0, 3);
+const quickStartTitle = {
+  recommendation: "Start With These",
+  comparison: "Check These First",
+  definition: "Examples First"
+}[page.data.searchIntent];
+const quickStartCopy = {
+  recommendation:
+    "Use these as the fastest route when the group wants an answer before reading the whole page.",
+  comparison:
+    "Use these as the quickest scan before you decide which side of the comparison fits your group.",
+  definition:
+    "Use these examples to make the term concrete before you read the full explainer."
+}[page.data.searchIntent];
 ---
 
 <aside class="page-rail">
@@ -51,6 +66,30 @@ const railPages = relatedPages.slice(0, 4);
     </section>
 
     {
+      quickStartGames.length > 0 && (
+        <section class="panel rail-panel rail-picks-panel">
+          <h2>{quickStartTitle}</h2>
+          <p class="muted rail-copy">{quickStartCopy}</p>
+          <div class="rail-game-list">
+            {quickStartGames.map((game, index) => (
+              <article class="rail-game-item">
+                <div class="route-card-kicker">
+                  {index === 0
+                    ? "Start here"
+                    : index === 1
+                      ? "Next option"
+                      : "Alternative route"}
+                </div>
+                <strong>{game.data.name}</strong>
+                <p class="muted">{game.data.shortPitch}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
       page.data.keyTakeaways.length > 0 && (
         <section class="panel rail-panel">
           <h2>Quick Calls</h2>
@@ -66,7 +105,7 @@ const railPages = relatedPages.slice(0, 4);
     {
       visibleHeadings.length > 0 && (
         <section class="panel rail-panel">
-          <h2>On This Page</h2>
+          <h2>Jump To Section</h2>
           <nav aria-label="Table of contents">
             <ol class="toc-list">
               {visibleHeadings.map((heading) => (

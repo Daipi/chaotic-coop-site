@@ -365,6 +365,21 @@ const canonicalUrl = canonical
         gap: 24px;
       }
 
+      .explorer-shell-embedded {
+        gap: 18px;
+      }
+
+      .explorer-shell-embedded .explorer-controls {
+        position: static;
+      }
+
+      .explorer-shell-embedded .explorer-results-shell {
+        padding: 0;
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+      }
+
       .explorer-shell-home {
         gap: 28px;
         padding: 32px;
@@ -769,6 +784,31 @@ const canonicalUrl = canonical
 
       .toc-list a {
         text-decoration: none;
+      }
+
+      .rail-game-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      .rail-game-item {
+        display: grid;
+        gap: 8px;
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
+      }
+
+      .rail-game-item:first-child {
+        padding-top: 0;
+        border-top: 0;
+      }
+
+      .rail-game-item strong {
+        margin: 0;
+      }
+
+      .rail-game-item p {
+        margin: 0;
       }
 
       .rail-pill-list {

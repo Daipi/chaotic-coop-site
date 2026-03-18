@@ -1,8 +1,9 @@
 ---
 import ArticleTemplate from "./ArticleTemplate.astro";
-import ComparisonTable from "../common/ComparisonTable.astro";
 import GameExplorer from "../common/GameExplorer.astro";
-import GameCardGrid from "../common/GameCardGrid.astro";
+import GameSpotlightRows from "../common/GameSpotlightRows.astro";
+import QuickCompareGrid from "../common/QuickCompareGrid.astro";
+import { comparisonFieldLabel, formatComparisonValue } from "../../lib/page-utils";
 import type { BestPageProps } from "../../types/page-props";
 
 export interface Props extends BestPageProps {}
@@ -10,15 +11,170 @@ export interface Props extends BestPageProps {}
 const { page, games, relatedPages, headings, quickPickGames, comparisonFields, rankingLabel } =
   Astro.props;
 const displayGames = quickPickGames.length > 0 ? quickPickGames : games;
+const focusGames = displayGames.slice(0, 3);
+const compareGames = displayGames.slice(0, 4);
+
+function pickLabel(game: BestPageProps["games"][number], index: number) {
+  if (index === 0) {
+    return "Best overall pick";
+  }
+
+  if (game.data.maxPlayers > 4) {
+    return "Bigger-group pick";
+  }
+
+  if (game.data.horrorLevel === "low") {
+    return "Least scary pick";
+  }
+
+  if (game.data.tone === "funny") {
+    return "Lightest social pick";
+  }
+
+  if (game.data.proximityChat) {
+    return "Voice-led pick";
+  }
+
+  if (game.data.progression === "high") {
+    return "Long-run pick";
+  }
+
+  return "Alternative route";
+}
+
+function pickCopy(game: BestPageProps["games"][number], index: number) {
+  if (index === 0) {
+    return "Start here if you want the safest broad recommendation for this whole topic.";
+  }
+
+  if (game.data.maxPlayers > 4) {
+    return "Start here when the group is larger and the broader evergreen winner is too small for your usual party.";
+  }
+
+  if (game.data.horrorLevel === "low") {
+    return "Start here when your group wants the same chaotic energy with less fear and less onboarding friction.";
+  }
+
+  if (game.data.tone === "funny") {
+    return "Start here when the social comedy matters more than pushing the fear curve upward.";
+  }
+
+  if (game.data.proximityChat) {
+    return "Start here when communication mistakes and voice pressure are the main reason this topic appeals.";
+  }
+
+  if (game.data.progression === "high") {
+    return "Start here when your group wants a game-night pick with more mastery and long-term replay value.";
+  }
+
+  return `Start here if ${game.data.name} better matches how your group actually talks about game night.`;
+}
+
+function skipLine(game: BestPageProps["games"][number]) {
+  if (game.data.maxPlayers <= 4) {
+    return "your regular party is larger and you need something that scales more comfortably";
+  }
+
+  if (game.data.horrorLevel === "high") {
+    return "your group wants social chaos without carrying heavy tension all night";
+  }
+
+  if (game.data.onboarding === "hard") {
+    return "you need something that reads clearly in the very first session";
+  }
+
+  if (game.data.proximityChat) {
+    return "voice-driven tension is not a major part of why your group plays together";
+  }
+
+  return "you want a different branch of the topic than this specific pick emphasizes";
+}
+
+const routeCards = focusGames.map((game, index) => ({
+  game,
+  label: pickLabel(game, index),
+  copy: pickCopy(game, index)
+}));
+
+const spotlightItems = focusGames.map((game, index) => ({
+  game,
+  eyebrow: pickLabel(game, index),
+  description: game.data.shortPitch,
+  facts: comparisonFields.map((field) => ({
+    label: comparisonFieldLabel(field),
+    value: formatComparisonValue(game, field)
+  })),
+  notes: [
+    {
+      label: "Why start here",
+      value: pickCopy(game, index)
+    },
+    {
+      label: "Best for",
+      value: game.data.bestFor
+    },
+    {
+      label: "Skip if",
+      value: skipLine(game)
+    }
+  ]
+}));
 ---
 
-<ArticleTemplate page={page} relatedPages={relatedPages} headings={headings}>
+<ArticleTemplate
+  page={page}
+  relatedPages={relatedPages}
+  headings={headings}
+  railGames={focusGames}
+  afterBeforeBody={true}
+  takeawaysAfterBody={true}
+>
   <Fragment slot="lead">
-    <GameCardGrid title="Quick Picks" description={rankingLabel} games={displayGames} />
-    <ComparisonTable
-      title="How the Shortlist Differs"
-      games={displayGames}
+    <section class="card decision-summary-card">
+      <div class="eyebrow">Best Of</div>
+      <h2>Start with the fastest yes for tonight</h2>
+      <p class="muted decision-summary-copy">{rankingLabel}</p>
+    </section>
+
+    <section class="card decision-route-panel">
+      <div class="eyebrow">Fast Routes</div>
+      <h2>Pick the lane before you scan the whole list</h2>
+      <p class="muted">
+        This page should answer the broad intent quickly, then let the group narrow by tone,
+        fear, and session shape.
+      </p>
+      <div class="route-pick-grid">
+        {routeCards.map((card) => (
+          <article class="route-pick-card">
+            <div class="route-card-kicker">{card.label}</div>
+            <strong>{card.game.data.name}</strong>
+            <p class="muted">{card.copy}</p>
+            <div class="route-pick-meta">
+              <span class="meta-chip">{card.game.data.players}</span>
+              <span class="meta-chip">
+                {card.game.data.tone === "funny"
+                  ? "Funny"
+                  : card.game.data.tone === "scary"
+                    ? "Scary"
+                    : "Mixed"}
+              </span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <QuickCompareGrid
+      title="How the strongest picks split apart"
+      description="Use this to eliminate the wrong branch quickly before reading the ranked sections below."
+      games={compareGames}
       fields={comparisonFields}
+    />
+
+    <GameSpotlightRows
+      title="Best picks worth opening first"
+      description="These recommendation blocks should resolve most readers before they ever need the full ranked article."
+      items={spotlightItems}
     />
   </Fragment>
   <Fragment slot="after">
@@ -29,6 +185,7 @@ const displayGames = quickPickGames.length > 0 ? quickPickGames : games;
         games={games}
         filterKeys={comparisonFields}
         emptyMessage="No games in this shortlist match the current filters."
+        variant="embedded"
       />
     </section>
   </Fragment>

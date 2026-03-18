@@ -127,7 +127,12 @@ const anchorFacts = featuredGame
   : [];
 ---
 
-<ArticleTemplate page={page} relatedPages={relatedPages} headings={headings}>
+<ArticleTemplate
+  page={page}
+  relatedPages={relatedPages}
+  headings={headings}
+  railGames={shortlistGames}
+>
   <Fragment slot="lead">
     {
       featuredGame && (

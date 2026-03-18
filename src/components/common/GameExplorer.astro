@@ -14,7 +14,7 @@ export interface Props {
   games: GameEntry[];
   filterKeys: ComparisonField[];
   emptyMessage?: string;
-  variant?: "default" | "home";
+  variant?: "default" | "home" | "embedded";
 }
 
 const {
@@ -29,12 +29,15 @@ const {
 const filterGroups = buildExplorerFilterGroups(games, filterKeys);
 const hasFilters = filterGroups.length > 0;
 const isHomeVariant = variant === "home";
+const isEmbeddedVariant = variant === "embedded";
 ---
 
 <section
   class:list={[
-    "panel explorer-shell",
-    isHomeVariant && "explorer-shell-home"
+    "explorer-shell",
+    !isEmbeddedVariant && "panel",
+    isHomeVariant && "explorer-shell-home",
+    isEmbeddedVariant && "explorer-shell-embedded"
   ]}
   data-game-explorer
 >

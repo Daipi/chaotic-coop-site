@@ -141,7 +141,12 @@ const spotlightItems = comparedGames.map((game, index) => {
 });
 ---
 
-<ArticleTemplate page={page} relatedPages={relatedPages} headings={headings}>
+<ArticleTemplate
+  page={page}
+  relatedPages={relatedPages}
+  headings={headings}
+  railGames={comparedGames}
+>
   <Fragment slot="lead">
     <section class="card decision-summary-card">
       <div class="eyebrow">Bottom Line</div>
