@@ -1,7 +1,9 @@
 ---
 import ArticleTemplate from "./ArticleTemplate.astro";
-import ComparisonTable from "../common/ComparisonTable.astro";
-import GameCardGrid from "../common/GameCardGrid.astro";
+import GameCardHero from "../common/GameCardHero.astro";
+import GameSpotlightRows from "../common/GameSpotlightRows.astro";
+import QuickCompareGrid from "../common/QuickCompareGrid.astro";
+import { comparisonFieldLabel, formatComparisonValue } from "../../lib/page-utils";
 import type { GamesLikePageProps } from "../../types/page-props";
 
 export interface Props extends GamesLikePageProps {
@@ -10,18 +12,193 @@ export interface Props extends GamesLikePageProps {
 
 const { page, games, relatedPages, headings, comparisonFields, featuredGame, shortlistGames } =
   Astro.props;
-const leadGames = featuredGame
-  ? [featuredGame, ...shortlistGames.filter((game) => game.id !== featuredGame.id)]
-  : shortlistGames;
+const horrorRank = {
+  low: 0,
+  medium: 1,
+  high: 2
+};
+const comparisonGames = featuredGame
+  ? [featuredGame, ...shortlistGames.filter((game) => game.id !== featuredGame.id).slice(0, 3)]
+  : shortlistGames.slice(0, 4);
+
+function routeLabel(game: GamesLikePageProps["games"][number], anchor?: GamesLikePageProps["featuredGame"], index = 0) {
+  if (index === 0) {
+    return "Closest overall branch";
+  }
+
+  if (anchor && game.data.maxPlayers > anchor.data.maxPlayers) {
+    return "Larger-group branch";
+  }
+
+  if (anchor && horrorRank[game.data.horrorLevel] < horrorRank[anchor.data.horrorLevel]) {
+    return "Softer branch";
+  }
+
+  if (anchor && game.data.tone === "funny" && anchor.data.tone !== "funny") {
+    return "Lighter-tone branch";
+  }
+
+  if (game.data.proximityChat && !anchor?.data.proximityChat) {
+    return "Voice-led branch";
+  }
+
+  return "Adjacent branch";
+}
+
+function routeCopy(game: GamesLikePageProps["games"][number], anchor?: GamesLikePageProps["featuredGame"], index = 0) {
+  if (index === 0) {
+    return `Start here if you want the nearest all-around substitute for ${anchor?.data.name ?? "this query"}.`;
+  }
+
+  if (anchor && game.data.maxPlayers > anchor.data.maxPlayers) {
+    return "Use this route when the party is bigger and the messy teamwork matters more than strict horror overlap.";
+  }
+
+  if (anchor && horrorRank[game.data.horrorLevel] < horrorRank[anchor.data.horrorLevel]) {
+    return "Use this route when your group wants the chaos and story-making without leaning as hard on fear.";
+  }
+
+  if (anchor && game.data.tone === "funny" && anchor.data.tone !== "funny") {
+    return "Use this route when the funniest recoveries matter more than matching the original tension beat for beat.";
+  }
+
+  if (game.data.proximityChat && !anchor?.data.proximityChat) {
+    return "Use this route when comms and information mistakes should drive the run more than spectacle.";
+  }
+
+  return `Use this route if ${game.data.name} matches the part of the fantasy your group actually talks about first.`;
+}
+
+function skipLine(game: GamesLikePageProps["games"][number], anchor?: GamesLikePageProps["featuredGame"]) {
+  if (anchor && game.data.maxPlayers < anchor.data.maxPlayers) {
+    return "your regular group size is larger than this game comfortably supports";
+  }
+
+  if (game.data.horrorLevel === "high") {
+    return "your group wants the chaos without heavy tension or dread";
+  }
+
+  if (!game.data.proximityChat && anchor?.data.proximityChat) {
+    return "proximity voice is the main reason the original game worked for your group";
+  }
+
+  if (game.data.onboarding === "hard") {
+    return "you need something that feels legible in the first session";
+  }
+
+  return "you want a cleaner, more serious loop than visible co-op mistakes and recoveries";
+}
+
+const routeCards = shortlistGames.slice(0, 3).map((game, index) => ({
+  game,
+  label: routeLabel(game, featuredGame, index),
+  copy: routeCopy(game, featuredGame, index)
+}));
+
+const spotlightItems = shortlistGames.map((game, index) => ({
+  game,
+  eyebrow: routeLabel(game, featuredGame, index),
+  description: game.data.shortPitch,
+  facts: comparisonFields.slice(0, 4).map((field) => ({
+    label: comparisonFieldLabel(field),
+    value: formatComparisonValue(game, field)
+  })),
+  notes: [
+    {
+      label: "Why it works",
+      value: routeCopy(game, featuredGame, index)
+    },
+    {
+      label: "Best for",
+      value: game.data.bestFor
+    },
+    {
+      label: "Skip if",
+      value: skipLine(game, featuredGame)
+    }
+  ]
+}));
+
+const anchorFacts = featuredGame
+  ? comparisonFields.slice(0, 4).map((field) => ({
+      label: comparisonFieldLabel(field),
+      value: formatComparisonValue(featuredGame, field)
+    }))
+  : [];
 ---
 
 <ArticleTemplate page={page} relatedPages={relatedPages} headings={headings}>
   <Fragment slot="lead">
-    <ComparisonTable title="Quick Comparison" games={leadGames} fields={comparisonFields} />
-    <GameCardGrid
-      title="Shortlist"
-      description="Use this shortlist to surface the closest overlaps before the full recommendation section."
-      games={shortlistGames}
+    {
+      featuredGame && (
+        <section class="decision-intro-grid">
+          <article class="card anchor-game-card">
+            <div class="anchor-game-media">
+              <GameCardHero game={featuredGame} priority={true} />
+            </div>
+            <div class="anchor-game-body">
+              <div class="eyebrow">Match Target</div>
+              <h2>Start from what you want to replace</h2>
+              <p class="muted anchor-game-copy">
+                {featuredGame.data.name} is the baseline for this query: {featuredGame.data.shortPitch}
+              </p>
+              <dl class="anchor-fact-grid">
+                {anchorFacts.map((fact) => (
+                  <div>
+                    <dt>{fact.label}</dt>
+                    <dd>{fact.value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p class="muted spotlight-note">
+                <span class="spotlight-note-label">Core loop</span>
+                {featuredGame.data.mechanics.slice(0, 3).join(" / ")}
+              </p>
+            </div>
+          </article>
+
+          <section class="card decision-route-panel">
+            <div class="eyebrow">Start Here</div>
+            <h2>Pick the branch that matches your group</h2>
+            <p class="muted">
+              Most readers are not asking for a clone. They are choosing which part of the
+              fantasy matters most tonight.
+            </p>
+            <div class="route-pick-grid">
+              {routeCards.map((card) => (
+                <article class="route-pick-card">
+                  <div class="route-card-kicker">{card.label}</div>
+                  <strong>{card.game.data.name}</strong>
+                  <p class="muted">{card.copy}</p>
+                  <div class="route-pick-meta">
+                    <span class="meta-chip">{card.game.data.players}</span>
+                    <span class="meta-chip">
+                      {card.game.data.tone === "funny"
+                        ? "Funny"
+                        : card.game.data.tone === "scary"
+                          ? "Scary"
+                          : "Mixed"}
+                    </span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        </section>
+      )
+    }
+
+    <QuickCompareGrid
+      title="Fast comparison before you commit"
+      description="Use this layer to check the hard filters first, then drop into the richer game snapshots below."
+      games={comparisonGames}
+      fields={comparisonFields}
+    />
+
+    <GameSpotlightRows
+      title="Best next picks for this query"
+      description="These are the recommendation blocks that should resolve most of the search intent before the long-form copy."
+      items={spotlightItems}
     />
   </Fragment>
   <slot />

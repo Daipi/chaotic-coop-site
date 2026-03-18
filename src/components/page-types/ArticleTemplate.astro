@@ -24,19 +24,19 @@ const hasAfter = Astro.slots.has("after");
     </section>
 
     {
-      page.data.keyTakeaways.length > 0 && (
-        <section class="panel">
-          <KeyTakeaways items={page.data.keyTakeaways} />
-        </section>
-      )
-    }
-
-    {
       hasLead && (
         <section class="panel lead-panel">
           <div class="lead-stack">
             <slot name="lead" />
           </div>
+        </section>
+      )
+    }
+
+    {
+      page.data.keyTakeaways.length > 0 && (
+        <section class="panel">
+          <KeyTakeaways items={page.data.keyTakeaways} />
         </section>
       )
     }

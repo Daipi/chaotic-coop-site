@@ -1,0 +1,53 @@
+---
+import { comparisonFieldLabel, formatComparisonValue, gameSignalLabels } from "../../lib/page-utils";
+import type { ComparisonField, GameEntry } from "../../types/page-props";
+
+export interface Props {
+  title: string;
+  description?: string;
+  games: GameEntry[];
+  fields: ComparisonField[];
+}
+
+const { title, description, games, fields } = Astro.props;
+---
+
+{
+  games.length > 0 && (
+    <section>
+      <h2>{title}</h2>
+      {description && <p class="section-copy">{description}</p>}
+      <div class="quick-compare-grid">
+        {games.map((game) => {
+          const signals = gameSignalLabels(game);
+
+          return (
+            <article class="card quick-compare-card">
+              <div class="quick-compare-head">
+                <div>
+                  <div class="route-card-kicker">Quick profile</div>
+                  <strong>{game.data.name}</strong>
+                </div>
+                <span class="meta-chip">{game.data.players}</span>
+              </div>
+              <div class="game-card-signal-row">
+                {signals.map((signal) => (
+                  <span class="game-card-signal">{signal}</span>
+                ))}
+              </div>
+              <p class="muted quick-compare-copy">{game.data.shortPitch}</p>
+              <dl class="quick-compare-facts">
+                {fields.map((field) => (
+                  <div>
+                    <dt>{comparisonFieldLabel(field)}</dt>
+                    <dd>{formatComparisonValue(game, field)}</dd>
+                  </div>
+                ))}
+              </dl>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  )
+}

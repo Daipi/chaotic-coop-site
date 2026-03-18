@@ -1,0 +1,91 @@
+---
+import GameCardHero from "./GameCardHero.astro";
+import { gameSignalLabels } from "../../lib/page-utils";
+import type { GameEntry } from "../../types/page-props";
+
+type SpotlightFact = {
+  label: string;
+  value: string;
+};
+
+type SpotlightNote = {
+  label: string;
+  value: string;
+};
+
+export interface Props {
+  title: string;
+  description?: string;
+  items: Array<{
+    game: GameEntry;
+    eyebrow: string;
+    title?: string;
+    description?: string;
+    facts?: SpotlightFact[];
+    notes?: SpotlightNote[];
+  }>;
+}
+
+const { title, description, items } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <section>
+      <h2>{title}</h2>
+      {description && <p class="section-copy">{description}</p>}
+      <div class="spotlight-stack">
+        {items.map((item, index) => {
+          const signals = gameSignalLabels(item.game);
+
+          return (
+            <article class="card spotlight-row">
+              <div class="spotlight-media">
+                <GameCardHero game={item.game} priority={index === 0} />
+              </div>
+              <div class="spotlight-body">
+                <div class="spotlight-head">
+                  <div>
+                    <div class="route-card-kicker">{item.eyebrow}</div>
+                    <h3>{item.title ?? item.game.data.name}</h3>
+                  </div>
+                  <span class="meta-chip">{item.game.data.players}</span>
+                </div>
+                <div class="game-card-signal-row">
+                  {signals.map((signal) => (
+                    <span class="game-card-signal">{signal}</span>
+                  ))}
+                </div>
+                <p class="muted spotlight-copy">{item.description ?? item.game.data.shortPitch}</p>
+                {
+                  item.facts && item.facts.length > 0 && (
+                    <dl class="spotlight-facts">
+                      {item.facts.map((fact) => (
+                        <div>
+                          <dt>{fact.label}</dt>
+                          <dd>{fact.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )
+                }
+                {
+                  item.notes && item.notes.length > 0 && (
+                    <div class="spotlight-notes">
+                      {item.notes.map((note) => (
+                        <p class="muted spotlight-note">
+                          <span class="spotlight-note-label">{note.label}</span>
+                          {note.value}
+                        </p>
+                      ))}
+                    </div>
+                  )
+                }
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  )
+}

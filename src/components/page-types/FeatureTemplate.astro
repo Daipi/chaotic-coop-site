@@ -1,33 +1,165 @@
 ---
 import ArticleTemplate from "./ArticleTemplate.astro";
-import ComparisonTable from "../common/ComparisonTable.astro";
-import GameCardGrid from "../common/GameCardGrid.astro";
+import GameSpotlightRows from "../common/GameSpotlightRows.astro";
+import QuickCompareGrid from "../common/QuickCompareGrid.astro";
+import { comparisonFieldLabel, formatComparisonValue } from "../../lib/page-utils";
 import type { FeaturePageProps } from "../../types/page-props";
 
 export interface Props extends FeaturePageProps {}
 
 const { page, relatedPages, headings, comparedGames, comparisonFields, winnerSummary } =
   Astro.props;
+const horrorRank = {
+  low: 0,
+  medium: 1,
+  high: 2
+};
+const progressionRank = {
+  low: 0,
+  medium: 1,
+  high: 2
+};
+
+function decisionHeadline(
+  game: FeaturePageProps["comparedGames"][number],
+  other: FeaturePageProps["comparedGames"][number]
+) {
+  if (game.data.physicsChaos && !other.data.physicsChaos) {
+    return "Pick this when visible chaos should drive the stories";
+  }
+
+  if (game.data.proximityChat && !other.data.proximityChat) {
+    return "Pick this when comms and bad callouts should drive the tension";
+  }
+
+  if (game.data.tone === "funny" && other.data.tone !== "funny") {
+    return "Pick this when comedy should soften the fear";
+  }
+
+  if (game.data.tone === "scary" && other.data.tone !== "scary") {
+    return "Pick this when you want the cleaner horror lane";
+  }
+
+  if (progressionRank[game.data.progression] > progressionRank[other.data.progression]) {
+    return "Pick this when your group wants a longer runway";
+  }
+
+  return `Pick this when ${game.data.name} fits the way your group talks about co-op nights.`;
+}
+
+function winsWhen(
+  game: FeaturePageProps["comparedGames"][number],
+  other: FeaturePageProps["comparedGames"][number]
+) {
+  const reasons = [];
+
+  if (game.data.physicsChaos && !other.data.physicsChaos) {
+    reasons.push("you want visible mistakes and recoveries to generate the funniest moments");
+  }
+
+  if (game.data.proximityChat && !other.data.proximityChat) {
+    reasons.push("voice chat should create the pressure, the confusion, and the storytelling");
+  }
+
+  if (horrorRank[game.data.horrorLevel] > horrorRank[other.data.horrorLevel]) {
+    reasons.push("your group prefers stronger fear over mixed-tone chaos");
+  }
+
+  if (horrorRank[game.data.horrorLevel] < horrorRank[other.data.horrorLevel]) {
+    reasons.push("your group wants a little less dread and a little more readable chaos");
+  }
+
+  if (progressionRank[game.data.progression] > progressionRank[other.data.progression]) {
+    reasons.push("you want something that keeps rewarding repeat sessions");
+  }
+
+  if (game.data.maxPlayers > other.data.maxPlayers) {
+    reasons.push("you sometimes need room for a bigger party");
+  }
+
+  if (reasons.length === 0) {
+    reasons.push("the core loop fits your group's preference more cleanly than the alternative");
+  }
+
+  return reasons.slice(0, 2).join("; ");
+}
+
+function skipLine(
+  game: FeaturePageProps["comparedGames"][number],
+  other: FeaturePageProps["comparedGames"][number]
+) {
+  if (game.data.physicsChaos && !other.data.physicsChaos) {
+    return "you mainly want cleaner comms-driven tension rather than spectacle";
+  }
+
+  if (game.data.proximityChat && !other.data.proximityChat) {
+    return "visible slapstick matters more than voice pressure for your group";
+  }
+
+  if (game.data.tone === "scary" && other.data.tone !== "scary") {
+    return "your group bounces off a tighter horror loop";
+  }
+
+  if (game.data.tone === "funny" && other.data.tone !== "funny") {
+    return "you want fear to stay in the foreground the whole session";
+  }
+
+  if (progressionRank[game.data.progression] > progressionRank[other.data.progression]) {
+    return "you want a lighter commitment and faster onboarding";
+  }
+
+  return `the other game's lane fits your group more cleanly than ${game.data.name}'s lane does`;
+}
+
+const spotlightItems = comparedGames.map((game, index) => {
+  const other = comparedGames[index === 0 ? 1 : 0] ?? game;
+
+  return {
+    game,
+    eyebrow: `Pick ${game.data.name}`,
+    title: decisionHeadline(game, other),
+    description: game.data.shortPitch,
+    facts: comparisonFields.map((field) => ({
+      label: comparisonFieldLabel(field),
+      value: formatComparisonValue(game, field)
+    })),
+    notes: [
+      {
+        label: "Wins when",
+        value: winsWhen(game, other)
+      },
+      {
+        label: "Best for",
+        value: game.data.bestFor
+      },
+      {
+        label: "Skip if",
+        value: skipLine(game, other)
+      }
+    ]
+  };
+});
 ---
 
 <ArticleTemplate page={page} relatedPages={relatedPages} headings={headings}>
   <Fragment slot="lead">
-    <section>
-      <h2>Winner Summary</h2>
-      <div class="card decision-card">
-        <strong>Who this page should help first</strong>
-        <p class="muted">{winnerSummary}</p>
-      </div>
+    <section class="card decision-summary-card">
+      <div class="eyebrow">Bottom Line</div>
+      <h2>Which game should your group buy first?</h2>
+      <p class="muted decision-summary-copy">{winnerSummary}</p>
     </section>
-    <ComparisonTable
-      title="Head-to-Head"
+
+    <QuickCompareGrid
+      title="Fast differences that actually change the pick"
+      description="Read this as the fast filter layer before you open the deeper comparison blocks."
       games={comparedGames}
       fields={comparisonFields}
     />
-    <GameCardGrid
-      title="Compared Games"
-      description="Use these cards as the quick orientation layer before the deeper comparison copy."
-      games={comparedGames}
+
+    <GameSpotlightRows
+      title="Pick the lane first"
+      description="These two blocks should tell a real group which branch to choose without forcing them through the full article."
+      items={spotlightItems}
     />
   </Fragment>
   <slot />
