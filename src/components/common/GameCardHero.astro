@@ -9,7 +9,10 @@ export interface Props {
 const { game, priority = false } = Astro.props;
 ---
 
-<div class="game-card-hero">
+<div
+  class="game-card-hero"
+  style={game.data.artwork ? `--hero-image: url("${game.data.artwork.src}");` : undefined}
+>
   {
     game.data.artwork ? (
       <img
