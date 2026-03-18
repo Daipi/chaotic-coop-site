@@ -21,12 +21,12 @@ export const GET: APIRoute = async ({ site }) => {
   const pages = await getCollection("pages", ({ data }) => !data.draft);
   const sectionOrder: Array<keyof typeof typeLabels> = ["games_like", "best", "explained", "feature"];
   const lines = [
-    "# Chaotic Co-op Site",
+    "# CoopQueue",
     "",
     "> English editorial site about chaotic co-op, physics-heavy co-op horror, and games like R.E.P.O.",
     "",
     "## Homepage",
-    `- Chaotic Co-op Site: ${toPublicUrl("/", site)}`,
+    `- CoopQueue: ${toPublicUrl("/", site)}`,
     "",
     "## Coverage",
     "- Topics: chaotic co-op, co-op horror, physics-heavy multiplayer, proximity chat horror",

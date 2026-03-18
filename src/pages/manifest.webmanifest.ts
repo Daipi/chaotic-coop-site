@@ -4,8 +4,8 @@ export const prerender = true;
 
 export const GET: APIRoute = () => {
   const manifest = {
-    name: "Chaotic Co-op Site",
-    short_name: "Chaotic Co-op",
+    name: "CoopQueue",
+    short_name: "CoopQueue",
     description: "Editorial site about chaotic co-op, physics horror, and games like R.E.P.O.",
     start_url: "/",
     scope: "/",

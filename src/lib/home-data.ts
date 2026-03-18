@@ -2,20 +2,20 @@ import type { HomePageProps } from "../types/page-props";
 
 export const homePageDraft: HomePageProps = {
   hero: {
-    eyebrow: "Chaotic Co-Op Finder",
-    title: "Find chaotic co-op games worth your next game night.",
+    eyebrow: "Next Co-Op Pick",
+    title: "Choose the next co-op game before game night stalls.",
     description:
-      "Start with R.E.P.O.-like games, proximity chat horror, and physics-heavy co-op picks that create panic and funny fails.",
-    signals: ["R.E.P.O.-like picks", "lighter alternatives", "voice-chaos filters"],
+      "Start with R.E.P.O.-like games, lighter alternatives, and recommendation paths that help your group decide what to boot next.",
+    signals: ["next-game picks", "lighter alternatives", "voice-chaos filters"],
     supportNote:
-      "Built for the moment when a friend says 'that was great, what do we boot next?'",
+      "Built for the moment when the group finishes one breakout hit and needs the clearest next pick.",
     primaryCta: {
       label: "Start with R.E.P.O.-like games",
       href: "/games-like/repo/"
     },
     secondaryCta: {
-      label: "What is friendslop?",
-      href: "/explained/what-is-friendslop/"
+      label: "Compare R.E.P.O. vs Lethal Company",
+      href: "/features/repo-vs-lethal-company/"
     }
   },
   shortcuts: [

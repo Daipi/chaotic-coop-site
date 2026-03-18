@@ -23,8 +23,8 @@ Add these in the Vercel project settings:
 
 ```bash
 SITE_URL=https://www.your-domain.com
-PUBLIC_SITE_NAME=Chaotic Co-op Site
-PUBLIC_ORGANIZATION_NAME=Chaotic Co-op Site
+PUBLIC_SITE_NAME=CoopQueue
+PUBLIC_ORGANIZATION_NAME=CoopQueue
 PUBLIC_CONTACT_EMAIL=contact@your-domain.com
 ADS_TXT_LINES=google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
 ```

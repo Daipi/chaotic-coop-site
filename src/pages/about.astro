@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { organizationName, siteDescription, siteName } from "../lib/site-config";
 
 const title = `About | ${siteName}`;
-const description = "Learn what Chaotic Co-op Site covers, how pages are selected, and who the site is for.";
+const description = "Learn what CoopQueue covers, how recommendations are selected, and who the site is for.";
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
@@ -24,18 +24,19 @@ const structuredData = {
       <section>
         <h2>What we publish</h2>
         <p>
-          {siteName} is an English editorial site focused on chaotic co-op games, physics-heavy horror,
-          and recommendation-style search queries such as games like <code>R.E.P.O.</code> or
-          low-friction group picks for game night.
+          {siteName} is an English editorial site focused on next-game recommendation queries for players
+          who just finished a breakout co-op hit and want the clearest follow-up pick. The strongest pages
+          usually start from searches such as games like <code>R.E.P.O.</code>, games like
+          <code>Lethal Company</code>, or lower-friction group picks for game night.
         </p>
       </section>
 
       <section>
         <h2>Who it is for</h2>
         <p>
-          The target reader is a player who wants a fast, honest answer before buying or installing a game
-          with friends. Most pages are written to solve recommendation intent first and broad genre
-          explanation second.
+          The target reader is a player who wants a fast, honest answer before buying or installing the
+          next game with friends. Most pages are written to solve recommendation intent first and broad
+          genre explanation second.
         </p>
       </section>
 
@@ -44,7 +45,7 @@ const structuredData = {
         <p>
           Pages are built around clear search intent, internal linking, and lightweight comparison data.
           Rankings and recommendations are based on mechanic fit, onboarding difficulty, group dynamics,
-          and replay value rather than hype alone.
+          buying friction, and replay value rather than hype alone.
         </p>
       </section>
 
