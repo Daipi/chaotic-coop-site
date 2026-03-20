@@ -70,13 +70,18 @@ export const homePageDraft: HomePageProps = {
       label: "Best Cheap Co-Op Horror Games Under $10",
       href: "/best/cheap-coop-horror-games-under-10/",
       description: "The budget route when price is the first filter and the group still wants strong co-op stories."
+    },
+    {
+      label: "Best Co-Op Horror Games for 4 Players",
+      href: "/best/co-op-horror-games-for-4-players/",
+      description: "Use this route when exactly four people are ready and the group wants the cleanest fit for tonight."
     }
   ],
   browseByVibe: [
     { label: "Funny", href: "/best/chaotic-coop-games/" },
     { label: "Scary", href: "/best/physics-based-coop-horror-games/" },
     { label: "Cheap", href: "/best/cheap-coop-horror-games-under-10/" },
-    { label: "4-player", href: "/best/chaotic-coop-games/" },
+    { label: "4-player", href: "/best/co-op-horror-games-for-4-players/" },
     { label: "Physics", href: "/best/physics-based-coop-horror-games/" },
     { label: "Proximity chat", href: "/best/proximity-chat-horror-games/" }
   ],
@@ -101,9 +106,9 @@ export const homePageDraft: HomePageProps = {
       description: "Use the broad shortlist when the group wants funny breakdowns more than a strict one-game match."
     },
     {
-      label: "What Is Friendslop?",
-      href: "/explained/what-is-friendslop/",
-      description: "The glossary route when the term is new but the energy of the games already makes sense."
+      label: "Best Co-Op Horror Games for 4 Players",
+      href: "/best/co-op-horror-games-for-4-players/",
+      description: "The buying route when exactly four people are ready and the group wants the shortest path to a fit."
     },
     {
       label: "Best Physics-Based Co-Op Horror Games",
