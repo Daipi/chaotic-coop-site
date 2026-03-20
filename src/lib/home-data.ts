@@ -82,6 +82,7 @@ export const homePageDraft: HomePageProps = {
     { label: "Scary", href: "/best/physics-based-coop-horror-games/" },
     { label: "Cheap", href: "/best/cheap-coop-horror-games-under-10/" },
     { label: "4-player", href: "/best/co-op-horror-games-for-4-players/" },
+    { label: "Beginner-friendly", href: "/best/co-op-horror-games-for-beginners/" },
     { label: "Physics", href: "/best/physics-based-coop-horror-games/" },
     { label: "Proximity chat", href: "/best/proximity-chat-horror-games/" }
   ],
@@ -111,9 +112,9 @@ export const homePageDraft: HomePageProps = {
       description: "The buying route when exactly four people are ready and the group wants the shortest path to a fit."
     },
     {
-      label: "Best Physics-Based Co-Op Horror Games",
-      href: "/best/physics-based-coop-horror-games/",
-      description: "A sharper branch for readers who specifically want object chaos, bad handling, and public mistakes."
+      label: "Best Co-Op Horror Games for Beginners",
+      href: "/best/co-op-horror-games-for-beginners/",
+      description: "The onboarding route when the group wants a first co-op horror game that lands fast and teaches itself."
     }
   ]
 };
