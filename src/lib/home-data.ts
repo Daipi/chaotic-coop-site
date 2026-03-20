@@ -97,12 +97,12 @@ export const homePageDraft: HomePageProps = {
   comparisons: [
     { label: "R.E.P.O. vs Lethal Company", href: "/features/repo-vs-lethal-company/" },
     {
-      label: "Content Warning vs Lethal Company",
-      href: "/features/content-warning-vs-lethal-company/"
+      label: "R.E.P.O. vs Content Warning",
+      href: "/features/repo-vs-content-warning/"
     },
     {
-      label: "Games like R.E.P.O. but less scary",
-      href: "/features/repo-less-scary-alternatives/"
+      label: "Content Warning vs Lethal Company",
+      href: "/features/content-warning-vs-lethal-company/"
     }
   ],
   fresh: [
