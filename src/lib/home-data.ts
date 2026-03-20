@@ -81,6 +81,7 @@ export const homePageDraft: HomePageProps = {
     { label: "Funny", href: "/best/chaotic-coop-games/" },
     { label: "Scary", href: "/best/physics-based-coop-horror-games/" },
     { label: "Cheap", href: "/best/cheap-coop-horror-games-under-10/" },
+    { label: "2-player", href: "/best/co-op-horror-games-for-2-players/" },
     { label: "4-player", href: "/best/co-op-horror-games-for-4-players/" },
     { label: "Beginner-friendly", href: "/best/co-op-horror-games-for-beginners/" },
     { label: "Physics", href: "/best/physics-based-coop-horror-games/" },
@@ -102,9 +103,9 @@ export const homePageDraft: HomePageProps = {
   ],
   fresh: [
     {
-      label: "Best Chaotic Co-Op Games",
-      href: "/best/chaotic-coop-games/",
-      description: "Use the broad shortlist when the group wants funny breakdowns more than a strict one-game match."
+      label: "Best Co-Op Horror Games for 2 Players",
+      href: "/best/co-op-horror-games-for-2-players/",
+      description: "The duo route when only two people are ready and the game still needs to feel complete."
     },
     {
       label: "Best Co-Op Horror Games for 4 Players",
