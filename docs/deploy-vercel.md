@@ -22,17 +22,17 @@ Recommended build settings:
 Add these in the Vercel project settings:
 
 ```bash
-SITE_URL=https://www.your-domain.com
+SITE_URL=https://coopqueue.com
 PUBLIC_SITE_NAME=CoopQueue
 PUBLIC_ORGANIZATION_NAME=CoopQueue
-PUBLIC_CONTACT_EMAIL=contact@your-domain.com
+PUBLIC_CONTACT_EMAIL=change-me@coopqueue.com
 ADS_TXT_LINES=google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
 ```
 
 Notes:
 
-- `SITE_URL` must be the final canonical production domain.
-- `PUBLIC_CONTACT_EMAIL` must be a real monitored inbox.
+- `SITE_URL` should be `https://coopqueue.com` unless you intentionally choose a different canonical host such as `www.coopqueue.com`.
+- Replace `change-me@coopqueue.com` with a real monitored inbox before production deploys.
 - If ads are not enabled yet, you can leave `ADS_TXT_LINES` empty or omit it. The site will still expose `/ads.txt`, but with placeholder guidance text.
 - Once real ads go live, replace `ADS_TXT_LINES` with the exact record required by the ad network.
 
@@ -55,13 +55,13 @@ Trigger a production deployment after the environment variables are in place.
 Before relying on the Vercel deployment, you can run the local release check with production-like values:
 
 ```bash
-SITE_URL=https://www.your-domain.com \
-PUBLIC_CONTACT_EMAIL=contact@your-domain.com \
+SITE_URL=https://coopqueue.com \
+PUBLIC_CONTACT_EMAIL=change-me@coopqueue.com \
 ADS_TXT_LINES='google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0' \
 npm run build
 
-SITE_URL=https://www.your-domain.com \
-PUBLIC_CONTACT_EMAIL=contact@your-domain.com \
+SITE_URL=https://coopqueue.com \
+PUBLIC_CONTACT_EMAIL=change-me@coopqueue.com \
 ADS_TXT_LINES='google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0' \
 npm run verify:release
 ```
@@ -71,7 +71,7 @@ npm run verify:release
 After Vercel is live, run:
 
 ```bash
-npm run verify:live -- https://www.your-domain.com contact@your-domain.com 'google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0'
+npm run verify:live -- https://coopqueue.com change-me@coopqueue.com 'google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0'
 ```
 
 That command checks:

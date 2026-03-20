@@ -79,7 +79,11 @@ function isPlaceholderEmail(value) {
     return true;
   }
 
-  return ["contact@example.com", "contact@your-domain.com"].includes(value);
+  return [
+    "contact@example.com",
+    "contact@your-domain.com",
+    "change-me@coopqueue.com"
+  ].includes(value);
 }
 
 function isPlaceholderAdsLine(value) {

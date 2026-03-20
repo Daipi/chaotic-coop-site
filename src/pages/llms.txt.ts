@@ -23,15 +23,15 @@ export const GET: APIRoute = async ({ site }) => {
   const lines = [
     "# CoopQueue",
     "",
-    "> English editorial site about chaotic co-op, physics-heavy co-op horror, and games like R.E.P.O.",
+    "> English editorial site focused on helping players choose the next co-op game after breakout hits.",
     "",
     "## Homepage",
     `- CoopQueue: ${toPublicUrl("/", site)}`,
     "",
     "## Coverage",
-    "- Topics: chaotic co-op, co-op horror, physics-heavy multiplayer, proximity chat horror",
-    "- Audience: English-speaking PC players looking for recommendation and explainer content",
-    "- Format: static editorial pages with comparison tables and internal links",
+    "- Topics: next-game recommendations, co-op horror, physics-heavy multiplayer, proximity chat horror",
+    "- Audience: English-speaking PC players looking for recommendation and comparison content",
+    "- Format: static editorial pages with comparison blocks, shortlist routes, and internal links",
     ""
   ];
 
