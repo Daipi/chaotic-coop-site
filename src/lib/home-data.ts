@@ -35,14 +35,9 @@ export const homePageDraft: HomePageProps = {
       description: "The best branch when the group wants lighter horror, shareable runs, and social chaos."
     },
     {
-      label: "Games like R.E.P.O. but less scary",
-      href: "/features/repo-less-scary-alternatives/",
-      description: "A cleaner route when the chaos is welcome but the fear needs to come down."
-    },
-    {
-      label: "Best proximity chat horror games",
-      href: "/best/proximity-chat-horror-games/",
-      description: "Open this when the voice mechanic matters more than any single game title."
+      label: "Games like Phasmophobia",
+      href: "/games-like/phasmophobia/",
+      description: "Best when the group wants voice-led horror, ghost-hunt tension, and a longer replay runway."
     }
   ],
   topPicks: [
@@ -67,9 +62,9 @@ export const homePageDraft: HomePageProps = {
       description: "The cleanest route for groups that want camera-loop comedy, lighter horror, and easy yeses."
     },
     {
-      label: "Best proximity chat horror games",
-      href: "/best/proximity-chat-horror-games/",
-      description: "Open the voice-first shortlist when your group mainly cares about callouts, separation, and panic."
+      label: "Games like Phasmophobia",
+      href: "/games-like/phasmophobia/",
+      description: "The strongest title-led route for players who want proximity voice, dread, and longer-term co-op mastery."
     },
     {
       label: "Best Cheap Co-Op Horror Games Under $10",
