@@ -1,18 +1,31 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { organizationName, siteName } from "../lib/site-config";
+import { buildBreadcrumbSchema } from "../lib/seo";
 
 const title = `Terms | ${siteName}`;
 const description = "Basic terms for using CoopQueue and its editorial content.";
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: title,
-  description
-};
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: title,
+    description
+  },
+  buildBreadcrumbSchema(Astro.site, [
+    { name: "Home", path: "/" },
+    { name: "Terms", path: "/terms/" }
+  ])
+];
 ---
 
-<BaseLayout title={title} description={description} canonical="/terms/" structuredData={structuredData}>
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/terms/"
+  structuredData={structuredData}
+  robots="noindex,follow"
+>
   <article class="panel page-shell">
     <header class="page-header">
       <div class="eyebrow">Terms</div>

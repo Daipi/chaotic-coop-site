@@ -1,15 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { siteName } from "../lib/site-config";
+import { buildBreadcrumbSchema } from "../lib/seo";
 
 const title = `Disclosure | ${siteName}`;
 const description = "Advertising, monetization, and editorial disclosure for CoopQueue.";
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: title,
-  description
-};
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: title,
+    description
+  },
+  buildBreadcrumbSchema(Astro.site, [
+    { name: "Home", path: "/" },
+    { name: "Disclosure", path: "/disclosure/" }
+  ])
+];
 ---
 
 <BaseLayout
@@ -17,6 +24,7 @@ const structuredData = {
   description={description}
   canonical="/disclosure/"
   structuredData={structuredData}
+  robots="noindex,follow"
 >
   <article class="panel page-shell">
     <header class="page-header">

@@ -6,11 +6,7 @@ export const GET: APIRoute = () => {
   const configuredLines = import.meta.env.ADS_TXT_LINES?.trim();
   const body =
     configuredLines ||
-    [
-      "# Configure ADS_TXT_LINES before enabling ad networks.",
-      "# Example:",
-      "# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0"
-    ].join("\n");
+    "# ads.txt intentionally empty until ad networks are enabled.";
 
   return new Response(body, {
     headers: {

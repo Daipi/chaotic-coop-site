@@ -1,15 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { contactEmail, hasConfiguredContactEmail, organizationName, siteName } from "../lib/site-config";
+import { buildBreadcrumbSchema } from "../lib/seo";
 
 const title = `Privacy Policy | ${siteName}`;
 const description = "Privacy policy for CoopQueue, including basic data handling, analytics, and advertising notes.";
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: title,
-  description
-};
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: title,
+    description
+  },
+  buildBreadcrumbSchema(Astro.site, [
+    { name: "Home", path: "/" },
+    { name: "Privacy Policy", path: "/privacy-policy/" }
+  ])
+];
 ---
 
 <BaseLayout
@@ -17,6 +24,7 @@ const structuredData = {
   description={description}
   canonical="/privacy-policy/"
   structuredData={structuredData}
+  robots="noindex,follow"
 >
   <article class="panel page-shell">
     <header class="page-header">

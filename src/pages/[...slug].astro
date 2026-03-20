@@ -6,6 +6,7 @@ import FeatureTemplate from "../components/page-types/FeatureTemplate.astro";
 import GamesLikeTemplate from "../components/page-types/GamesLikeTemplate.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { pageHref, sortPagesByIds } from "../lib/page-utils";
+import { buildBreadcrumbSchema } from "../lib/seo";
 
 export async function getStaticPaths() {
   const pages = await getCollection("pages", ({ data }) => !data.draft);
@@ -58,6 +59,13 @@ if (mentionedGames.length > 0) {
 }
 
 const structuredData: Array<Record<string, unknown>> = [webPageSchema];
+
+structuredData.push(
+  buildBreadcrumbSchema(Astro.site, [
+    { name: "Home", path: "/" },
+    { name: page.data.title, path: pageHref(page) }
+  ])
+);
 
 if (page.data.faq.length > 0) {
   structuredData.push({

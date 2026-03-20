@@ -295,7 +295,10 @@ if (fs.existsSync(distDir)) {
       failures.push("ads.txt does not contain ADS_TXT_LINES from environment.");
     }
 
-    if (!adsTxtLines || isPlaceholderAdsLine(adsTxtLines)) {
+    if (
+      (!adsTxtLines && adsContents.includes("Configure ADS_TXT_LINES before enabling ad networks")) ||
+      adsContents.includes("pub-XXXXXXXXXXXXXXXX")
+    ) {
       warnings.push("dist/ads.txt is still using placeholder guidance text.");
     }
   }

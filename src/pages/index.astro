@@ -4,10 +4,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import HomeTemplate from "../components/home/HomeTemplate.astro";
 import { homePageDraft } from "../lib/home-data";
 import { siteDescription, siteName } from "../lib/site-config";
+import { buildOrganizationSchema } from "../lib/seo";
 
 const games = await getCollection("games");
 const hasRealSite = Boolean(Astro.site) && Astro.site.hostname !== "example.com";
 const homeUrl = hasRealSite ? new URL("/", Astro.site).toString() : undefined;
+const homeTitle = `Find Your Next Co-Op Game After R.E.P.O. | ${siteName}`;
+const organizationSchema = buildOrganizationSchema(Astro.site);
 const websiteSchema: Record<string, unknown> = {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -23,7 +26,7 @@ if (homeUrl) {
 const itemListSchema: Record<string, unknown> = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Top chaotic co-op picks",
+  name: "Top next co-op game picks",
   itemListElement: homePageDraft.topPicks.map((item, index) => {
     const entry: Record<string, unknown> = {
       "@type": "ListItem",
@@ -41,10 +44,10 @@ const itemListSchema: Record<string, unknown> = {
 ---
 
 <BaseLayout
-  title={siteName}
+  title={homeTitle}
   description={siteDescription}
   canonical="/"
-  structuredData={[websiteSchema, itemListSchema]}
+  structuredData={[websiteSchema, itemListSchema, organizationSchema]}
 >
   <HomeTemplate page={homePageDraft} games={games} />
 </BaseLayout>

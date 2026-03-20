@@ -1,15 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { organizationName, siteDescription, siteName } from "../lib/site-config";
+import { buildBreadcrumbSchema } from "../lib/seo";
 
 const title = `About | ${siteName}`;
 const description = "Learn what CoopQueue covers, how recommendations are selected, and who the site is for.";
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "AboutPage",
-  name: title,
-  description
-};
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: title,
+    description
+  },
+  buildBreadcrumbSchema(Astro.site, [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about/" }
+  ])
+];
 ---
 
 <BaseLayout title={title} description={description} canonical="/about/" structuredData={structuredData}>

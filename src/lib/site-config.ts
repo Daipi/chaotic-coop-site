@@ -2,7 +2,7 @@ import type { SiteLink } from "../types/page-props";
 
 export const siteName = import.meta.env.PUBLIC_SITE_NAME?.trim() || "CoopQueue";
 export const siteDescription =
-  "An English recommendation site for players choosing the next co-op game after R.E.P.O., Lethal Company, and similar breakout hits.";
+  "Find the next co-op game to play after R.E.P.O., Lethal Company, and similar hits with fast picks, comparisons, and filters.";
 export const organizationName = import.meta.env.PUBLIC_ORGANIZATION_NAME?.trim() || siteName;
 
 const configuredContactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL?.trim();
