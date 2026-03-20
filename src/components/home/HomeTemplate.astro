@@ -17,7 +17,7 @@ const routeGroups = [
     eyebrow: "By Game",
     title: "Start from the exact game your group just played",
     description:
-      "Use the title-led pages when the question is literally 'what should we play after this?'",
+      "Use the title-led routes when the question is literally 'what do we play after this?'",
     items: page.shortcuts
   },
   {
@@ -64,11 +64,11 @@ const routeGroups = [
   </section>
 
   <section class="grid dual-panels">
-    <SectionPanel eyebrow="Priority Pages" title="Start with the strongest entry points">
+    <SectionPanel eyebrow="Start Here" title="Open the fastest route for tonight's decision">
       <LinkCardGrid items={page.topPicks} />
     </SectionPanel>
 
-    <SectionPanel eyebrow="Fresh Reads" title="Keep moving once you land">
+    <SectionPanel eyebrow="Next Problem" title="Handle the most common tie-breakers next">
       <LinkCardGrid items={page.fresh} />
     </SectionPanel>
   </section>

@@ -1,5 +1,5 @@
 ---
-import { pageHref } from "../../lib/page-utils";
+import { pageHref, pageTypeLabel } from "../../lib/page-utils";
 import type { PageEntry } from "../../types/page-props";
 
 export interface Props {
@@ -12,11 +12,20 @@ const { pages } = Astro.props;
 {
   pages.length > 0 && (
     <section>
-      <h2>Keep Exploring</h2>
-      <div class="pill-list">
+      <h2>Pick the next route</h2>
+      <p class="section-copy">
+        Use these next clicks when this page solved only part of the decision and your group still needs a
+        narrower answer.
+      </p>
+      <div class="grid cards">
         {pages.map((page) => (
-          <a class="pill" href={pageHref(page)}>
-            {page.data.title}
+          <a class="card link-card" href={pageHref(page)}>
+            <div class="link-card-body">
+              <div class="route-card-kicker">{pageTypeLabel(page.data.type)}</div>
+              <strong>{page.data.title}</strong>
+              <p class="muted link-card-copy">{page.data.summary ?? page.data.metaDescription}</p>
+            </div>
+            <span class="link-card-cta">Open page</span>
           </a>
         ))}
       </div>
