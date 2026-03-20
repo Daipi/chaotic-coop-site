@@ -30,9 +30,9 @@ export const homePageDraft: HomePageProps = {
       description: "Best when voice tension, salvage pressure, and small-group fear are the draw."
     },
     {
-      label: "R.E.P.O. vs Lethal Company",
-      href: "/features/repo-vs-lethal-company/",
-      description: "Use this when the group is stuck between the two closest overlap picks."
+      label: "Games like Content Warning",
+      href: "/games-like/content-warning/",
+      description: "The best branch when the group wants lighter horror, shareable runs, and social chaos."
     },
     {
       label: "Games like R.E.P.O. but less scary",
@@ -62,9 +62,9 @@ export const homePageDraft: HomePageProps = {
       description: "Best for groups chasing proximity-chat fear, salvage pressure, and short horror runs."
     },
     {
-      label: "Games like R.E.P.O. but less scary",
-      href: "/features/repo-less-scary-alternatives/",
-      description: "A faster route for groups that want funny co-op mistakes without the same dread curve."
+      label: "Games like Content Warning",
+      href: "/games-like/content-warning/",
+      description: "The cleanest route for groups that want camera-loop comedy, lighter horror, and easy yeses."
     },
     {
       label: "Best proximity chat horror games",
