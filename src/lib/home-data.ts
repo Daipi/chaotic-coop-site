@@ -123,6 +123,10 @@ export const homePageDraft: HomePageProps = {
     {
       label: "R.E.P.O. vs Phasmophobia",
       href: "/features/repo-vs-phasmophobia/"
+    },
+    {
+      label: "R.E.P.O. vs PANICORE",
+      href: "/features/repo-vs-panicore/"
     }
   ],
   fresh: [
