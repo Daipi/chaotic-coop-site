@@ -51,6 +51,8 @@ const games = defineCollection({
     horrorLevel: z.enum(["low", "medium", "high"]),
     physicsChaos: z.boolean(),
     proximityChat: z.boolean(),
+    earlyAccess: z.boolean().default(false),
+    officialUrl: z.string().url(),
     progression: z.enum(["low", "medium", "high"]),
     priceLabel: z.enum(["budget", "mid", "premium"]),
     tone: z.enum(["funny", "scary", "mixed"]),
