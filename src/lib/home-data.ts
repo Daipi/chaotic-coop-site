@@ -103,6 +103,10 @@ export const homePageDraft: HomePageProps = {
     {
       label: "Content Warning vs Lethal Company",
       href: "/features/content-warning-vs-lethal-company/"
+    },
+    {
+      label: "Phasmophobia vs Lethal Company",
+      href: "/features/phasmophobia-vs-lethal-company/"
     }
   ],
   fresh: [
