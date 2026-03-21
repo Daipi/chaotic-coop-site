@@ -95,59 +95,85 @@ export const homePageDraft: HomePageProps = {
     }
   ],
   comparisons: [
-    { label: "R.E.P.O. vs Lethal Company", href: "/features/repo-vs-lethal-company/" },
+    {
+      label: "R.E.P.O. vs Lethal Company",
+      href: "/features/repo-vs-lethal-company/",
+      description:
+        "Best first tie-breaker when the group is choosing between physics spectacle and comms-driven salvage tension."
+    },
     {
       label: "R.E.P.O. vs Content Warning",
-      href: "/features/repo-vs-content-warning/"
+      href: "/features/repo-vs-content-warning/",
+      description:
+        "Use this when the group is split between louder pressure-chaos and lighter social-comedy energy."
     },
     {
       label: "Content Warning vs Lethal Company",
-      href: "/features/content-warning-vs-lethal-company/"
+      href: "/features/content-warning-vs-lethal-company/",
+      description:
+        "A high-intent route when the choice is lighter social chaos versus a cleaner horror loop."
     },
     {
       label: "Phasmophobia vs Lethal Company",
-      href: "/features/phasmophobia-vs-lethal-company/"
-    },
-    {
-      label: "Phasmophobia vs Content Warning",
-      href: "/features/phasmophobia-vs-content-warning/"
-    },
-    {
-      label: "PANICORE vs Lethal Company",
-      href: "/features/panicore-vs-lethal-company/"
-    },
-    {
-      label: "PANICORE vs Content Warning",
-      href: "/features/panicore-vs-content-warning/"
-    },
-    {
-      label: "R.E.P.O. vs Phasmophobia",
-      href: "/features/repo-vs-phasmophobia/"
+      href: "/features/phasmophobia-vs-lethal-company/",
+      description:
+        "The clearest split between deeper ghost-hunt systems and faster first-night comms pressure."
     },
     {
       label: "R.E.P.O. vs PANICORE",
-      href: "/features/repo-vs-panicore/"
+      href: "/features/repo-vs-panicore/",
+      description:
+        "Use this when the group is choosing between visible spectacle and shorter, harsher fear."
+    },
+    {
+      label: "R.E.P.O. vs Phasmophobia",
+      href: "/features/repo-vs-phasmophobia/",
+      description:
+        "Best when the decision is quick physics chaos versus deeper long-term mastery."
+    },
+    {
+      label: "PANICORE vs Lethal Company",
+      href: "/features/panicore-vs-lethal-company/",
+      description:
+        "Use this when the group wants to choose between stealth-heavy fear and the cleaner default buy."
     },
     {
       label: "Phasmophobia vs PANICORE",
-      href: "/features/phasmophobia-vs-panicore/"
+      href: "/features/phasmophobia-vs-panicore/",
+      description:
+        "Best when the question is longer investigation depth versus shorter pressure spikes."
+    },
+    {
+      label: "Phasmophobia vs Content Warning",
+      href: "/features/phasmophobia-vs-content-warning/",
+      description:
+        "Use this when the group is split between a hobby horror game and an easier mixed-group night."
+    },
+    {
+      label: "PANICORE vs Content Warning",
+      href: "/features/panicore-vs-content-warning/",
+      description:
+        "Best for groups deciding between sharper fear and lighter social-chaos momentum."
     }
   ],
   fresh: [
     {
-      label: "Best Co-Op Horror Games for 2 Players",
-      href: "/best/co-op-horror-games-for-2-players/",
-      description: "The duo route when only two people are ready and the game still needs to feel complete."
+      label: "Content Warning vs Lethal Company",
+      href: "/features/content-warning-vs-lethal-company/",
+      description:
+        "The fastest route when the group is split between easy laughter and a clearer horror loop."
     },
     {
-      label: "Best Co-Op Horror Games for 4 Players",
-      href: "/best/co-op-horror-games-for-4-players/",
-      description: "The buying route when exactly four people are ready and the group wants the shortest path to a fit."
+      label: "Phasmophobia vs Lethal Company",
+      href: "/features/phasmophobia-vs-lethal-company/",
+      description:
+        "Use this when the decision is deeper ghost-hunt mastery versus faster comms-driven tension."
     },
     {
-      label: "Best Co-Op Horror Games for Beginners",
-      href: "/best/co-op-horror-games-for-beginners/",
-      description: "The onboarding route when the group wants a first co-op horror game that lands fast and teaches itself."
+      label: "R.E.P.O. vs Content Warning",
+      href: "/features/repo-vs-content-warning/",
+      description:
+        "A strong next click when the group is choosing between louder physics panic and softer social-chaos comedy."
     }
   ]
 };
