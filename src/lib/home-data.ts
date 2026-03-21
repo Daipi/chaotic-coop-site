@@ -115,6 +115,10 @@ export const homePageDraft: HomePageProps = {
     {
       label: "PANICORE vs Lethal Company",
       href: "/features/panicore-vs-lethal-company/"
+    },
+    {
+      label: "PANICORE vs Content Warning",
+      href: "/features/panicore-vs-content-warning/"
     }
   ],
   fresh: [
