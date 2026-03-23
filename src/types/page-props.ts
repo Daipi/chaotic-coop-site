@@ -25,6 +25,8 @@ export type HomePageProps = {
   hero: HomeHero;
   shortcuts: SiteLink[];
   topPicks: SiteLink[];
+  launchPriorities: SiteLink[];
+  moneyPages: SiteLink[];
   browseByVibe: SiteLink[];
   explainers: SiteLink[];
   comparisons: SiteLink[];

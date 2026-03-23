@@ -77,6 +77,58 @@ export const homePageDraft: HomePageProps = {
       description: "Use this route when exactly four people are ready and the group wants the cleanest fit for tonight."
     }
   ],
+  launchPriorities: [
+    {
+      label: "R.E.P.O. vs Lethal Company",
+      href: "/features/repo-vs-lethal-company/",
+      description:
+        "The clearest first tie-breaker when the group is split between visible chaos and comms-driven tension."
+    },
+    {
+      label: "Content Warning vs Lethal Company",
+      href: "/features/content-warning-vs-lethal-company/",
+      description:
+        "Best when the choice is lighter mixed-group chaos versus the cleaner horror default."
+    },
+    {
+      label: "Games Like R.E.P.O. but Less Scary",
+      href: "/features/repo-less-scary-alternatives/",
+      description:
+        "Use this when the group likes the chaos in theory but wants a softer recommendation."
+    },
+    {
+      label: "Phasmophobia vs Lethal Company",
+      href: "/features/phasmophobia-vs-lethal-company/",
+      description:
+        "The strongest route when the decision is deeper long-term mastery versus a faster first-night hit."
+    }
+  ],
+  moneyPages: [
+    {
+      label: "Best Cheap Co-Op Horror Games Under $10",
+      href: "/best/cheap-coop-horror-games-under-10/",
+      description:
+        "Use this route when price is the first filter and the group still wants real co-op story value."
+    },
+    {
+      label: "Best Co-Op Horror Games for Beginners",
+      href: "/best/co-op-horror-games-for-beginners/",
+      description:
+        "Best when onboarding and fear tolerance matter more than exact title matching."
+    },
+    {
+      label: "Best Co-Op Horror Games for 4 Players",
+      href: "/best/co-op-horror-games-for-4-players/",
+      description:
+        "Open this when exactly four people are ready and you want the cleanest party-size fit."
+    },
+    {
+      label: "Best Games for Discord Night",
+      href: "/best/discord-night-games/",
+      description:
+        "The broad route when the group only knows it wants an easy yes and stories fast."
+    }
+  ],
   browseByVibe: [
     { label: "Funny", href: "/best/chaotic-coop-games/" },
     { label: "Scary", href: "/best/physics-based-coop-horror-games/" },

@@ -73,6 +73,22 @@ const routeGroups = [
     </SectionPanel>
   </section>
 
+  <section class="grid dual-panels">
+    <SectionPanel eyebrow="High Intent" title="Start with the pages that resolve the buying choice fastest">
+      <p class="section-copy">
+        These routes work best when the group is already close to buying and only needs a narrower answer.
+      </p>
+      <LinkCardGrid items={page.launchPriorities} />
+    </SectionPanel>
+
+    <SectionPanel eyebrow="Low Friction" title="Use these routes when fear, price, or party size matters first">
+      <p class="section-copy">
+        These are the cleaner entry points when the group is filtering by budget, onboarding, or exact headcount.
+      </p>
+      <LinkCardGrid items={page.moneyPages} />
+    </SectionPanel>
+  </section>
+
   <GameExplorer
     title="Browse the Current Co-Op Pool"
     description="Scan the pool as full game rows first, then narrow it by tone, fear level, party size, and mechanics."
