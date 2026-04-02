@@ -3,6 +3,7 @@ import ArticleTemplate from "./ArticleTemplate.astro";
 import GameCardHero from "../common/GameCardHero.astro";
 import GameSpotlightRows from "../common/GameSpotlightRows.astro";
 import QuickCompareGrid from "../common/QuickCompareGrid.astro";
+import StoreDecisionPanel from "../common/StoreDecisionPanel.astro";
 import { comparisonFieldLabel, formatComparisonValue } from "../../lib/page-utils";
 import type { GamesLikePageProps } from "../../types/page-props";
 
@@ -125,6 +126,13 @@ const anchorFacts = featuredGame
       value: formatComparisonValue(featuredGame, field)
     }))
   : [];
+const decisionCtaPageIds = new Set([
+  "games-like/repo",
+  "games-like/lethal-company",
+  "games-like/content-warning"
+]);
+const showDecisionCta = decisionCtaPageIds.has(page.id);
+const ctaGames = shortlistGames.slice(0, 3);
 ---
 
 <ArticleTemplate
@@ -199,6 +207,17 @@ const anchorFacts = featuredGame
       games={comparisonGames}
       fields={comparisonFields}
     />
+
+    {
+      showDecisionCta && (
+        <StoreDecisionPanel
+          title="Start with the safest next-store clicks for this query"
+          description="These are the strongest official store pages to open first if your group already knows which branch it wants."
+          games={ctaGames}
+          ctaLabel="Open official store page"
+        />
+      )
+    }
 
     <GameSpotlightRows
       title="Best next picks for this query"

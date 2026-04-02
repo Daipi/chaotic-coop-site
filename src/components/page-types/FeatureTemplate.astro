@@ -2,6 +2,7 @@
 import ArticleTemplate from "./ArticleTemplate.astro";
 import GameSpotlightRows from "../common/GameSpotlightRows.astro";
 import QuickCompareGrid from "../common/QuickCompareGrid.astro";
+import StoreDecisionPanel from "../common/StoreDecisionPanel.astro";
 import { comparisonFieldLabel, formatComparisonValue } from "../../lib/page-utils";
 import type { FeaturePageProps } from "../../types/page-props";
 
@@ -139,6 +140,13 @@ const spotlightItems = comparedGames.map((game, index) => {
     ]
   };
 });
+
+const decisionCtaPageIds = new Set([
+  "features/repo-vs-lethal-company",
+  "features/repo-vs-content-warning",
+  "features/repo-vs-phasmophobia"
+]);
+const showDecisionCta = decisionCtaPageIds.has(page.id);
 ---
 
 <ArticleTemplate
@@ -153,6 +161,16 @@ const spotlightItems = comparedGames.map((game, index) => {
       <h2>Which game should your group buy first?</h2>
       <p class="muted decision-summary-copy">{winnerSummary}</p>
     </section>
+
+    {
+      showDecisionCta && (
+        <StoreDecisionPanel
+          title="If the choice is already clear, jump to the official store page"
+          description="Use these as the fast next step after the summary above. The goal here is to reduce friction, not add more tabs to compare."
+          games={comparedGames}
+        />
+      )
+    }
 
     <QuickCompareGrid
       title="Fast differences that actually change the pick"
