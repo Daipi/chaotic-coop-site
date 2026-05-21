@@ -1,0 +1,98 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { pageHref } from "../../lib/page-utils";
+
+export const prerender = true;
+
+const posts = await getCollection("blogPosts", ({ data }) => !data.draft);
+posts.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+---
+
+<BaseLayout
+  title="CoopQueue Blog — Co-Op Horror Game News & Updates"
+  description="Monthly roundups, new releases, and updates from the world of co-op horror games."
+  canonical="/blog/"
+>
+  <div class="shell">
+    <header class="site-header">
+      <a class="brand" href="/">CoopQueue</a>
+      <nav class="site-nav muted" aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </header>
+
+    <main class="article-layout page-type-blog-list">
+      <div class="page-main">
+        <section class="panel page-hero-panel">
+          <div class="eyebrow">Blog</div>
+          <h1>Co-Op Horror Game News & Updates</h1>
+          <p class="muted">Monthly roundups, new releases, and what's worth playing in co-op horror right now.</p>
+        </section>
+
+        {posts.length === 0 ? (
+          <section class="panel">
+            <p class="muted">No posts yet. Check back soon!</p>
+          </section>
+        ) : (
+          posts.map((post) => (
+            <section class="panel">
+              <article class="blog-post-card">
+                <div class="blog-post-meta">
+                  <time datetime={post.data.publishedAt.toISOString()}>
+                    {post.data.publishedAt.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                  </time>
+                </div>
+                <h2>
+                  <a href={pageHref(post)}>{post.data.title}</a>
+                </h2>
+                <p class="muted">{post.data.intro}</p>
+                <a class="button secondary" href={pageHref(post)}>Read more</a>
+              </article>
+            </section>
+          ))
+        )}
+      </div>
+    </main>
+
+    <footer class="site-footer muted">
+      <p>CoopQueue — Find the next co-op game before the group tabs out.</p>
+    </footer>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-type-blog-list .page-hero-panel h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .blog-post-card {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color, #e5e5e5);
+  }
+  .blog-post-card:last-child {
+    border-bottom: none;
+  }
+  .blog-post-meta time {
+    font-size: 0.85rem;
+    color: var(--muted-color, #888);
+  }
+  .blog-post-card h2 {
+    font-size: 1.25rem;
+    margin: 0.25rem 0 0.5rem;
+  }
+  .blog-post-card h2 a {
+    color: var(--text-color, #222);
+    text-decoration: none;
+  }
+  .blog-post-card h2 a:hover {
+    text-decoration: underline;
+  }
+  .blog-post-card .muted {
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+  }
+</style>

@@ -109,4 +109,36 @@ const pages = defineCollection({
   ])
 });
 
-export const collections = { games, pages };
+const blogPosts = defineCollection({
+  loader: glob({
+    base: "./src/content/blog",
+    pattern: "**/*.{md,mdx}"
+  }),
+  schema: z.object({
+    title: z.string(),
+    metaTitle: z.string().max(60),
+    metaDescription: z.string().max(160),
+    targetKeyword: z.string(),
+    secondaryKeywords: z.array(z.string()).default([]),
+    searchIntent: z.enum(["informational", "news", "comparison", "recommendation"]),
+    intro: z.string(),
+    summary: z.string().optional(),
+    draft: z.boolean().default(false),
+    order: z.number().optional(),
+    relatedPages: z.array(z.string()).default([]),
+    gamesMentioned: z.array(reference("games")).default([]),
+    keyTakeaways: z.array(z.string()).default([]),
+    faq: z
+      .array(
+        z.object({
+          q: z.string(),
+          a: z.string()
+        })
+      )
+      .default([]),
+    publishedAt: z.coerce.date(),
+    updatedAt: z.coerce.date().optional()
+  })
+});
+
+export const collections = { games, pages, blogPosts };

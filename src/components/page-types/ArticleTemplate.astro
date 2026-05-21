@@ -4,6 +4,7 @@ import KeyTakeaways from "../common/KeyTakeaways.astro";
 import PageRail from "../common/PageRail.astro";
 import PageHeader from "../common/PageHeader.astro";
 import RelatedPagesSection from "../common/RelatedPagesSection.astro";
+import ShareButtons from "../common/ShareButtons.astro";
 import type { GameEntry, PageEntry, PageHeading } from "../../types/page-props";
 
 export interface Props {
@@ -23,6 +24,8 @@ const {
   afterBeforeBody = false,
   takeawaysAfterBody = false
 } = Astro.props;
+const hasRealSite = Boolean(Astro.site) && Astro.site.hostname !== "example.com";
+const pageUrl = hasRealSite ? new URL(`/${page.id}/`, Astro.site).toString() : undefined;
 const hasLead = Astro.slots.has("lead");
 const hasAfter = Astro.slots.has("after");
 ---
@@ -76,6 +79,12 @@ const hasAfter = Astro.slots.has("after");
         </section>
       )
     }
+
+    {pageUrl && (
+      <section class="panel">
+        <ShareButtons title={page.data.metaTitle} url={pageUrl} />
+      </section>
+    )}
 
     {
       relatedPages.length > 0 && (

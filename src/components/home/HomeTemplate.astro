@@ -2,6 +2,7 @@
 import GameExplorer from "../common/GameExplorer.astro";
 import LinkCardGrid from "../common/LinkCardGrid.astro";
 import PillLinks from "../common/PillLinks.astro";
+import PollWidget from "../common/PollWidget.astro";
 import SectionPanel from "../common/SectionPanel.astro";
 import HomeHero from "./HomeHero.astro";
 import type { HomeTemplateProps } from "../../types/page-props";
@@ -105,5 +106,29 @@ const routeGroups = [
     <SectionPanel eyebrow="Comparisons" title="Break the tie between close picks">
       <LinkCardGrid items={page.comparisons} />
     </SectionPanel>
+  </section>
+
+  <section class="panel">
+    <div class="eyebrow">Community Poll</div>
+    <h2>What's your group playing this weekend?</h2>
+    <PollWidget
+      title="Pick your weekend game"
+      options={[
+        { label: "R.E.P.O.", value: "repo" },
+        { label: "Lethal Company", value: "lethal-company" },
+        { label: "Content Warning", value: "content-warning" },
+        { label: "Phasmophobia", value: "phasmophobia" },
+        { label: "Something else", value: "other" }
+      ]}
+    />
+  </section>
+
+  <section class="panel">
+    <div class="eyebrow">Latest Updates</div>
+    <h2>Co-Op Horror Game News & Monthly Roundups</h2>
+    <p class="section-copy">
+      Stay up to date with new releases, major updates, and what's worth playing in co-op horror right now.
+    </p>
+    <a class="button secondary" href="/blog/">View Blog</a>
   </section>
 </main>

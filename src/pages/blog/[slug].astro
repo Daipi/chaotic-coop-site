@@ -1,0 +1,141 @@
+---
+import { getCollection, getEntries, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import FaqSection from "../../components/common/FaqSection.astro";
+import KeyTakeaways from "../../components/common/KeyTakeaways.astro";
+import { pageHref, sortPagesByIds } from "../../lib/page-utils";
+import { buildBreadcrumbSchema } from "../../lib/seo";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blogPosts", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+const allPages = await getCollection("pages", ({ data }) => !data.draft);
+const mentionedGames = await getEntries(post.data.gamesMentioned);
+const relatedPages = sortPagesByIds(
+  allPages.filter((candidate) => candidate.id !== post.id),
+  post.data.relatedPages
+);
+const { Content, headings } = await render(post);
+const hasRealSite = Boolean(Astro.site) && Astro.site.hostname !== "example.com";
+const postUrl = hasRealSite ? new URL(pageHref(post), Astro.site).toString() : undefined;
+const keywords = [post.data.targetKeyword, ...post.data.secondaryKeywords]
+  .filter(Boolean)
+  .join(", ");
+
+const structuredData: Array<Record<string, unknown>> = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.data.metaTitle,
+    description: post.data.metaDescription,
+    inLanguage: "en",
+    datePublished: post.data.publishedAt.toISOString(),
+    ...(post.data.updatedAt && { dateModified: post.data.updatedAt.toISOString() })
+  }
+];
+
+if (postUrl) {
+  structuredData[0].url = postUrl;
+}
+if (keywords) {
+  structuredData[0].keywords = keywords;
+}
+
+structuredData.push(
+  buildBreadcrumbSchema(Astro.site, [
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blog/" },
+    { name: post.data.title, path: pageHref(post) }
+  ])
+);
+
+if (post.data.faq.length > 0) {
+  structuredData.push({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: post.data.faq.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a
+      }
+    }))
+  });
+}
+---
+
+<BaseLayout
+  title={post.data.metaTitle}
+  description={post.data.metaDescription}
+  canonical={pageHref(post)}
+  ogType="article"
+  structuredData={structuredData}
+>
+  <div class="shell">
+    <header class="site-header">
+      <a class="brand" href="/">CoopQueue</a>
+      <nav class="site-nav muted" aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </header>
+
+    <main class="article-layout page-type-blog">
+      <div class="page-main">
+        <section class="panel page-hero-panel">
+          <div class="eyebrow">
+            <a href="/blog/" class="muted">Blog</a>
+          </div>
+          <h1>{post.data.title}</h1>
+          <p class="muted">
+            <time datetime={post.data.publishedAt.toISOString()}>
+              {post.data.publishedAt.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+            </time>
+          </p>
+        </section>
+
+        {post.data.keyTakeaways.length > 0 && (
+          <section class="panel">
+            <KeyTakeaways items={post.data.keyTakeaways} />
+          </section>
+        )}
+
+        <article class="panel body-panel">
+          <section class="body-copy">
+            <Content />
+          </section>
+        </article>
+
+        {post.data.faq.length > 0 && (
+          <section class="panel">
+            <FaqSection items={post.data.faq} />
+          </section>
+        )}
+
+        {relatedPages.length > 0 && (
+          <section class="panel">
+            <h2>Related Pages</h2>
+            <ul>
+              {relatedPages.map((page) => (
+                <li><a href={pageHref(page)}>{page.data.title}</a></li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </div>
+    </main>
+
+    <footer class="site-footer muted">
+      <p>CoopQueue — Find the next co-op game before the group tabs out.</p>
+    </footer>
+  </div>
+</BaseLayout>

@@ -1,0 +1,149 @@
+---
+export interface Props {
+  title: string;
+  options: { label: string; value: string }[];
+}
+
+const { title, options } = Astro.props;
+const pollId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').substring(0, 30);
+---
+
+<div class="poll-card" id={`poll-${pollId}`}>
+  <div class="poll-header">
+    <span class="poll-icon">📊</span>
+    <strong>{title}</strong>
+  </div>
+  <div class="poll-options">
+    {
+      options.map((option) => (
+        <button
+          class="poll-option"
+          data-value={option.value}
+          onclick={`handlePollClick('${pollId}', '${option.value}')`}
+        >
+          <span class="poll-option-label">{option.label}</span>
+          <span class="poll-option-bar" style={`width: 0%`}></span>
+          <span class="poll-option-pct">0%</span>
+        </button>
+      ))
+    }
+  </div>
+  <div class="poll-total" id={`poll-total-${pollId}`}></div>
+</div>
+
+<script>
+  function handlePollClick(pollId: string, value: string) {
+    const card = document.getElementById(`poll-${pollId}`);
+    if (!card) return;
+
+    // Mark as voted
+    card.classList.add('voted');
+
+    // Simulate vote data (in production, this would call an API)
+    const votes: Record<string, number> = {};
+    options.forEach((opt: { value: string }) => {
+      votes[opt.value] = Math.floor(Math.random() * 50) + 10;
+    });
+    votes[value] += 1;
+
+    const total = Object.values(votes).reduce((a, b) => a + b, 0);
+
+    // Update UI
+    const buttons = card.querySelectorAll('.poll-option');
+    buttons.forEach((btn: HTMLButtonElement) => {
+      const btnValue = btn.dataset.value;
+      const count = votes[btnValue!] || 0;
+      const pct = Math.round((count / total) * 100);
+
+      const bar = btn.querySelector('.poll-option-bar');
+      const pctEl = btn.querySelector('.poll-option-pct');
+
+      if (bar) bar.style.width = `${pct}%`;
+      if (pctEl) pctEl.textContent = `${pct}%`;
+
+      if (btnValue === value) {
+        btn.classList.add('selected');
+      }
+    });
+
+    const totalEl = document.getElementById(`poll-total-${pollId}`);
+    if (totalEl) totalEl.textContent = `${total} votes`;
+  }
+</script>
+
+<style>
+  .poll-card {
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.62));
+    box-shadow: var(--shadow-soft);
+  }
+  .poll-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-size: 1rem;
+    color: var(--accent-deep);
+  }
+  .poll-icon {
+    font-size: 1.2rem;
+  }
+  .poll-options {
+    display: grid;
+    gap: 8px;
+  }
+  .poll-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-size: 0.92rem;
+    color: var(--text);
+    transition: all 200ms ease;
+    overflow: hidden;
+    text-align: left;
+    width: 100%;
+  }
+  .poll-option:hover:not(.voted) {
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.9);
+  }
+  .poll-option-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(81, 208, 222, 0.15), rgba(190, 239, 0, 0.15));
+    transition: width 500ms ease;
+    z-index: 0;
+  }
+  .poll-option.selected .poll-option-bar {
+    background: linear-gradient(90deg, rgba(81, 208, 222, 0.25), rgba(190, 239, 0, 0.25));
+  }
+  .poll-option-label {
+    position: relative;
+    z-index: 1;
+    font-weight: 600;
+  }
+  .poll-option-pct {
+    position: relative;
+    z-index: 1;
+    font-weight: 700;
+    color: var(--accent-deep);
+    min-width: 40px;
+    text-align: right;
+  }
+  .poll-total {
+    margin-top: 10px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-align: right;
+  }
+</style>

@@ -12,12 +12,15 @@ export const hasConfiguredContactEmail = Boolean(configuredContactEmail);
 
 export const primaryNavLinks: SiteLink[] = [
   { label: "Home", href: "/" },
+  { label: "Blog", href: "/blog/" },
   { label: "About", href: "/about/" },
   { label: "Disclosure", href: "/disclosure/" },
   { label: "Contact", href: "/contact/" }
 ];
 
 export const footerNavLinks: SiteLink[] = [
+  { label: "Home", href: "/" },
+  { label: "Blog", href: "/blog/" },
   { label: "About", href: "/about/" },
   { label: "Privacy Policy", href: "/privacy-policy/" },
   { label: "Terms", href: "/terms/" },
